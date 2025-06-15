@@ -1,5 +1,5 @@
 import React from 'react';
-import './StudentSidebar.module.css';
+import styles from './StudentSidebar.module.css';
 
 // Utility function to get active page from current URL
 const getActivePageFromURL = () => {
@@ -28,56 +28,56 @@ const StudentSidebar = ({ onNavigate }) => {
   const activePage = getActivePageFromURL();
   
   return (
-    <div className="sidebar">
-      <div className="sidebar-header">
-        <div className="logo">S</div>
+    <div className={styles.sidebar}>
+      <div className={styles.sidebarHeader}>
+        <div className={styles.logo}>S</div>
       </div>
-      <div className="sidebar-content">
-        <div className="nav-section">
-          <div className="nav-label">Main</div>
-          <div className="nav-items">
+      <div className={styles.sidebarContent}>
+        <div className={styles.navSection}>
+          <div className={styles.navLabel}>Main</div>
+          <div className={styles.navItems}>
             <div
-              className={`nav-item${activePage === 'StudentDashboard' ? ' active-page' : ''}`}
+              className={`${styles.navItem} ${activePage === 'StudentDashboard' ? styles.activePage : ''}`}
               onClick={() => onNavigate('Dashboard')}
             >
               📊 Dashboard
             </div>
           </div>
         </div>
-        <div className="nav-section">
-          <div className="nav-label">Academic</div>
-          <div className="nav-items">
+        <div className={styles.navSection}>
+          <div className={styles.navLabel}>Academic</div>
+          <div className={styles.navItems}>
             <div
-              className={`nav-item${activePage === 'StudentSchedule' ? ' active-page' : ''}`}
+              className={`${styles.navItem} ${activePage === 'StudentSchedule' ? styles.activePage : ''}`}
               onClick={() => onNavigate('StudentSchedule')}
             >
               📅 Schedule
             </div>
             <div
-              className={`nav-item${activePage === 'Enrollment' ? ' active-page' : ''}`}
+              className={`${styles.navItem} ${activePage === 'Enrollment' ? styles.activePage : ''}`}
               onClick={() => onNavigate('Enrollment')}
             >
               📝 Enrollment
             </div>
             <div
-              className={`nav-item${activePage === 'StudentGrades' ? ' active-page' : ''}`}
+              className={`${styles.navItem} ${activePage === 'StudentGrades' ? styles.activePage : ''}`}
               onClick={() => onNavigate('StudentGrades')}
             >
               📈 Grades
             </div>
             <div
-              className={`nav-item${activePage === 'StudentCurriculum' ? ' active-page' : ''}`}
+              className={`${styles.navItem} ${activePage === 'StudentCurriculum' ? styles.activePage : ''}`}
               onClick={() => onNavigate('StudentCurriculum')}
             >
               📚 Curriculum
             </div>
           </div>
         </div>
-        <div className="nav-section">
-          <div className="nav-label">System</div>
-          <div className="nav-items">
+        <div className={styles.navSection}>
+          <div className={styles.navLabel}>System</div>
+          <div className={styles.navItems}>
             <div
-              className={`nav-item${activePage === 'StudentSettings' ? ' active-page' : ''}`}
+              className={`${styles.navItem} ${activePage === 'StudentSettings' ? styles.activePage : ''}`}
               onClick={() => onNavigate('StudentSettings')}
             >
               ⚙️ Settings
@@ -85,19 +85,19 @@ const StudentSidebar = ({ onNavigate }) => {
           </div>
         </div>
       </div>
-      <div className="sidebar-footer">
-        <button className="logout-button" onClick={() => {
+      <div className={styles.sidebarFooter}>
+        <button className={styles.logoutButton} onClick={() => {
           if (window.confirm('Are you sure you want to log out?')) {
             window.location.href = '/';
           }
         }}>
           🚪 Log Out
         </button>
-        <div className="user-profile">
-          <div className="user-avatar">JS</div>
-          <div className="user-info">
-            <div className="user-name">John Smith</div>
-            <div className="user-role">Student</div>
+        <div className={styles.userProfile}>
+          <div className={styles.userAvatar}>JS</div>
+          <div className={styles.userInfo}>
+            <div className={styles.userName}>John Smith</div>
+            <div className={styles.userRole}>Student</div>
           </div>
         </div>
       </div>

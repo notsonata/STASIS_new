@@ -32,7 +32,7 @@ const Sidebar = ({ onNavigate, userInfo = {}, sections = [] }) => {
   const activePage = getActivePageFromURL();
   
   // If userInfo is not provided, use defaults
-  const name = userInfo.name || "David Anderson";
+  const name = userInfo.name || "John Stasis";
   const role = userInfo.role || "Admin";
   const initials = name ? name.split(' ').map(n => n[0]).join('') : "DA";
   

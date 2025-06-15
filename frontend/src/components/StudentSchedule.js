@@ -1,9 +1,15 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import styles from './StudentGrades.module.css';
+import styles from './AdminDashboard.module.css'; // Use the existing module CSS
 import Sidebar from './StudentSidebar';
 
-const StudentGrades = () => {
+const StudentSchedule = () => {
+  const navigate = useNavigate(); // Define navigate
+  const [currentWeek, setCurrentWeek] = useState(new Date()); // Define currentWeek state
+  const [selectedCourse, setSelectedCourse] = useState('all'); // Define selectedCourse state
+  const [selectedClass, setSelectedClass] = useState(null); // Define selectedClass state
+  const [showClassModal, setShowClassModal] = useState(false); // Define showClassModal state
+
   // Sample grades data
   const [gradesList, setGradesList] = useState([
     {
@@ -410,133 +416,110 @@ const StudentGrades = () => {
               Dashboard
             </span>
             <span className={styles.breadcrumbSeparator}> / </span>
-            <span className={styles.breadcrumbCurrent}>My Grades</span>
+            <span className={styles.breadcrumbCurrent}>My Schedule</span>
           </div>
           
           {/* Header */}
           <div className={styles.pageHeader}>
-            <h1 className={styles.pageTitle}>My Grades</h1>
+            <h1 className={styles.pageTitle}>My Schedule</h1>
           </div>
 
-          {/* Grades List */}
-          <div className={styles.gradesListContainer}>
-            <div className={styles.listHeader}>
-              <div className={styles.listControls}>
-                <h2 className={styles.listTitle}>Academic Records</h2>
-                <div className={styles.controls}>
-                  <select 
-                    value={selectedSemester}
-                    onChange={(e) => setSelectedSemester(e.target.value)}
-                    className={styles.selectInput}
-                  >
-                    <option>All Semesters</option>
-                    {semesterOptions.map(semester => (
-                      <option key={semester} value={semester}>{semester}</option>
-                    ))}
-                  </select>
-                  <input
-                    type="text"
-                    placeholder="Search courses..."
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                    className={styles.searchInput}
-                  />
-                </div>
+          {/* Schedule Controls */}
+          <div className={styles.scheduleControls}>
+            <div className={styles.weekNavigator}>
+              <button onClick={goToPrevWeek} className={styles.navButton}>
+                &lt; Prev
+              </button>
+              <div className={styles.currentWeek}>
+                {getFormattedWeekRange()}
               </div>
-              
-              {/* Academic Information */}
-              <div className={styles.academicInfo}>
-                <div className={styles.academicItem}>
-                  <span className={styles.academicLabel}>Current GPA:</span>
-                  <span className={`${styles.academicValue} ${styles.gpaValue}`}>{currentGPA}</span>
-                </div>
-                <div className={styles.academicItem}>
-                  <span className={styles.academicLabel}>Enrollment Status:</span>
-                  <span className={`${styles.academicValue} ${styles.statusBadge} ${enrollmentStatus.toLowerCase() === 'regular' ? styles.statusRegular : styles.statusIrregular}`}>
-                    {enrollmentStatus}
-                  </span>
-                </div>
-                <div className={styles.academicItem}>
-                  <span className={styles.academicLabel}>Units Earned:</span>
-                  <span className={styles.academicValue}>{totalUnitsEarned} / {totalUnitsEnrolled}</span>
-                </div>
-              </div>
+              <button onClick={goToNextWeek} className={styles.navButton}>
+                Next &gt;
+              </button>
             </div>
 
-            <div className={styles.tableContainer}>
-              <table className={styles.gradesTable}>
-                <thead>
-                  <tr>
-                    <th>Course Code</th>
-                    <th>Course & Section</th>
-                    <th>Instructor</th>
-                    <th>Units</th>
-                    <th>Midterm</th>
-                    <th>Final</th>
-                    <th>Overall</th>
-                    <th>Grade</th>
-                    <th>Remarks</th>
-                    <th>Semester</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {filteredGrades.map((grade, index) => (
-                    <tr key={grade.id}>
-                      <td className={styles.courseCode}>{grade.id}</td>
-                      <td>
-                        <div className={styles.courseInfo}>
-                          <div className={styles.courseName}>{grade.course}</div>
-                          <div className={styles.courseSection}>{grade.section}</div>
+            <div className={styles.courseFilter}>
+              <select 
+                value={selectedCourse}
+                onChange={(e) => setSelectedCourse(e.target.value)}
+                className={styles.selectInput}
+              >
+                <option value="all">All Courses</option>
+                {Array.from(new Set(scheduleData.map(item => item.course))).map(course => (
+                  <option key={course} value={course}>{course}</option>
+                ))}
+              </select>
+            </div>
+          </div>
+
+          {/* Weekly Schedule View */}
+          <div className={styles.scheduleContainer}>
+            <div className={styles.timeSlots}>
+              {timeSlots.map((slot, index) => (
+                <div key={index} className={styles.timeSlot}>
+                  {slot}
+                </div>
+              ))}
+            </div>
+
+            <div className={styles.daysContainer}>
+              {weekDays.map((day, index) => (
+                <div key={index} className={styles.dayColumn}>
+                  <div className={styles.dayHeader}>{day.toLocaleString('default', { weekday: 'short' })}</div>
+                  <div className={styles.dayContent}>
+                    {groupedSchedule[day].map((classItem) => (
+                      <div 
+                        key={classItem.id} 
+                        className={styles.classItem} 
+                        style={getClassItemStyle(classItem)}
+                        onClick={() => showClassDetails(classItem)}
+                      >
+                        <div className={styles.classTime}>
+                          {formatTime(classItem.startTime)} - {formatTime(classItem.endTime)}
                         </div>
-                      </td>
-                      <td className={styles.instructorName}>{grade.instructor}</td>
-                      <td className={styles.creditUnits}>{grade.creditUnits}</td>
-                      <td className={styles.gradeScore}>
-                        {grade.midtermGrade !== null ? grade.midtermGrade : '-'}
-                      </td>
-                      <td className={styles.gradeScore}>
-                        {grade.finalGrade !== null ? grade.finalGrade : '-'}
-                      </td>
-                      <td className={styles.gradeScore}>
-                        {grade.overallGrade !== null ? grade.overallGrade.toFixed(1) : '-'}
-                      </td>
-                      <td>
-                        <span className={`${styles.letterGrade} ${getGradeColor(grade.letterGrade)}`}>
-                          {grade.letterGrade}
-                        </span>
-                      </td>
-                      <td>
-                        <span className={`${styles.remarksBadge} ${
-                          grade.remarks === 'Passed' ? styles.remarksPassed : 
-                          grade.remarks === 'Failed' ? styles.remarksFailed : 
-                          styles.remarksProgress
-                        }`}>
-                          {grade.remarks}
-                        </span>
-                      </td>
-                      <td className={styles.semesterInfo}>{grade.semester}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-
-            <div className={styles.tableFooter}>
-              <div className={styles.tableInfo}>
-                Showing {filteredGrades.length} of {gradesList.length} courses
-              </div>
-              <div className={styles.pagination}>
-                <button className={`${styles.pageBtn} ${styles.disabled}`}>Previous</button>
-                <button className={`${styles.pageBtn} ${styles.active}`}>1</button>
-                <button className={styles.pageBtn}>2</button>
-                <button className={styles.pageBtn}>Next</button>
-              </div>
+                        <div className={styles.classDetails}>
+                          <div className={styles.classCourse}>{classItem.course}</div>
+                          <div className={styles.classSection}>{classItem.section}</div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
+
+          {/* Class Details Modal */}
+          {showClassModal && selectedClass && (
+            <div className={styles.classModal}>
+              <div className={styles.modalContent}>
+                <span className={styles.closeModal} onClick={closeClassModal}>&times;</span>
+                <h2 className={styles.modalTitle}>{selectedClass.course} - {selectedClass.section}</h2>
+                <div className={styles.modalDetails}>
+                  <div className={styles.detailItem}>
+                    <span className={styles.detailLabel}>Instructor:</span>
+                    <span className={styles.detailValue}>{selectedClass.instructor}</span>
+                  </div>
+                  <div className={styles.detailItem}>
+                    <span className={styles.detailLabel}>Time:</span>
+                    <span className={styles.detailValue}>{formatTime(selectedClass.startTime)} - {formatTime(selectedClass.endTime)}</span>
+                  </div>
+                  <div className={styles.detailItem}>
+                    <span className={styles.detailLabel}>Location:</span>
+                    <span className={styles.detailValue}>{selectedClass.location}</span>
+                  </div>
+                  <div className={styles.detailItem}>
+                    <span className={styles.detailLabel}>Type:</span>
+                    <span className={styles.detailValue}>{selectedClass.type}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
-      )}
+      </div>
     </div>
   );
 };
 
-export default StudentGrades;
+export default StudentSchedule; // Export with correct name

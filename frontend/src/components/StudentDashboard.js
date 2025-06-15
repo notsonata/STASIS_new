@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import './AdminDashboard.css';
+import styles from './AdminDashboard.module.css'; // Use the existing module CSS
 import Sidebar from './StudentSidebar';
 
 const StudentDashboard = () => {
