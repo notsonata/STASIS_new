@@ -1,30 +1,28 @@
 import React from 'react';
 import styles from './StudentSidebar.module.css';
 
-// Utility function to get active page from current URL
+// Updated function with consistent route naming
 const getActivePageFromURL = () => {
   const path = window.location.pathname;
   
   if (path === '/student-dashboard' || path === '/') {
-    return 'StudentDashboard';
+    return 'Dashboard';
   } else if (path === '/student-schedule') {
-    return 'StudentSchedule';
-  } else if (path === '/enrollment') {
+    return 'Schedule';
+  } else if (path === '/student-enrollment') {
     return 'Enrollment';
   } else if (path === '/student-grades') {
-    return 'StudentGrades';
+    return 'Grades';
   } else if (path === '/student-curriculum') {
-    return 'StudentCurriculum';
+    return 'Curriculum';
   } else if (path === '/student-settings') {
-    return 'StudentSettings';
+    return 'Settings';
   }
   
-  // Return empty string if no match so nothing is highlighted
   return '';
 };
 
 const StudentSidebar = ({ onNavigate }) => {
-  // Automatically determine active page from URL instead of using prop
   const activePage = getActivePageFromURL();
   
   return (
@@ -37,7 +35,7 @@ const StudentSidebar = ({ onNavigate }) => {
           <div className={styles.navLabel}>Main</div>
           <div className={styles.navItems}>
             <div
-              className={`${styles.navItem} ${activePage === 'StudentDashboard' ? styles.activePage : ''}`}
+              className={`${styles.navItem} ${activePage === 'Dashboard' ? styles.activePage : ''}`}
               onClick={() => onNavigate('Dashboard')}
             >
               📊 Dashboard
@@ -48,8 +46,8 @@ const StudentSidebar = ({ onNavigate }) => {
           <div className={styles.navLabel}>Academic</div>
           <div className={styles.navItems}>
             <div
-              className={`${styles.navItem} ${activePage === 'StudentSchedule' ? styles.activePage : ''}`}
-              onClick={() => onNavigate('StudentSchedule')}
+              className={`${styles.navItem} ${activePage === 'Schedule' ? styles.activePage : ''}`}
+              onClick={() => onNavigate('Schedule')}
             >
               📅 Schedule
             </div>
@@ -60,14 +58,14 @@ const StudentSidebar = ({ onNavigate }) => {
               📝 Enrollment
             </div>
             <div
-              className={`${styles.navItem} ${activePage === 'StudentGrades' ? styles.activePage : ''}`}
-              onClick={() => onNavigate('StudentGrades')}
+              className={`${styles.navItem} ${activePage === 'Grades' ? styles.activePage : ''}`}
+              onClick={() => onNavigate('Grades')}
             >
               📈 Grades
             </div>
             <div
-              className={`${styles.navItem} ${activePage === 'StudentCurriculum' ? styles.activePage : ''}`}
-              onClick={() => onNavigate('StudentCurriculum')}
+              className={`${styles.navItem} ${activePage === 'Curriculum' ? styles.activePage : ''}`}
+              onClick={() => onNavigate('Curriculum')}
             >
               📚 Curriculum
             </div>
@@ -77,8 +75,8 @@ const StudentSidebar = ({ onNavigate }) => {
           <div className={styles.navLabel}>System</div>
           <div className={styles.navItems}>
             <div
-              className={`${styles.navItem} ${activePage === 'StudentSettings' ? styles.activePage : ''}`}
-              onClick={() => onNavigate('StudentSettings')}
+              className={`${styles.navItem} ${activePage === 'Settings' ? styles.activePage : ''}`}
+              onClick={() => onNavigate('Settings')}
             >
               ⚙️ Settings
             </div>

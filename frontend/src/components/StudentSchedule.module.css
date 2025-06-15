@@ -776,553 +776,124 @@ display: flex !important; /* Force flex display */
   min-width: 200px;
 }
 
-/* Student Schedule Styles */
-.scheduleContainer {
-  display: flex;
-  min-height: 100vh;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  background-color: #f8f9fa;
-  color: #333;
-  font-size: 14px;
-  gap: clamp(10px, 2vw, 30px);
-}
-
-.mainContent {
-  flex: 1;
-  min-height: 100vh;
-  margin-left: 256px;
-  padding: 20px;
-  box-sizing: border-box;
-  background-color: #f8f9fa;
-  max-width: calc(100vw - 256px);
-}
-
-.dashboardHeader {
-  margin-bottom: 25px;
-}
-
-.dashboardTitle {
-  font-size: 22px;
-  font-weight: 500;
-  color: #212529;
-  margin: 0 0 10px 0;
-}
-
-.dashboardSubtitle {
-  font-size: 14px;
-  color: #6c757d;
-  margin: 0;
-}
-
-/* Schedule View Styles */
-.scheduleContent {
-  background: white;
-  border-radius: 8px;
-  border: 1px solid #e9ecef;
-  padding: 0;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-  overflow: hidden;
-  margin-bottom: 30px;
-}
-
-.scheduleHeader {
-  padding: 20px;
-  border-bottom: 1px solid #f1f3f4;
-  background: #fafbfc;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.scheduleTitle {
-  font-size: 18px;
-  font-weight: 600;
-  color: #212529;
-  margin: 0;
-}
-
-.scheduleActions {
-  display: flex;
-  gap: 10px;
-}
-
-.scheduleViewToggle {
-  display: flex;
-  background: #f1f3f4;
-  border-radius: 6px;
-  overflow: hidden;
-}
-
-.scheduleViewButton {
-  padding: 8px 16px;
-  border: none;
-  background: transparent;
-  font-size: 14px;
-  font-weight: 500;
-  color: #495057;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.scheduleViewButtonActive {
-  background: #dc3545;
-  color: white;
-}
-
-.scheduleFilters {
-  padding: 15px 20px;
-  border-bottom: 1px solid #f1f3f4;
-  display: flex;
-  gap: 15px;
-  flex-wrap: wrap;
-}
-
-.scheduleFilterItem {
-  flex: 1;
-  min-width: 200px;
-}
-
-.formLabel {
-  font-size: 13px;
-  font-weight: 500;
-  color: #495057;
-  margin-bottom: 6px;
-  display: block;
-}
-
-.formSelect {
-  width: 100%;
-  padding: 8px 12px;
-  border: 1px solid #ced4da;
-  border-radius: 4px;
-  font-size: 14px;
-  transition: border-color 0.2s;
-  background-color: white;
-}
-
-.formSelect:focus {
-  outline: none;
-  border-color: #dc3545;
-  box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25);
-}
-
-/* Weekly Calendar View */
-.weeklyCalendar {
-  padding: 20px;
-}
-
-.weekNavigation {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 20px;
-}
-
-.currentWeek {
-  font-size: 16px;
-  font-weight: 600;
-  color: #212529;
-}
-
-.weekNavigationButtons {
-  display: flex;
-  gap: 10px;
-}
-
-.navButton {
-  padding: 6px 12px;
-  border: 1px solid #ced4da;
-  border-radius: 4px;
-  background: white;
-  cursor: pointer;
-  font-size: 14px;
-  transition: all 0.2s;
-}
-
-.navButton:hover {
-  background: #f8f9fa;
-  border-color: #adb5bd;
-}
-
-.calendarGrid {
-  display: grid;
-  grid-template-columns: 100px repeat(7, 1fr);
-  border: 1px solid #dee2e6;
-  border-radius: 6px;
-  overflow: hidden;
-}
-
-.timeColumn {
-  background: #f8f9fa;
-  border-right: 1px solid #dee2e6;
-}
-
-.timeSlot {
-  height: 60px;
-  border-bottom: 1px solid #dee2e6;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 12px;
-  font-weight: 500;
-  color: #6c757d;
-}
-
-.dayColumn {
-  min-width: 120px;
-}
-
-.dayHeader {
-  height: 60px;
-  background: #f8f9fa;
-  border-bottom: 1px solid #dee2e6;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-weight: 500;
-}
-
-.dayName {
-  font-size: 14px;
-  color: #212529;
-}
-
-.dayDate {
-  font-size: 12px;
-  color: #6c757d;
-}
-
-.classSlot {
-  height: 60px;
-  border-bottom: 1px solid #dee2e6;
-  padding: 5px;
-  position: relative;
-}
-
-.classItem {
-  position: absolute;
-  left: 5px;
-  right: 5px;
-  border-radius: 4px;
-  padding: 5px 8px;
-  font-size: 12px;
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-  cursor: pointer;
-  transition: transform 0.2s;
-}
-
-.classItem:hover {
-  transform: scale(1.02);
-  z-index: 1;
-}
-
-.classItemCS {
-  background-color: rgba(0, 123, 255, 0.1);
-  border-left: 3px solid #007bff;
-  color: #007bff;
-}
-
-.classItemMath {
-  background-color: rgba(40, 167, 69, 0.1);
-  border-left: 3px solid #28a745;
-  color: #28a745;
-}
-
-.classItemPhysics {
-  background-color: rgba(220, 53, 69, 0.1);
-  border-left: 3px solid #dc3545;
-  color: #dc3545;
-}
-
-.classItemEnglish {
-  background-color: rgba(255, 193, 7, 0.1);
-  border-left: 3px solid #ffc107;
-  color: #856404;
-}
-
-.classTitle {
-  font-weight: 600;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.classInfo {
-  font-size: 11px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-/* List View */
-.scheduleList {
-  padding: 20px;
-}
-
-.scheduleListDay {
-  margin-bottom: 25px;
-}
-
-.scheduleListDayHeader {
-  font-size: 16px;
-  font-weight: 600;
-  color: #212529;
-  margin-bottom: 15px;
-  padding-bottom: 8px;
-  border-bottom: 1px solid #dee2e6;
-}
-
-.scheduleListItems {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.scheduleListItem {
-  display: flex;
-  padding: 15px;
-  border-radius: 8px;
-  background: #f8f9fa;
-  border: 1px solid #e9ecef;
-  gap: 15px;
-}
-
-.scheduleListTime {
-  min-width: 100px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  border-right: 1px solid #dee2e6;
-  padding-right: 15px;
-}
-
-.scheduleListStartTime {
-  font-size: 16px;
-  font-weight: 600;
-  color: #212529;
-}
-
-.scheduleListEndTime {
-  font-size: 12px;
-  color: #6c757d;
-  margin-top: 4px;
-}
-
-.scheduleListDetails {
-  flex: 1;
-}
-
-.scheduleListCourse {
-  font-size: 16px;
-  font-weight: 600;
-  color: #212529;
-  margin-bottom: 6px;
-}
-
-.scheduleListInfo {
-  font-size: 13px;
-  color: #6c757d;
-  margin-bottom: 6px;
-}
-
-.scheduleListLocation {
-  font-size: 13px;
-  color: #007bff;
-}
-
-/* Empty Schedule */
-.emptySchedule {
-  padding: 40px 20px;
-  text-align: center;
-  color: #6c757d;
-}
-
-.emptyScheduleText {
-  font-size: 16px;
-  margin-bottom: 20px;
-}
-
-.emptyScheduleButton {
-  padding: 10px 20px;
-  background-color: #dc3545;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  font-size: 14px;
-  cursor: pointer;
-  transition: background-color 0.2s;
-}
-
-.emptyScheduleButton:hover {
-  background-color: #c82333;
-}
-
-/* Class Details Modal */
-.modalOverlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.5);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 2000;
-  backdrop-filter: blur(2px);
-}
-
-.modalContent {
-  background: white;
-  border-radius: 12px;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
-  width: 100%;
-  max-width: 500px;
-  margin: 20px;
-  animation: modalSlideIn 0.3s ease-out;
-}
-
-@keyframes modalSlideIn {
-  from {
-    opacity: 0;
-    transform: translateY(-20px) scale(0.95);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
-}
-
-.modalHeader {
-  padding: 24px 28px 20px;
-  border-bottom: 1px solid #e9ecef;
-  background: #fafbfc;
-  border-radius: 12px 12px 0 0;
-}
-
-.modalTitle {
-  font-size: 20px;
-  font-weight: 600;
-  color: #212529;
-  margin: 0;
-}
-
-.modalBody {
-  padding: 28px;
-}
-
-.classDetailGrid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 20px;
-}
-
-.classDetailItem {
-  margin-bottom: 20px;
-}
-
-.classDetailLabel {
-  font-size: 12px;
-  color: #6c757d;
-  margin-bottom: 6px;
-}
-
-.classDetailValue {
-  font-size: 16px;
-  font-weight: 500;
-  color: #212529;
-}
-
-.modalFooter {
-  padding: 20px 28px 28px;
-  border-top: 1px solid #e9ecef;
-  display: flex;
-  justify-content: flex-end;
-  gap: 12px;
-  background: #fafbfc;
-  border-radius: 0 0 12px 12px;
-}
-
-.btn {
-  padding: 12px 24px;
-  border-radius: 8px;
-  font-size: 14px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  border: none;
-  line-height: 1;
-  min-width: 100px;
-  text-align: center;
-}
-
-.btnSecondary {
-  background: #f8f9fa;
-  color: #6b7280;
-  border: 1px solid #d1d5db;
-}
-
-.btnSecondary:hover {
-  background: #e5e7eb;
-  color: #374151;
-  border-color: #9ca3af;
-}
-
 /* Responsive Design */
-@media (max-width: 1200px) {
-  .mainContent {
-    margin-left: 0;
-    max-width: 100vw;
-  }
-
-  .calendarGrid {
-    min-width: 900px;
-  }
-}
-
-@media (max-width: 992px) {
-  .scheduleListItem {
-    flex-direction: column;
-    gap: 10px;
-  }
-
-  .scheduleListTime {
-    border-right: none;
-    border-bottom: 1px solid #dee2e6;
-    padding-right: 0;
-    padding-bottom: 10px;
-    min-width: 100%;
-    flex-direction: row;
-    gap: 10px;
-    justify-content: flex-start;
-  }
-}
-
 @media (max-width: 768px) {
-  .scheduleHeader {
+  .main-content {
+    margin-left: 0;
+    padding: 15px;
+  }
+  
+  .content-wrapper {
+    padding: 12px;
+  }
+  
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+  
+  .page-header {
     flex-direction: column;
-    gap: 15px;
-    align-items: flex-start;
+    align-items: stretch;
   }
-
-  .scheduleFilters {
+  
+  .list-controls {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .controls {
     flex-direction: column;
   }
-
-  .scheduleFilterItem {
-    min-width: 100%;
+  
+  .search-input {
+    width: 100%;
   }
-
-  .weekNavigation {
-    flex-direction: column;
-    gap: 10px;
-  }
-
-  .classDetailGrid {
+  
+  .form-grid {
     grid-template-columns: 1fr;
   }
+  
+  .time-inputs {
+    grid-template-columns: 1fr;
+  }
+  
+  .table-footer {
+    flex-direction: column;
+    align-items: stretch;
+    text-align: center;
+  }
+  
+  .schedule-table td {
+    padding: 12px 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .modal-container {
+    margin: 8px;
+    border-radius: 12px;
+  }
+  
+  .modal-header,
+  .modal-content,
+  .modal-footer {
+    padding: 16px 20px;
+  }
+  .content-wrapper {
+    padding: 8px;
+  }
+}
+
+/* Loading and Empty States */
+.loading-state {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px;
+  color: #6b7280;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 40px;
+  color: #6b7280;
+}
+
+.empty-state h3 {
+  margin-bottom: 8px;
+  color: #374151;
+}
+
+/* Utility Classes */
+.text-center {
+  text-align: center;
+}
+
+.text-red {
+  color: #ef4444;
+}
+
+.text-green {
+  color: #10b981;
+}
+
+.font-semibold {
+  font-weight: 600;
+}
+
+.font-bold {
+  font-weight: 700;
+}
+
+.mb-4 {
+  margin-bottom: 1rem;
+}
+
+.mt-4 {
+  margin-top: 1rem;
 }
