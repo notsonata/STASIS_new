@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import './StudentManagement.css';
+import styles from './StudentManagement.module.css';
 import Sidebar from './Sidebar';
 
 const StudentManagement = () => {
@@ -345,7 +345,8 @@ const StudentManagement = () => {
   };
 
   // Navigation
-  const navigate = useNavigate();  const showSection = (section) => {
+  const navigate = useNavigate();  
+  const showSection = (section) => {
     switch(section){
       case 'Dashboard':
         navigate('/admin-dashboard');
@@ -381,8 +382,9 @@ const StudentManagement = () => {
     setSelectedCourse(program);
     setSelectedSection('All Sections');
   };
+  
   return (
-    <div className="dashboard-container">
+    <div className={styles.dashboardContainer}>
       {/* Sidebar */}
       <Sidebar 
         onNavigate={showSection}
@@ -412,79 +414,79 @@ const StudentManagement = () => {
       />
 
       {/* Main Content with Card Layout */}
-      <div className="main-content">
-        <div className="content-wrapper">
-          <div className="breadcrumb">
+      <div className={styles.mainContent}>
+        <div className={styles.contentWrapper}>
+          <div className={styles.breadcrumb}>
             <span 
-              className="breadcrumb-link" 
+              className={styles.breadcrumbLink} 
               onClick={() => navigate('/admin-dashboard')}
             >
               Dashboard
             </span>
-            <span className="breadcrumb-separator"> / </span>
-            <span className="breadcrumb-current">Student Management</span>
+            <span className={styles.breadcrumbSeparator}> / </span>
+            <span className={styles.breadcrumbCurrent}>Student Management</span>
           </div>
           
-          <div className="dashboard-header">
-            <h1 className="dashboard-welcome-title">Student Management</h1>
-            <div className="program-indicator">
+          <div className={styles.dashboardHeader}>
+            <h1 className={styles.dashboardWelcomeTitle}>Student Management</h1>
+            <div className={styles.programIndicator}>
               {selectedProgram}
             </div>
           </div>
 
-          <div className="student-content-wrapper">
+          <div className={styles.studentContentWrapper}>
             {/* Program Selection Card */}
-            <div className="student-nav-section">
-              <div className="student-nav-header">
-                <h2 className="student-nav-title">Programs</h2>
+            <div className={styles.studentNavSection}>
+              <div className={styles.studentNavHeader}>
+                <h2 className={styles.studentNavTitle}>Programs</h2>
               </div>
-              <div className="student-nav-list">
+              <div className={styles.studentNavList}>
                 {courses.map((program) => (
                   <div
                     key={program}
-                    className={`student-nav-item ${selectedProgram === program ? 'student-nav-item-active' : ''}`}
+                    className={`${styles.studentNavItem} ${selectedProgram === program ? styles.studentNavItemActive : ''}`}
                     onClick={() => handleCourseSelect(program)}
                   >
-                    <span className="student-nav-icon">📚</span>
+                    <span className={styles.studentNavIcon}>📚</span>
                     {program}
                   </div>
                 ))}
               </div>
-              <div className="student-nav-actions">
-                <button className="student-btn-add-section" onClick={showAddSectionForm}>
+              <div className={styles.studentNavActions}>
+                <button className={styles.studentBtnAddSection} onClick={showAddSectionForm}>
                   Add New Section
                 </button>
               </div>
-              <div className="student-nav-info">
-                <div className="student-nav-info-item">
-                  <div className="student-nav-info-label">{selectedProgram}</div>
-                  <div className="student-nav-info-value">Total Students: {filteredStudents.length}</div>
+              <div className={styles.studentNavInfo}>
+                <div className={styles.studentNavInfoItem}>
+                  <div className={styles.studentNavInfoLabel}>{selectedProgram}</div>
+                  <div className={styles.studentNavInfoValue}>Total Students: {filteredStudents.length}</div>
                 </div>
               </div>
             </div>
 
             {/* Student Management Section Card */}
-            <div className="student-main-section">
-              <div className="student-section-header">
-                <h2 className="student-section-title">Students</h2>
-                <p className="student-section-desc">Manage student records and information</p>
+            <div className={styles.studentMainSection}>
+              <div className={styles.studentSectionHeader}>
+                <h2 className={styles.studentSectionTitle}>Students</h2>
+                <p className={styles.studentSectionDesc}>Manage student records and information</p>
               </div>
               
-              <div className="student-section-content">
+              <div className={styles.studentSectionContent}>
                 {/* Filters */}
-                <div className="student-filters">
-                  <div className="student-search-group">
+                <div className={styles.studentFilters}>
+                  <div className={styles.studentSearchGroup}>
                     <input
                       type="text"
-                      className="form-input student-search-input"
+                      className={`${styles.formInput} ${styles.studentSearchInput}`}
                       placeholder="Search students..."
                       value={searchTerm}
                       onChange={(e) => setSearchTerm(e.target.value)}
                     />
                   </div>
-                  <div className="student-filter-group">
+                  <div className={styles.studentFilterGroup}>
                     <select
-                      className="form-input"
+                      className={styles.formInput}
                       value={selectedSection}
                       onChange={(e) => setSelectedSection(e.target.value)}
                     >
@@ -494,16 +496,16 @@ const StudentManagement = () => {
                       ))}
                     </select>
                   </div>
-                  <div className="student-header-actions">
-                    <button className="btn-add-student" onClick={showAddStudentForm}>
+                  <div className={styles.studentHeaderActions}>
+                    <button className={styles.btnAddStudent} onClick={showAddStudentForm}>
                       + Add New Student
                     </button>
                   </div>
                 </div>
 
                 {/* Student Table */}
-                <div className="student-table-container">
-                  <table className="student-table">
+                <div className={styles.studentTableContainer}>
+                  <table className={styles.studentTable}>
                     <thead>
                       <tr>
                         <th>Student ID</th>
@@ -519,27 +521,27 @@ const StudentManagement = () => {
                     <tbody>
                       {filteredStudents.length === 0 ? (
                         <tr>
-                          <td colSpan="8" className="no-students">
+                          <td colSpan="8" className={styles.noStudents}>
                             No students found matching your criteria.
                           </td>
                         </tr>
                       ) : (
                         filteredStudents.map((student) => (
                           <tr key={student.id}>
-                            <td className="student-id">{student.studentId}</td>
-                            <td className="student-name">{student.name}</td>
-                            <td className="student-email">{student.email}</td>
+                            <td className={styles.studentId}>{student.studentId}</td>
+                            <td className={styles.studentName}>{student.name}</td>
+                            <td className={styles.studentEmail}>{student.email}</td>
                             <td>{student.birthday}</td>
                             <td>{student.section}</td>
                             <td>{student.program}</td>
                             <td>
-                              <span className={`student-status ${student.status.toLowerCase()}`}>
+                              <span className={`${styles.studentStatus} ${styles[student.status.toLowerCase()]}`}>
                                 {student.status}
                               </span>
                             </td>
                             <td>
                               <button 
-                                className="btn-action"
+                                className={styles.btnAction}
                                 onClick={() => showEditStudentForm(student)}
                               >
                               </button>
@@ -558,83 +560,83 @@ const StudentManagement = () => {
 
       {/* Add Student Modal */}
       {showAddStudentModal && (
-        <div className="modal-overlay">
-          <div className="modal-content">
-            <div className="modal-header">
-              <h2 className="modal-title">Add New Student</h2>
+        <div className={styles.modalOverlay}>
+          <div className={styles.modalContent}>
+            <div className={styles.modalHeader}>
+              <h2 className={styles.modalTitle}>Add New Student</h2>
             </div>
             
-            <div className="modal-body">
-              <div className="modal-grid">
-                <div className="form-group">
-                  <label className="form-label">Student ID *</label>
+            <div className={styles.modalBody}>
+              <div className={styles.modalGrid}>
+                <div className={styles.formGroup}>
+                  <label className={styles.formLabel}>Student ID *</label>
                   <input
                     type="text"
-                    className="form-input"
+                    className={styles.formInput}
                     placeholder="Enter Student ID"
                     value={studentForm.studentId}
                     onChange={(e) => handleStudentFormChange('studentId', e.target.value)}
                   />
                 </div>
                 
-                <div className="form-group">
-                  <label className="form-label">Email *</label>
+                <div className={styles.formGroup}>
+                  <label className={styles.formLabel}>Email *</label>
                   <input
                     type="email"
-                    className="form-input"
+                    className={styles.formInput}
                     placeholder="Enter Student Email"
                     value={studentForm.email}
                     onChange={(e) => handleStudentFormChange('email', e.target.value)}
                   />
                 </div>
                 
-                <div className="form-group">
-                  <label className="form-label">First Name *</label>
+                <div className={styles.formGroup}>
+                  <label className={styles.formLabel}>First Name *</label>
                   <input
                     type="text"
-                    className="form-input"
+                    className={styles.formInput}
                     placeholder="Enter First Name"
                     value={studentForm.firstName}
                     onChange={(e) => handleStudentFormChange('firstName', e.target.value)}
                   />
                 </div>
                 
-                <div className="form-group">
-                  <label className="form-label">Last Name *</label>
+                <div className={styles.formGroup}>
+                  <label className={styles.formLabel}>Last Name *</label>
                   <input
                     type="text"
-                    className="form-input"
+                    className={styles.formInput}
                     placeholder="Enter Last Name"
                     value={studentForm.lastName}
                     onChange={(e) => handleStudentFormChange('lastName', e.target.value)}
                   />
                 </div>
                 
-                <div className="form-group">
-                  <label className="form-label">Middle Name</label>
+                <div className={styles.formGroup}>
+                  <label className={styles.formLabel}>Middle Name</label>
                   <input
                     type="text"
-                    className="form-input"
+                    className={styles.formInput}
                     placeholder="Enter Middle Name"
                     value={studentForm.middleName}
                     onChange={(e) => handleStudentFormChange('middleName', e.target.value)}
                   />
                 </div>
                 
-                <div className="form-group">
-                  <label className="form-label">Birthday</label>
+                <div className={styles.formGroup}>
+                  <label className={styles.formLabel}>Birthday</label>
                   <input
                     type="date"
-                    className="form-input"
+                    className={styles.formInput}
                     value={studentForm.birthday}
                     onChange={(e) => handleStudentFormChange('birthday', e.target.value)}
                   />
                 </div>
                 
-                <div className="form-group">
-                  <label className="form-label">Section</label>
+                <div className={styles.formGroup}>
+                  <label className={styles.formLabel}>Section</label>
                   <select
-                    className="form-input"
+                    className={styles.formInput}
                     value={studentForm.section}
                     onChange={(e) => handleStudentFormChange('section', e.target.value)}
                   >
@@ -645,10 +647,10 @@ const StudentManagement = () => {
                   </select>
                 </div>
                 
-                <div className="form-group">
-                  <label className="form-label">Program</label>
+                <div className={styles.formGroup}>
+                  <label className={styles.formLabel}>Program</label>
                   <select
-                    className="form-input"
+                    className={styles.formInput}
                     value={studentForm.program}
                     onChange={(e) => handleStudentFormChange('program', e.target.value)}
                   >
@@ -661,11 +663,11 @@ const StudentManagement = () => {
               </div>
             </div>
             
-            <div className="modal-footer">
-              <button className="btn btn-secondary" onClick={closeAddStudentModal}>
+            <div className={styles.modalFooter}>
+              <button className={`${styles.btn} ${styles.btnSecondary}`} onClick={closeAddStudentModal}>
                 Cancel
               </button>
-              <button className="btn-add-student" onClick={handleAddStudent}>
+              <button className={styles.btnAddStudent} onClick={handleAddStudent}>
                 Add Student
               </button>
             </div>
@@ -675,83 +677,83 @@ const StudentManagement = () => {
 
       {/* Edit Student Modal */}
       {showEditStudentModal && (
-        <div className="modal-overlay">
-          <div className="modal-content">
-            <div className="modal-header">
-              <h2 className="modal-title">Edit Student</h2>
+        <div className={styles.modalOverlay}>
+          <div className={styles.modalContent}>
+            <div className={styles.modalHeader}>
+              <h2 className={styles.modalTitle}>Edit Student</h2>
             </div>
             
-            <div className="modal-body">
-              <div className="modal-grid">
-                <div className="form-group">
-                  <label className="form-label">Student ID *</label>
+            <div className={styles.modalBody}>
+              <div className={styles.modalGrid}>
+                <div className={styles.formGroup}>
+                  <label className={styles.formLabel}>Student ID *</label>
                   <input
                     type="text"
-                    className="form-input"
+                    className={styles.formInput}
                     placeholder="Enter Student ID"
                     value={studentForm.studentId}
                     onChange={(e) => handleStudentFormChange('studentId', e.target.value)}
                   />
                 </div>
                 
-                <div className="form-group">
-                  <label className="form-label">Email *</label>
+                <div className={styles.formGroup}>
+                  <label className={styles.formLabel}>Email *</label>
                   <input
                     type="email"
-                    className="form-input"
+                    className={styles.formInput}
                     placeholder="Enter Student Email"
                     value={studentForm.email}
                     onChange={(e) => handleStudentFormChange('email', e.target.value)}
                   />
                 </div>
                 
-                <div className="form-group">
-                  <label className="form-label">First Name *</label>
+                <div className={styles.formGroup}>
+                  <label className={styles.formLabel}>First Name *</label>
                   <input
                     type="text"
-                    className="form-input"
+                    className={styles.formInput}
                     placeholder="Enter First Name"
                     value={studentForm.firstName}
                     onChange={(e) => handleStudentFormChange('firstName', e.target.value)}
                   />
                 </div>
                 
-                <div className="form-group">
-                  <label className="form-label">Last Name *</label>
+                <div className={styles.formGroup}>
+                  <label className={styles.formLabel}>Last Name *</label>
                   <input
                     type="text"
-                    className="form-input"
+                    className={styles.formInput}
                     placeholder="Enter Last Name"
                     value={studentForm.lastName}
                     onChange={(e) => handleStudentFormChange('lastName', e.target.value)}
                   />
                 </div>
                 
-                <div className="form-group">
-                  <label className="form-label">Middle Name</label>
+                <div className={styles.formGroup}>
+                  <label className={styles.formLabel}>Middle Name</label>
                   <input
                     type="text"
-                    className="form-input"
+                    className={styles.formInput}
                     placeholder="Enter Middle Name"
                     value={studentForm.middleName}
                     onChange={(e) => handleStudentFormChange('middleName', e.target.value)}
                   />
                 </div>
                 
-                <div className="form-group">
-                  <label className="form-label">Birthday</label>
+                <div className={styles.formGroup}>
+                  <label className={styles.formLabel}>Birthday</label>
                   <input
                     type="date"
-                    className="form-input"
+                    className={styles.formInput}
                     value={studentForm.birthday}
                     onChange={(e) => handleStudentFormChange('birthday', e.target.value)}
                   />
                 </div>
                 
-                <div className="form-group">
-                  <label className="form-label">Section</label>
+                <div className={styles.formGroup}>
+                  <label className={styles.formLabel}>Section</label>
                   <select
-                    className="form-input"
+                    className={styles.formInput}
                     value={studentForm.section}
                     onChange={(e) => handleStudentFormChange('section', e.target.value)}
                   >
@@ -762,10 +764,10 @@ const StudentManagement = () => {
                   </select>
                 </div>
                 
-                <div className="form-group">
-                  <label className="form-label">Program</label>
+                <div className={styles.formGroup}>
+                  <label className={styles.formLabel}>Program</label>
                   <select
-                    className="form-input"
+                    className={styles.formInput}
                     value={studentForm.program}
                     onChange={(e) => handleStudentFormChange('program', e.target.value)}
                   >
@@ -776,10 +778,10 @@ const StudentManagement = () => {
                   </select>
                 </div>
                 
-                <div className="form-group">
-                  <label className="form-label">Status</label>
+                <div className={styles.formGroup}>
+                  <label className={styles.formLabel}>Status</label>
                   <select
-                    className="form-input"
+                    className={styles.formInput}
                     value={studentForm.status}
                     onChange={(e) => handleStudentFormChange('status', e.target.value)}
                   >
@@ -790,11 +792,11 @@ const StudentManagement = () => {
               </div>
             </div>
             
-            <div className="modal-footer">
-              <button className="btn btn-secondary" onClick={closeEditStudentModal}>
+            <div className={styles.modalFooter}>
+              <button className={`${styles.btn} ${styles.btnSecondary}`} onClick={closeEditStudentModal}>
                 Cancel
               </button>
-              <button className="btn btn-primary" onClick={handleEditStudent}>
+              <button className={`${styles.btn} ${styles.btnPrimary}`} onClick={handleEditStudent}>
                 Update Student
               </button>
             </div>
@@ -804,17 +806,17 @@ const StudentManagement = () => {
 
       {/* Add Section Modal */}
       {showAddSectionModal && (
-        <div className="modal-overlay">
-          <div className="modal-content">
-            <div className="modal-header">
-              <h2 className="modal-title">Add New Section</h2>
+        <div className={styles.modalOverlay}>
+          <div className={styles.modalContent}>
+            <div className={styles.modalHeader}>
+              <h2 className={styles.modalTitle}>Add New Section</h2>
             </div>
             
-            <div className="modal-body">
-              <div className="form-group">
-                <label className="form-label">Program *</label>
+            <div className={styles.modalBody}>
+              <div className={styles.formGroup}>
+                <label className={styles.formLabel}>Program *</label>
                 <select
-                  className="form-input"
+                  className={styles.formInput}
                   value={sectionForm.program}
                   onChange={(e) => handleSectionFormChange('program', e.target.value)}
                 >
@@ -826,10 +828,10 @@ const StudentManagement = () => {
                 </select>
               </div>
               
-              <div className="form-group">
-                <label className="form-label">Year Level *</label>
+              <div className={styles.formGroup}>
+                <label className={styles.formLabel}>Year Level *</label>
                 <select
-                  className="form-input"
+                  className={styles.formInput}
                   value={sectionForm.yearLevel}
                   onChange={(e) => handleSectionFormChange('yearLevel', e.target.value)}
                 >
@@ -841,10 +843,10 @@ const StudentManagement = () => {
                 </select>
               </div>
               
-              <div className="form-group">
-                <label className="form-label">Section Number *</label>
+              <div className={styles.formGroup}>
+                <label className={styles.formLabel}>Section Number *</label>
                 <select
-                  className="form-input"
+                  className={styles.formInput}
                   value={sectionForm.sectionNumber}
                   onChange={(e) => handleSectionFormChange('sectionNumber', e.target.value)}
                 >
@@ -858,11 +860,11 @@ const StudentManagement = () => {
               </div>
             </div>
             
-            <div className="modal-footer">
-              <button className="btn btn-secondary" onClick={closeAddSectionModal}>
+            <div className={styles.modalFooter}>
+              <button className={`${styles.btn} ${styles.btnSecondary}`} onClick={closeAddSectionModal}>
                 Cancel
               </button>
-              <button className="btn btn-primary" onClick={handleAddSection}>
+              <button className={`${styles.btn} ${styles.btnPrimary}`} onClick={handleAddSection}>
                 Create Section
               </button>
             </div>

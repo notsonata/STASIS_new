@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import './Settings.css';
+import styles from './Settings.module.css';
 import Sidebar from './Sidebar';
 
 const Settings = () => {
@@ -118,6 +118,8 @@ const Settings = () => {
             sessionTimeout: '30'
           });
           break;
+          default:
+            // No action for unknown sections
       }
       setHasUnsavedChanges(false);
       alert('Settings reset to defaults');
@@ -139,43 +141,43 @@ const Settings = () => {
 
   // Render different sections
   const renderProfileSection = () => (
-    <div className="settings-section-content">
-      <div className="settings-profile-photo-section">
-        <div className="settings-profile-photo">
+    <div className={styles.settingsSectionContent}>
+      <div className={styles.settingsProfilePhotoSection}>
+        <div className={styles.settingsProfilePhoto}>
           {profileSettings.firstName.charAt(0)}{profileSettings.lastName.charAt(0)}
         </div>
-        <div className="settings-profile-photo-info">
-          <h3 className="settings-profile-photo-title">Profile Photo</h3>
-          <p className="settings-profile-photo-desc">
+        <div className={styles.settingsProfilePhotoInfo}>
+          <h3 className={styles.settingsProfilePhotoTitle}>Profile Photo</h3>
+          <p className={styles.settingsProfilePhotoDesc}>
             Update your profile photo to help colleagues recognize you
           </p>
-          <div className="settings-profile-photo-actions">
-            <button className="settings-btn settings-btn-primary settings-btn-small">
+          <div className={styles.settingsProfilePhotoActions}>
+            <button className={`${styles.settingsBtn} ${styles.settingsBtnPrimary} ${styles.settingsBtnSmall}`}>
               Upload Photo
             </button>
-            <button className="settings-btn settings-btn-secondary settings-btn-small">
+            <button className={`${styles.settingsBtn} ${styles.settingsBtnSecondary} ${styles.settingsBtnSmall}`}>
               Remove
             </button>
           </div>
         </div>
       </div>
 
-      <div className="settings-form-row">
-        <div className="settings-form-group">
-          <label className="settings-form-label">First Name *</label>
+      <div className={styles.settingsFormRow}>
+        <div className={styles.settingsFormGroup}>
+          <label className={styles.settingsFormLabel}>First Name *</label>
           <input
             type="text"
-            className="settings-form-input"
+            className={styles.settingsFormInput}
             value={profileSettings.firstName}
             onChange={(e) => handleProfileChange('firstName', e.target.value)}
             placeholder="Enter your first name"
           />
         </div>
-        <div className="settings-form-group">
-          <label className="settings-form-label">Last Name *</label>
+        <div className={styles.settingsFormGroup}>
+          <label className={styles.settingsFormLabel}>Last Name *</label>
           <input
             type="text"
-            className="settings-form-input"
+            className={styles.settingsFormInput}
             value={profileSettings.lastName}
             onChange={(e) => handleProfileChange('lastName', e.target.value)}
             placeholder="Enter your last name"
@@ -183,32 +185,32 @@ const Settings = () => {
         </div>
       </div>
 
-      <div className="settings-form-group">
-        <label className="settings-form-label">Email Address *</label>
+      <div className={styles.settingsFormGroup}>
+        <label className={styles.settingsFormLabel}>Email Address *</label>
         <input
           type="email"
-          className="settings-form-input"
+          className={styles.settingsFormInput}
           value={profileSettings.email}
           onChange={(e) => handleProfileChange('email', e.target.value)}
           placeholder="Enter your email address"
         />
       </div>
 
-      <div className="settings-form-row">   
-        <div className="settings-form-group">
-          <label className="settings-form-label">Phone Number</label>
+      <div className={styles.settingsFormRow}>   
+        <div className={styles.settingsFormGroup}>
+          <label className={styles.settingsFormLabel}>Phone Number</label>
           <input
             type="tel"
-            className="settings-form-input"
+            className={styles.settingsFormInput}
             value={profileSettings.phone}
             onChange={(e) => handleProfileChange('phone', e.target.value)}
             placeholder="Enter your phone number"
           />
         </div>
-        <div className="settings-form-group">
-          <label className="settings-form-label">Department</label>
+        <div className={styles.settingsFormGroup}>
+          <label className={styles.settingsFormLabel}>Department</label>
           <select
-            className="settings-form-select"
+            className={styles.settingsFormSelect}
             value={profileSettings.department}
             onChange={(e) => handleProfileChange('department', e.target.value)}
           >
@@ -222,22 +224,22 @@ const Settings = () => {
         </div>
       </div>
 
-      <div className="settings-form-row">
-        <div className="settings-form-group">
-          <label className="settings-form-label">Position</label>
+      <div className={styles.settingsFormRow}>
+        <div className={styles.settingsFormGroup}>
+          <label className={styles.settingsFormLabel}>Position</label>
           <input
             type="text"
-            className="settings-form-input"
+            className={styles.settingsFormInput}
             value={profileSettings.position}
             onChange={(e) => handleProfileChange('position', e.target.value)}
             placeholder="Enter your position"
           />
         </div>
-        <div className="settings-form-group">
-          <label className="settings-form-label">Office Location</label>
+        <div className={styles.settingsFormGroup}>
+          <label className={styles.settingsFormLabel}>Office Location</label>
           <input
             type="text"
-            className="settings-form-input"
+            className={styles.settingsFormInput}
             value={profileSettings.officeLocation}
             onChange={(e) => handleProfileChange('officeLocation', e.target.value)}
             placeholder="Enter your office location"
@@ -245,24 +247,24 @@ const Settings = () => {
         </div>
       </div>
 
-      <div className="settings-form-group">
-        <label className="settings-form-label">Working Hours</label>
+      <div className={styles.settingsFormGroup}>
+        <label className={styles.settingsFormLabel}>Working Hours</label>
         <input
           type="text"
-          className="settings-form-input"
+          className={styles.settingsFormInput}
           value={profileSettings.workingHours}
           onChange={(e) => handleProfileChange('workingHours', e.target.value)}
           placeholder="e.g., 9:00 AM - 5:00 PM"
         />
       </div>
 
-      <div className="settings-form-group">
-        <label className="settings-form-label">Bio</label>
-        <div className="settings-form-sublabel">
+      <div className={styles.settingsFormGroup}>
+        <label className={styles.settingsFormLabel}>Bio</label>
+        <div className={styles.settingsFormSublabel}>
           Tell others about yourself and your role in the organization
         </div>
         <textarea
-          className="settings-form-textarea"
+          className={styles.settingsFormTextarea}
           value={profileSettings.bio}
           onChange={(e) => handleProfileChange('bio', e.target.value)}
           placeholder="Write a brief bio about yourself..."
@@ -272,41 +274,41 @@ const Settings = () => {
   );
 
   const renderAccountSection = () => (
-    <div className="settings-section-content">
-      <div className="settings-info-box">
-        <h4 className="settings-info-box-title">Password Security</h4>
-        <p className="settings-info-box-desc">
+    <div className={styles.settingsSectionContent}>
+      <div className={styles.settingsInfoBox}>
+        <h4 className={styles.settingsInfoBoxTitle}>Password Security</h4>
+        <p className={styles.settingsInfoBoxDesc}>
           Use a strong password that's at least 8 characters long and includes numbers, letters, and special characters.
         </p>
       </div>
 
-      <div className="settings-form-group">
-        <label className="settings-form-label">Current Password</label>
+      <div className={styles.settingsFormGroup}>
+        <label className={styles.settingsFormLabel}>Current Password</label>
         <input
           type="password"
-          className="settings-form-input"
+          className={styles.settingsFormInput}
           value={accountSettings.currentPassword}
           onChange={(e) => handleAccountChange('currentPassword', e.target.value)}
           placeholder="Enter your current password"
         />
       </div>
 
-      <div className="settings-form-row">
-        <div className="settings-form-group">
-          <label className="settings-form-label">New Password</label>
+      <div className={styles.settingsFormRow}>
+        <div className={styles.settingsFormGroup}>
+          <label className={styles.settingsFormLabel}>New Password</label>
           <input
             type="password"
-            className="settings-form-input"
+            className={styles.settingsFormInput}
             value={accountSettings.newPassword}
             onChange={(e) => handleAccountChange('newPassword', e.target.value)}
             placeholder="Enter new password"
           />
         </div>
-        <div className="settings-form-group">
-          <label className="settings-form-label">Confirm New Password</label>
+        <div className={styles.settingsFormGroup}>
+          <label className={styles.settingsFormLabel}>Confirm New Password</label>
           <input
             type="password"
-            className="settings-form-input"
+            className={styles.settingsFormInput}
             value={accountSettings.confirmPassword}
             onChange={(e) => handleAccountChange('confirmPassword', e.target.value)}
             placeholder="Confirm new password"
@@ -314,51 +316,51 @@ const Settings = () => {
         </div>
       </div>
 
-      <hr className="settings-divider" />
+      <hr className={styles.settingsDivider} />
 
-      <div className="settings-form-group">
-        <div className="settings-form-checkbox-group">
+      <div className={styles.settingsFormGroup}>
+        <div className={styles.settingsFormCheckboxGroup}>
           <input
             type="checkbox"
-            className="settings-form-checkbox"
+            className={styles.settingsFormCheckbox}
             checked={accountSettings.twoFactorEnabled}
             onChange={(e) => handleAccountChange('twoFactorEnabled', e.target.checked)}
             id="twoFactor"
           />
-          <label htmlFor="twoFactor" className="settings-form-checkbox-label">
+          <label htmlFor="twoFactor" className={styles.settingsFormCheckboxLabel}>
             Enable Two-Factor Authentication
-            <div className="settings-form-checkbox-desc">
+            <div className={styles.settingsFormCheckboxDesc}>
               Add an extra layer of security to your account with 2FA
             </div>
           </label>
         </div>
       </div>
 
-      <div className="settings-form-group">
-        <div className="settings-form-checkbox-group">
+      <div className={styles.settingsFormGroup}>
+        <div className={styles.settingsFormCheckboxGroup}>
           <input
             type="checkbox"
-            className="settings-form-checkbox"
+            className={styles.settingsFormCheckbox}
             checked={accountSettings.loginNotifications}
             onChange={(e) => handleAccountChange('loginNotifications', e.target.checked)}
             id="loginNotifications"
           />
-          <label htmlFor="loginNotifications" className="settings-form-checkbox-label">
+          <label htmlFor="loginNotifications" className={styles.settingsFormCheckboxLabel}>
             Login Notifications
-            <div className="settings-form-checkbox-desc">
+            <div className={styles.settingsFormCheckboxDesc}>
               Get notified when someone logs into your account
             </div>
           </label>
         </div>
       </div>
 
-      <div className="settings-form-group">
-        <label className="settings-form-label">Session Timeout</label>
-        <div className="settings-form-sublabel">
+      <div className={styles.settingsFormGroup}>
+        <label className={styles.settingsFormLabel}>Session Timeout</label>
+        <div className={styles.settingsFormSublabel}>
           Automatically log out after period of inactivity
         </div>
         <select
-          className="settings-form-select"
+          className={styles.settingsFormSelect}
           value={accountSettings.sessionTimeout}
           onChange={(e) => handleAccountChange('sessionTimeout', e.target.value)}
         >
@@ -370,12 +372,12 @@ const Settings = () => {
         </select>
       </div>
 
-      <div className="settings-danger-zone">
-        <h4 className="settings-danger-title">Danger Zone</h4>
-        <p className="settings-danger-desc">
+      <div className={styles.settingsDangerZone}>
+        <h4 className={styles.settingsDangerTitle}>Danger Zone</h4>
+        <p className={styles.settingsDangerDesc}>
           Once you delete your account, there is no going back. Please be certain.
         </p>
-        <button className="settings-btn settings-btn-danger" onClick={deleteAccount}>
+        <button className={`${styles.settingsBtn} ${styles.settingsBtnDanger}`} onClick={deleteAccount}>
           Delete Account
         </button>
       </div>
@@ -409,7 +411,7 @@ const Settings = () => {
   const currentSection = getCurrentSectionData();
 
   return (
-    <div className="settings-container">
+    <div className={styles.settingsContainer}>
       <Sidebar 
         onNavigate={showSection}
         userInfo={{ name: "David Anderson", role: "Schedule Admin" }}        
@@ -437,48 +439,48 @@ const Settings = () => {
         ]}
       />
       
-      <div className="settings-main-content">
-        <div className="settings-header">
-          <h1 className="settings-title">Settings</h1>
-          <p className="settings-subtitle">Manage your account and system preferences</p>
+      <div className={styles.settingsMainContent}>
+        <div className={styles.settingsHeader}>
+          <h1 className={styles.settingsTitle}>Settings</h1>
+          <p className={styles.settingsSubtitle}>Manage your account and system preferences</p>
         </div>
 
-        <div className="settings-content-wrapper">
-          <div className="settings-nav-section">
-            <div className="settings-nav-header">
-              <h2 className="settings-nav-title">Configuration</h2>
+        <div className={styles.settingsContentWrapper}>
+          <div className={styles.settingsNavSection}>
+            <div className={styles.settingsNavHeader}>
+              <h2 className={styles.settingsNavTitle}>Configuration</h2>
             </div>
-            <div className="settings-nav-list">
+            <div className={styles.settingsNavList}>
               {settingsSections.map((section) => (
                 <div
                   key={section.id}
-                  className={`settings-nav-item ${activeSection === section.id ? 'settings-nav-item-active' : ''}`}
+                  className={`${styles.settingsNavItem} ${activeSection === section.id ? styles.settingsNavItemActive : ''}`}
                   onClick={() => setActiveSection(section.id)}
                 >
-                  <span className="settings-nav-icon">{section.icon}</span>
+                  <span className={styles.settingsNavIcon}>{section.icon}</span>
                   {section.label}
                 </div>
               ))}
             </div>
           </div>
 
-          <div className="settings-main-section">
-            <div className="settings-section-header">
-              <h2 className="settings-section-title">{currentSection.title}</h2>
-              <p className="settings-section-desc">{currentSection.description}</p>
+          <div className={styles.settingsMainSection}>
+            <div className={styles.settingsSectionHeader}>
+              <h2 className={styles.settingsSectionTitle}>{currentSection.title}</h2>
+              <p className={styles.settingsSectionDesc}>{currentSection.description}</p>
             </div>
             
             {currentSection.content}
 
-            <div className="settings-action-buttons">
+            <div className={styles.settingsActionButtons}>
               <button 
-                className="settings-btn settings-btn-secondary" 
+                className={`${styles.settingsBtn} ${styles.settingsBtnSecondary}`}
                 onClick={resetSettings}
               >
                 Reset Changes
               </button>
               <button 
-                className={`settings-btn settings-btn-primary ${!hasUnsavedChanges ? 'settings-btn-primary:disabled' : ''}`}
+                className={`${styles.settingsBtn} ${styles.settingsBtnPrimary}`}
                 onClick={saveSettings}
                 disabled={!hasUnsavedChanges}
               >

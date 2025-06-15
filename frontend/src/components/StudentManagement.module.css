@@ -1,0 +1,595 @@
+/* Container and Layout */
+.dashboardContainer {
+  display: flex;
+  min-height: 100vh;
+  background-color: #f8f9fa;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+/* Main Content */
+.mainContent {
+  flex: 1;
+  padding-left: calc(256px + 20px);
+  padding-right: 20px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  min-height: 100vh;
+  box-sizing: border-box;
+  background-color: #f8f9fa;
+  min-width: 0;
+  overflow-x: auto;
+}
+
+.contentWrapper {
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  padding: 0;
+  min-width: 0;
+}
+
+.dashboardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: clamp(20px, 3vw, 36px);
+  padding-bottom: clamp(16px, 2.5vw, 24px);
+  border-bottom: 1px solid #e9ecef;
+  flex-wrap: wrap;
+  gap: clamp(12px, 2vw, 16px);
+}
+
+.dashboardWelcomeTitle {
+  font-size: clamp(20px, 3vw, 28px);
+  font-weight: 700;
+  color: #212529;
+  margin: 0;
+}
+
+.programIndicator {
+  background-color: #ffebee;
+  color: #dc3545;
+  padding: clamp(6px, 1vw, 10px) clamp(12px, 2vw, 20px);
+  border-radius: clamp(16px, 2vw, 24px);
+  font-size: clamp(11px, 1.5vw, 14px);
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+/* Student Content Wrapper */
+.studentContentWrapper {
+  display: grid;
+  grid-template-columns: 230px 1fr;
+  gap: 25px;
+  height: calc(100vh - 140px);
+  padding: 15px;
+}
+
+/* Program Navigation Card */
+.studentNavSection {
+  background: white;
+  border-radius: 8px;
+  border: 1px solid #e9ecef;
+  padding: 0;
+  width: 230px;
+  min-width: 160px;
+  max-width: 230px;
+  height: fit-content;
+  position: sticky;
+  top: 0;
+}
+
+.studentNavHeader {
+  padding: 18px 20px;
+  border-bottom: 1px solid #f1f3f4;
+  background: #fafbfc;
+  border-radius: 8px 8px 0 0;
+}
+
+.studentNavTitle {
+  font-size: 16px;
+  font-weight: 600;
+  color: #212529;
+  margin: 0;
+}
+
+.studentNavList {
+  padding: 12px 0;
+}
+
+.studentNavItem {
+  padding: 12px 20px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  color: #495057;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  font-size: 14px;
+}
+
+.studentNavItem:hover {
+  background-color: #f9fafb;
+  color: #374151;
+}
+
+.studentNavItemActive {
+  color: #ef4444 !important;
+  background-color: #fef2f2 !important;
+  font-weight: 500;
+  border-radius: 6px;
+  margin: 0 12px;
+  padding: 12px 16px;
+}
+
+.studentNavIcon {
+  font-size: 16px;
+  width: 20px;
+  text-align: center;
+}
+
+/* Navigation Actions */
+.studentNavActions {
+  padding: 12px 20px;
+  border-top: 1px solid #f1f3f4;
+}
+
+.studentBtnAddSection {
+  width: 100%;
+  padding: 10px 12px;
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  text-align: center;
+}
+
+.studentBtnAddSection:hover {
+  background-color: #c82333;
+}
+
+/* Program Info */
+.studentNavInfo {
+  padding: 12px 20px;
+  border-top: 1px solid #f1f3f4;
+}
+
+.studentNavInfoItem {
+  margin-bottom: 10px;
+}
+
+.studentNavInfoLabel {
+  font-size: 12px;
+  font-weight: 600;
+  color: #6c757d;
+  margin-bottom: 4px;
+}
+
+.studentNavInfoValue {
+  font-size: 14px;
+  font-weight: 500;
+  color: #212529;
+}
+
+/* Main Student Section Card */
+.studentMainSection {
+  background: white;
+  border-radius: 8px;
+  border: 1px solid #e9ecef;
+  padding: 0;
+  height: fit-content;
+  max-height: calc(100vh - 180px);
+  overflow-y: auto;
+}
+
+.studentSectionHeader {
+  padding: 24px 28px;
+  border-bottom: 1px solid #f1f3f4;
+  background: #fafbfc;
+  border-radius: 8px 8px 0 0;
+}
+
+.studentSectionTitle {
+  font-size: 18px;
+  font-weight: 600;
+  color: #212529;
+  margin: 0 0 6px 0;
+}
+
+.studentSectionDesc {
+  font-size: 14px;
+  color: #6c757d;
+  margin: 0;
+}
+
+.studentSectionContent {
+  padding: 20px;
+}
+
+/* Dashboard Section Card */
+.dashboardSectionCard {
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.dashboardSectionHeader {
+  padding: 20px;
+  border-bottom: 1px solid #e9ecef;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.dashboardSectionTitle {
+  font-size: 18px;
+  font-weight: 600;
+  color: #212529;
+  margin: 0;
+}
+
+.studentHeaderActions {
+  display: flex;
+  gap: 10px;
+}
+
+/* Buttons */
+.btn {
+  padding: clamp(6px, 1vw, 10px) clamp(12px, 2vw, 20px);
+  border: none;
+  border-radius: clamp(3px, 0.5vw, 6px);
+  font-size: clamp(12px, 1.5vw, 14px);
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.btnPrimary {
+  background-color: #dc3545;
+  color: white;
+}
+
+.btnPrimary:hover {
+  background-color: #c82333;
+}
+
+.btnSecondary {
+  background-color: #6c757d;
+  color: white;
+  border: none;
+  padding: clamp(8px, 1.5vw, 12px) clamp(16px, 2.5vw, 24px);
+  border-radius: clamp(4px, 0.8vw, 8px);
+  font-size: clamp(12px, 1.5vw, 14px);
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family: inherit;
+}
+
+.btnSecondary:hover {
+  background-color: #545b62;
+}
+
+.btnAction {
+  padding: clamp(4px, 0.8vw, 8px) clamp(6px, 1vw, 10px);
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: clamp(2px, 0.5vw, 4px);
+  font-size: clamp(12px, 1.5vw, 16px);
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: clamp(28px, 4vw, 36px);
+  height: clamp(28px, 4vw, 36px);
+}
+
+.btnAction:hover {
+  background-color: #1e7e34;
+}
+
+.btnAction::before {
+  content: "✏️";
+  font-size: clamp(12px, 1.5vw, 16px);
+}
+
+.btnAddStudent {
+  background: #dc3545;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: 0 1px 2px rgba(220, 53, 69, 0.08);
+  display: inline-block;
+}
+
+.btnAddStudent:hover {
+  background: #c82333;
+}
+
+/* Filters */
+.studentFilters {
+  padding: 20px;
+  border-bottom: 1px solid #e9ecef;
+  display: flex;
+  gap: 15px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.studentSearchGroup,
+.studentFilterGroup {
+  flex: 1;
+  min-width: 200px;
+}
+
+.formInput {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  font-size: 13px;
+  transition: border-color 0.2s;
+}
+
+.formInput:focus {
+  outline: none;
+  border-color: #dc3545;
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+.studentSearchInput::placeholder {
+  color: #6c757d;
+}
+
+/* Table */
+.studentTableContainer {
+  overflow-x: auto;
+  border-radius: clamp(6px, 1vw, 8px);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  margin: 0 !important;
+  padding: 0 !important;
+  box-sizing: border-box;
+}
+
+.studentTable {
+  width: 100%;
+  min-width: 600px;
+  border-collapse: collapse;
+  font-size: clamp(12px, 1.5vw, 14px);
+  margin: 0;
+  padding: 0;
+  max-width: none;
+}
+
+.studentTable th {
+  background-color: #f8f9fa;
+  padding: clamp(10px, 2vw, 16px);
+  text-align: left;
+  font-weight: 600;
+  color: #495057;
+  border-bottom: 1px solid #dee2e6;
+  font-size: clamp(11px, 1.5vw, 13px);
+}
+
+.studentTable td {
+  padding: clamp(10px, 2vw, 16px);
+  border-bottom: 1px solid #e9ecef;
+  color: #212529;
+  font-size: clamp(12px, 1.5vw, 14px);
+}
+
+.studentTable tbody tr:hover {
+  background-color: rgba(0, 0, 0, 0.01);
+}
+
+.studentId {
+  font-weight: 500;
+  color: #495057;
+}
+
+.studentName {
+  font-weight: 500;
+  color: #212529;
+}
+
+.studentEmail {
+  color: #6c757d;
+}
+
+.studentStatus {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: clamp(11px, 1.5vw, 12px);
+  font-weight: 500;
+}
+
+.active {
+  background-color: #d1e7dd;
+  color: #146c43;
+}
+
+.inactive {
+  background-color: #f8d7da;
+  color: #b02a37;
+}
+
+.noStudents {
+  padding: 40px;
+  text-align: center;
+  color: #6c757d;
+  font-size: 15px;
+}
+
+/* Modal Styles */
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+  backdrop-filter: blur(2px);
+}
+
+.modalContent {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+  width: 100%;
+  max-width: 600px;
+  margin: 20px;
+  max-height: 90vh;
+  overflow-y: auto;
+  animation: modalSlideIn 0.3s ease-out;
+}
+
+@keyframes modalSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.modalHeader {
+  padding: 20px;
+  border-bottom: 1px solid #e9ecef;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.modalTitle {
+  font-size: 18px;
+  font-weight: 600;
+  color: #212529;
+  margin: 0;
+}
+
+.modalBody {
+  padding: 20px;
+}
+
+.modalGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.formGroup {
+  margin-bottom: 16px;
+}
+
+.formLabel {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #212529;
+}
+
+.formLabel:after {
+  content: "";
+}
+
+.formLabel:has(+ .formInput[required]):after,
+.formLabel:contains('*'):after {
+  content: " *";
+  color: #dc3545;
+}
+
+.modalFooter {
+  padding: 16px 20px;
+  border-top: 1px solid #e9ecef;
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+  .studentContentWrapper {
+    grid-template-columns: 180px 1fr;
+    gap: 20px;
+  }
+  
+  .studentNavSection {
+    width: 180px;
+    min-width: 160px;
+    max-width: 180px;
+  }
+}
+
+@media (max-width: 992px) {
+  .mainContent {
+    padding-left: 20px;
+  }
+
+  .studentContentWrapper {
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
+  
+  .studentNavSection {
+    width: 100%;
+    max-width: none;
+    position: static;
+  }
+}
+
+@media (max-width: 768px) {
+  .modalGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .dashboardHeader {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+/* Print Styles */
+@media print {
+  .studentFilters,
+  .studentHeaderActions,
+  .btnAction,
+  .studentNavSection {
+    display: none !important;
+  }
+  
+  .mainContent {
+    padding: 0;
+  }
+  
+  .studentTable {
+    border: 1px solid #dee2e6;
+  }
+}

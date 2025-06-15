@@ -10,29 +10,33 @@ body {
   color: #111827;
 }
 
-/* Container and Layout */
-.dashboard-container {
+/* Main Container */
+.dashboardContainer {
   display: flex;
   min-height: 100vh;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   background-color: #f8f9fa;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  color: #333;
+  font-size: 14px;
 }
 
 /* Main Content */
-.main-content {
+.mainContent {
   flex: 1;
-  padding-left: calc(256px + 20px); /* Correct sidebar width + content padding */
-  padding-right: 20px;
-  padding-top: 20px;
-  padding-bottom: 20px;
-  min-height: 100vh;
+  position: fixed; /* Use fixed positioning like Settings */
+  left: 256px;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  overflow-y: auto;
+  padding: clamp(16px, 2vw, 24px);
   box-sizing: border-box;
   background-color: #f8f9fa;
   min-width: 0;
-  overflow-x: auto;
+  transition: left 0.3s ease; /* Smooth transitions for sidebar changes */
 }
 
-.content-wrapper {
+.contentWrapper {
   width: 100%;
   max-width: none; /* Allow full width stretching */
   margin: 0;
@@ -40,8 +44,8 @@ body {
   min-width: 0;
 }
 
-/* Faculty Content Wrapper */
-.faculty-content-wrapper {
+/* Schedule Content Wrapper */
+.scheduleContentWrapper {
   display: grid;
   grid-template-columns: 280px 1fr;
   gap: 25px;
@@ -50,7 +54,7 @@ body {
 }
 
 /* Program Navigation Card */
-.faculty-nav-section {
+.scheduleNavSection {
   background: white;
   border-radius: 8px;
   border: 1px solid #e9ecef;
@@ -60,8 +64,8 @@ body {
   top: 0;
 }
 
-/* Main Faculty Section Card */
-.faculty-main-section {
+/* Main Schedule Section Card */
+.scheduleMainSection {
   background: white;
   border-radius: 8px;
   border: 1px solid #e9ecef;
@@ -72,75 +76,77 @@ body {
 }
 
 @media (max-width: 1200px) {
-  .main-content {
-    padding-left: calc(506px + 20px); /* Adjusted for smaller sidebars + content padding */
+  .mainContent {
+    left: 0; /* Adjusted for smaller sidebars */
+    right: 0;
   }
   
-  .faculty-content-wrapper {
+  .scheduleContentWrapper {
     grid-template-columns: 260px 1fr;
     gap: 20px;
   }
 }
 
 @media (max-width: 992px) {
-  .main-content {
-    padding-left: 20px;
+  .mainContent {
+    left: 0; /* Remove sidebar offset */
+    padding: 16px;
   }
   
-  .faculty-content-wrapper {
+  .scheduleContentWrapper {
     grid-template-columns: 1fr;
     gap: 16px;
   }
   
-  .faculty-nav-section {
+  .scheduleNavSection {
     position: static;
   }
 }
 
 @media (max-width: 768px) {
-  .main-content {
+  .mainContent {
     padding-left: 20px;
   }
   
-  .faculty-filters {
+  .scheduleFilters {
     flex-direction: column;
     align-items: stretch;
     gap: 12px;
   }
   
-  .faculty-search-group,
-  .faculty-filter-group {
+  .scheduleSearchGroup,
+  .scheduleFilterGroup {
     min-width: 100%;
   }
   
-  .faculty-section-content {
+  .scheduleSectionContent {
     padding: 20px;
   }
   
-  .faculty-table {
+  .scheduleTable {
     font-size: 12px;
   }
   
-  .faculty-table th,
-  .faculty-table td {
+  .scheduleTable th,
+  .scheduleTable td {
     padding: 8px;
   }
 }
 
 @media (max-width: 480px) {
-  .content-wrapper {
+  .contentWrapper {
     padding: 8px;
   }
   
-  .faculty-section-header {
+  .scheduleSectionHeader {
     padding: 16px;
   }
   
-  .faculty-filters {
+  .scheduleFilters {
     padding: 16px;
   }
   
-  .faculty-table-container {
+  .scheduleTableContainer {
     padding: 0 16px;
   }
 }
@@ -155,30 +161,30 @@ body {
   gap: 4px;
 }
 
-.breadcrumb-link {
-  color: #dc3545;
+.breadcrumbLink {
+  color: #ef4444;
   cursor: pointer;
   transition: color 0.2s ease;
   text-decoration: none;
 }
 
-.breadcrumb-link:hover {
-  color: #c82333;
+.breadcrumbLink:hover {
+  color: #dc2626;
   text-decoration: underline;
 }
 
-.breadcrumb-separator {
+.breadcrumbSeparator {
   color: #9ca3af;
   margin: 0 4px;
 }
 
-.breadcrumb-current {
+.breadcrumbCurrent {
   color: #6b7280;
   font-weight: 500;
 }
 
 /* Header */
-.page-header {
+.pageHeader {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -187,7 +193,7 @@ body {
   gap: 16px;
 }
 
-.page-title {
+.pageTitle {
   font-size: 28px;
   font-weight: 700;
   color: #111827;
@@ -214,30 +220,30 @@ body {
   box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
 }
 
-.btn-primary {
+.btnPrimary {
   background-color: #ef4444;
   color: white;
 }
 
-.btn-primary:hover {
+.btnPrimary:hover {
   background-color: #dc2626;
   transform: translateY(-1px);
   box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
 }
 
-.btn-secondary {
+.btnSecondary {
   background-color: #f3f4f6;
   color: #374151;
   border: 1px solid #d1d5db;
 }
 
-.btn-secondary:hover {
+.btnSecondary:hover {
   background-color: #e5e7eb;
   border-color: #9ca3af;
 }
 
-/* Add New Faculty Button - Updated to match CurriculumManagement styling */
-.add-faculty-btn {
+/* Add New Schedule Button - Updated to match CurriculumManagement styling */
+.addScheduleBtn {
   background: #dc3545;
   color: white;
   border: none;
@@ -255,27 +261,28 @@ body {
   gap: 8px;
 }
 
-.add-faculty-btn:hover {
+.addScheduleBtn:hover {
   background: #c82333;
 }
 
-.add-faculty-btn:focus {
+.addScheduleBtn:focus {
   box-shadow: 0 0 0 3px rgba(220, 53, 69, 0.1);
 }
 
-.add-faculty-btn:active {
+.addScheduleBtn:active {
   transform: translateY(0);
 }
 
+
 /* Stats Grid */
-.stats-grid {
+.statsGrid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 24px;
   margin-bottom: 32px;
 }
 
-.stat-card {
+.statCard {
   background-color: white;
   padding: 24px;
   border-radius: 12px;
@@ -284,26 +291,26 @@ body {
   transition: all 0.2s ease;
 }
 
-.stat-card:hover {
+.statCard:hover {
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
   transform: translateY(-1px);
 }
 
-.stat-label {
+.statLabel {
   font-size: 14px;
   color: #6b7280;
   margin-bottom: 8px;
   font-weight: 500;
 }
 
-.stat-value {
+.statValue {
   font-size: 32px;
   font-weight: 700;
   color: #111827;
 }
 
-/* Faculty List Container */
-.faculty-list-container {
+/* Schedule List Container */
+.scheduleListContainer {
   background-color: white;
   border-radius: 12px;
   border: 1px solid #e5e7eb;
@@ -311,13 +318,13 @@ body {
   overflow: hidden;
 }
 
-.list-header {
+.listHeader {
   padding: 24px;
   border-bottom: 1px solid #e5e7eb;
   background-color: #f9fafb;
 }
 
-.list-controls {
+.listControls {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -325,7 +332,7 @@ body {
   gap: 16px;
 }
 
-.list-title {
+.listTitle {
   font-size: 18px;
   font-weight: 600;
   color: #111827;
@@ -339,7 +346,7 @@ body {
   flex-wrap: wrap;
 }
 
-.select-input {
+.selectInput {
   padding: 10px 12px;
   border: 1px solid #d1d5db;
   border-radius: 8px;
@@ -350,13 +357,13 @@ body {
   transition: all 0.2s ease;
 }
 
-.select-input:focus {
+.selectInput:focus {
   outline: none;
   border-color: #ef4444;
   box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
 }
 
-.search-input {
+.searchInput {
   padding: 10px 12px;
   border: 1px solid #d1d5db;
   border-radius: 8px;
@@ -366,49 +373,33 @@ body {
   transition: all 0.2s ease;
 }
 
-.search-input:focus {
+.searchInput:focus {
   outline: none;
   border-color: #ef4444;
   box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
 }
 
-.search-input::placeholder {
+.searchInput::placeholder {
   color: #9ca3af;
 }
 
-/* Faculty Filters */
-.faculty-filters {
-  padding: 20px 28px;
-  border-bottom: 1px solid #e9ecef;
-  display: flex;
-  gap: 15px;
-  align-items: center;
-  flex-wrap: wrap;
-}
-
-.faculty-search-group,
-.faculty-filter-group {
-  flex: 1;
-  min-width: 200px;
-}
-
 /* Table */
-.table-container {
+.tableContainer {
   overflow-x: auto;
 }
 
-.faculty-table {
+.scheduleTable {
   width: 100%;
-  min-width: 800px; /* Fixed minimum width for horizontal scroll */
+  min-width: 900px; /* Fixed minimum width for horizontal scroll */
   border-collapse: collapse;
   font-size: 13px;
 }
 
-.faculty-table thead {
+.scheduleTable thead {
   background-color: #f9fafb;
 }
 
-.faculty-table th {
+.scheduleTable th {
   background-color: #f8f9fa;
   padding: 12px;
   text-align: left;
@@ -418,76 +409,64 @@ body {
   white-space: nowrap;
 }
 
-.faculty-table tbody {
+.scheduleTable tbody {
   background-color: white;
 }
 
-.faculty-table tbody tr {
+.scheduleTable tbody tr {
   border-bottom: 1px solid #e5e7eb;
   transition: background-color 0.2s ease;
 }
 
-.faculty-table tbody tr:hover {
+.scheduleTable tbody tr:hover {
   background-color: #f8f9fa;
-  transition: background-color 0.2s ease;
 }
 
-.faculty-table tbody tr:last-child {
+.scheduleTable tbody tr:last-child {
   border-bottom: none;
 }
 
-.faculty-table td {
+.scheduleTable td {
   padding: 12px;
   border-bottom: 1px solid #f1f3f4;
   color: #495057;
   vertical-align: middle;
 }
 
-/* Section Headers */
-.faculty-section-header {
-  padding: 24px 28px;
-  border-bottom: 1px solid #f1f3f4;
-  background: #fafbfc;
-  border-radius: 8px 8px 0 0;
-}
-
-.faculty-section-title {
-  font-size: 18px;
-  font-weight: 600;
-  color: #212529;
-  margin: 0 0 6px 0;
-}
-
-.faculty-section-desc {
-  font-size: 14px;
-  color: #6c757d;
-  margin: 0;
-}
-
-.faculty-section-content {
-  padding: 20px;
-  padding-bottom: 20px;
-}
-
-/* Faculty Info */
-.faculty-info {
+.scheduleInfo {
   display: flex;
   flex-direction: column;
 }
 
-.faculty-name {
+.scheduleCourse {
   font-weight: 500;
   color: #111827;
   margin-bottom: 2px;
 }
 
-.faculty-position {
+.scheduleSection {
+  font-size: 13px;
+  color: #6b7280;
+}
+
+.timeInfo {
+  display: flex;
+  flex-direction: column;
+}
+
+.timePeriod {
+  font-weight: 500;
+  color: #111827;
+  margin-bottom: 2px;
+}
+
+.dayInfo {
   font-size: 13px;
   color: #6b7280;
 }
 
 /* Status Badges */
-.status-badge {
+.statusBadge {
   padding: 4px 12px;
   font-size: 12px;
   border-radius: 20px;
@@ -495,23 +474,28 @@ body {
   display: inline-block;
 }
 
-.status-fulltime {
+.statusActive {
   background-color: #dcfce7;
   color: #166534;
 }
 
-.status-parttime {
-  background-color: #fef3c7;
-  color: #a16207;
+.statusCancelled {
+  background-color: #fef2f2;
+  color: #dc2626;
+}
+
+.statusCompleted {
+  background-color: #f0f9ff;
+  color: #1e40af;
 }
 
 /* Action Buttons */
-.action-buttons {
+.actionButtons {
   display: flex;
   gap: 12px;
 }
 
-.btn-edit {
+.btnEdit {
   padding: 6px 8px;
   background-color: #28a745;
   color: white;
@@ -528,16 +512,16 @@ body {
   height: 32px;
 }
 
-.btn-edit:hover {
+.btnEdit:hover {
   background-color: #1e7e34;
 }
 
-.btn-edit::before {
+.btnEdit::before {
   content: "✏️";
   font-size: 14px;
 }
 
-.btn-delete {
+.btnDelete {
   padding: 6px 8px;
   background-color: #dc3545;
   color: white;
@@ -554,17 +538,17 @@ body {
   height: 32px;
 }
 
-.btn-delete:hover {
+.btnDelete:hover {
   background-color: #c82333;
 }
 
-.btn-delete::before {
+.btnDelete::before {
   content: "🗑️";
   font-size: 14px;
 }
 
 /* Table Footer */
-.table-footer {
+.tableFooter {
   padding: 16px 24px;
   border-top: 1px solid #e5e7eb;
   display: flex;
@@ -575,7 +559,7 @@ body {
   gap: 16px;
 }
 
-.table-info {
+.tableInfo {
   font-size: 14px;
   color: #6b7280;
 }
@@ -591,10 +575,13 @@ body {
   margin: 0;
   list-style: none; /* Remove list styles if it's a <ul> or <ol> */
   flex-shrink: 0; /* Prevent the pagination container from shrinking too much */
-} 
+}
 
+.pagination li {
+  margin: 0; /* Remove default margin */
+}
 
-.page-btn {
+.pageBtn {
   padding: 8px 12px;
   border: none;
   background: none;
@@ -605,27 +592,27 @@ body {
   min-width: 40px;
 }
 
-.page-btn.disabled {
+.pageBtnDisabled {
   color: #9ca3af;
   cursor: not-allowed;
 }
 
-.page-btn.active {
+.pageBtnActive {
   background-color: #ef4444;
   color: white;
 }
 
-.page-btn:not(.disabled):not(.active) {
+.pageBtn:not(.disabled):not(.active) {
   color: #6b7280;
 }
 
-.page-btn:not(.disabled):not(.active):hover {
+.pageBtn:not(.disabled):not(.active):hover {
   background-color: #f3f4f6;
   color: #374151;
 }
 
 /* Modal Styles */
-.modal-overlay {
+.modalOverlay {
   position: fixed;
   inset: 0;
   background-color: rgba(0, 0, 0, 0.5);
@@ -637,7 +624,7 @@ body {
   backdrop-filter: blur(4px);
 }
 
-.modal-container {
+.modalContainer {
   background-color: white;
   border-radius: 16px;
   box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
@@ -659,44 +646,48 @@ body {
   }
 }
 
-.modal-header {
+.modalHeader {
   padding: 24px 28px;
   border-bottom: 1px solid #e5e7eb;
   background-color: #f9fafb;
   border-radius: 16px 16px 0 0;
 }
 
-.modal-title {
+.modalTitle {
   font-size: 20px;
   font-weight: 600;
   color: #111827;
   margin: 0;
 }
 
-.modal-content {
+.modalContent {
   padding: 28px;
   background-color: white;
 }
 
-.form-grid {
+.formGrid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 20px;
 }
 
-.form-group {
+.formGroup {
   display: flex;
   flex-direction: column;
 }
 
-.form-label {
+.formGroupFullWidth {
+  grid-column: 1 / -1;
+}
+
+.formLabel {
   font-size: 14px;
   font-weight: 600;
   color: #374151;
   margin-bottom: 8px;
 }
 
-.form-input {
+.formInput {
   padding: 12px 16px;
   border: 1px solid #d1d5db;
   border-radius: 8px;
@@ -706,17 +697,23 @@ body {
   background-color: white;
 }
 
-.form-input:focus {
+.formInput:focus {
   outline: none;
   border-color: #ef4444;
   box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
 }
 
-.form-input::placeholder {
+.formInput::placeholder {
   color: #9ca3af;
 }
 
-.modal-footer {
+.timeInputs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.modalFooter {
   padding: 20px 28px;
   border-top: 1px solid #e5e7eb;
   background-color: #f9fafb;
@@ -726,13 +723,13 @@ body {
   gap: 12px;
 }
 
-.modal-footer .btn {
+.modalFooter .btn {
   padding: 12px 24px;
   font-weight: 600;
 }
 
 /* Modal Footer Buttons - Updated to match design consistency */
-.modal-footer .btn-primary {
+.modalFooter .btnPrimary {
   background: #dc3545;
   color: white;
   border: none;
@@ -744,11 +741,11 @@ body {
   transition: all 0.2s;
 }
 
-.modal-footer .btn-primary:hover {
+.modalFooter .btnPrimary:hover {
   background: #c82333;
 }
 
-.modal-footer .btn-secondary {
+.modalFooter .btnSecondary {
   background: #6c757d;
   color: white;
   border: none;
@@ -760,32 +757,48 @@ body {
   transition: all 0.2s;
 }
 
-.modal-footer .btn-secondary:hover {
+.modalFooter .btnSecondary:hover {
   background: #545b62;
+}
+
+/* Schedule Filters */
+.scheduleFilters {
+  padding: 20px 28px;
+  border-bottom: 1px solid #e9ecef;
+  display: flex;
+  gap: 15px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.scheduleSearchGroup,
+.scheduleFilterGroup {
+  flex: 1;
+  min-width: 200px;
 }
 
 /* Responsive Design */
 @media (max-width: 768px) {
-  .main-content {
+  .mainContent {
     margin-left: 0;
     padding: 15px;
   }
   
-  .content-wrapper {
-    padding: 16px;
+  .contentWrapper {
+    padding: 12px;
   }
   
-  .stats-grid {
+  .statsGrid {
     grid-template-columns: repeat(2, 1fr);
     gap: 16px;
   }
   
-  .page-header {
+  .pageHeader {
     flex-direction: column;
     align-items: stretch;
   }
   
-  .list-controls {
+  .listControls {
     flex-direction: column;
     align-items: stretch;
   }
@@ -794,44 +807,51 @@ body {
     flex-direction: column;
   }
   
-  .search-input {
+  .searchInput {
     width: 100%;
   }
   
-  .form-grid {
+  .formGrid {
     grid-template-columns: 1fr;
   }
   
-  .table-footer {
+  .timeInputs {
+    grid-template-columns: 1fr;
+  }
+  
+  .tableFooter {
     flex-direction: column;
     align-items: stretch;
     text-align: center;
   }
   
-  .faculty-table td {
+  .scheduleTable td {
     padding: 12px 16px;
   }
 }
 
 @media (max-width: 480px) {
-  .stats-grid {
+  .statsGrid {
     grid-template-columns: 1fr;
   }
   
-  .modal-container {
+  .modalContainer {
     margin: 8px;
     border-radius: 12px;
   }
   
-  .modal-header,
-  .modal-content,
-  .modal-footer {
+  .modalHeader,
+  .modalContent,
+  .modalFooter {
     padding: 16px 20px;
+  }
+  .contentWrapper {
+    padding: 8px;
   }
 }
 
 /* Loading and Empty States */
-.loading-state {
+.loadingState {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -839,42 +859,42 @@ body {
   color: #6b7280;
 }
 
-.empty-state {
+.emptyState {
   text-align: center;
   padding: 40px;
   color: #6b7280;
 }
 
-.empty-state h3 {
+.emptyState h3 {
   margin-bottom: 8px;
   color: #374151;
 }
 
 /* Utility Classes */
-.text-center {
+.textCenter {
   text-align: center;
 }
 
-.text-red {
+.textRed {
   color: #ef4444;
 }
 
-.text-green {
+.textGreen {
   color: #10b981;
 }
 
-.font-semibold {
+.fontSemibold {
   font-weight: 600;
 }
 
-.font-bold {
+.fontBold {
   font-weight: 700;
 }
 
-.mb-4 {
+.mb4 {
   margin-bottom: 1rem;
 }
 
-.mt-4 {
+.mt4 {
   margin-top: 1rem;
 }

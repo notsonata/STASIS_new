@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import './FacultyManagement.css';
+import styles from './FacultyManagement.module.css';
 import Sidebar from './Sidebar';
 
 const FacultyManagement = () => {
@@ -242,7 +242,8 @@ const FacultyManagement = () => {
         break;
       case 'Students':
         navigate('/student-management');
-        break;      case 'Schedule':
+        break;      
+      case 'Schedule':
         navigate('/schedule-management');
         break;
       case 'Faculty':
@@ -261,8 +262,10 @@ const FacultyManagement = () => {
         // No action for unknown sections
     }
   };
+  
   return (
-    <div className="dashboard-container">      {/* Sidebar */}
+    <div className={styles.dashboardContainer}>
+      {/* Sidebar */}
       <Sidebar 
         onNavigate={showSection}
         userInfo={{ name: "David Anderson", role: "Faculty Admin" }}
@@ -291,61 +294,61 @@ const FacultyManagement = () => {
       />
 
       {/* Main Content */}
-      <div className="main-content">
-        <div className="content-wrapper">
+      <div className={styles.mainContent}>
+        <div className={styles.contentWrapper}>
           {/* Breadcrumb */}
-          <div className="breadcrumb">
+          <div className={styles.breadcrumb}>
             <span 
-              className="breadcrumb-link" 
+              className={styles.breadcrumbLink} 
               onClick={() => navigate('/admin-dashboard')}
             >
               Dashboard
             </span>
-            <span className="breadcrumb-separator"> / </span>
-            <span className="breadcrumb-current">Faculty Management</span>
+            <span className={styles.breadcrumbSeparator}> / </span>
+            <span className={styles.breadcrumbCurrent}>Faculty Management</span>
           </div>
           
           {/* Header */}
-          <div className="page-header">
-            <h1 className="page-title">Faculty Management</h1>
+          <div className={styles.pageHeader}>
+            <h1 className={styles.pageTitle}>Faculty Management</h1>
             <button 
               onClick={showAddFacultyForm}
-              className="add-faculty-btn"
+              className={styles.addFacultyBtn}
             >
               + Add New Faculty
             </button>
           </div>
 
           {/* Stats Cards */}
-          <div className="stats-grid">
-            <div className="stat-card">
-              <div className="stat-label">Total Faculty</div>
-              <div className="stat-value">{totalFaculty}</div>
+          <div className={styles.statsGrid}>
+            <div className={styles.statCard}>
+              <div className={styles.statLabel}>Total Faculty</div>
+              <div className={styles.statValue}>{totalFaculty}</div>
             </div>
-            <div className="stat-card">
-              <div className="stat-label">Full-time</div>
-              <div className="stat-value">{fullTimeFaculty}</div>
+            <div className={styles.statCard}>
+              <div className={styles.statLabel}>Full-time</div>
+              <div className={styles.statValue}>{fullTimeFaculty}</div>
             </div>
-            <div className="stat-card">
-              <div className="stat-label">Part-time</div>
-              <div className="stat-value">{partTimeFaculty}</div>
+            <div className={styles.statCard}>
+              <div className={styles.statLabel}>Part-time</div>
+              <div className={styles.statValue}>{partTimeFaculty}</div>
             </div>
-            <div className="stat-card">
-              <div className="stat-label">Departments</div>
-              <div className="stat-value">{departments}</div>
+            <div className={styles.statCard}>
+              <div className={styles.statLabel}>Departments</div>
+              <div className={styles.statValue}>{departments}</div>
             </div>
           </div>
 
           {/* Faculty List */}
-          <div className="faculty-list-container">
-            <div className="list-header">
-              <div className="list-controls">
-                <h2 className="list-title">Faculty List</h2>
-                <div className="controls">
+          <div className={styles.facultyListContainer}>
+            <div className={styles.listHeader}>
+              <div className={styles.listControls}>
+                <h2 className={styles.listTitle}>Faculty List</h2>
+                <div className={styles.controls}>
                   <select 
                     value={selectedDepartment}
                     onChange={(e) => setSelectedDepartment(e.target.value)}
-                    className="select-input"
+                    className={styles.selectInput}
                   >
                     <option>All Departments</option>
                     {departmentOptions.map(dept => (
@@ -357,14 +360,14 @@ const FacultyManagement = () => {
                     placeholder="Search faculty..."
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
-                    className="search-input"
+                    className={styles.searchInput}
                   />
                 </div>
               </div>
             </div>
 
-            <div className="table-container">
-              <table className="faculty-table">
+            <div className={styles.tableContainer}>
+              <table className={styles.facultyTable}>
                 <thead>
                   <tr>
                     <th>Faculty ID</th>
@@ -380,26 +383,26 @@ const FacultyManagement = () => {
                     <tr key={faculty.id}>
                       <td>{faculty.id}</td>
                       <td>
-                        <div className="faculty-info">
-                          <div className="faculty-name">{faculty.name}</div>
-                          <div className="faculty-position">{faculty.position}</div>
+                        <div className={styles.facultyInfo}>
+                          <div className={styles.facultyName}>{faculty.name}</div>
+                          <div className={styles.facultyPosition}>{faculty.position}</div>
                         </div>
                       </td>
                       <td>{faculty.department}</td>
                       <td>{faculty.email}</td>
                       <td>
-                        <span className={`status-badge ${faculty.status === 'Full-time' ? 'status-fulltime' : 'status-parttime'}`}>
+                        <span className={`${styles.statusBadge} ${faculty.status === 'Full-time' ? styles.statusFulltime : styles.statusParttime}`}>
                           {faculty.status}
                         </span>
                       </td>
-                      <td className="action-buttons">
+                      <td className={styles.actionButtons}>
                         <button 
-                          className="btn-edit"
+                          className={styles.btnEdit}
                           onClick={() => showEditFacultyForm(faculty)}
                         >
                         </button>
                         <button 
-                          className="btn-delete"
+                          className={styles.btnDelete}
                           onClick={() => handleDeleteFaculty(faculty.id)}
                         >
                         </button>
@@ -410,15 +413,15 @@ const FacultyManagement = () => {
               </table>
             </div>
 
-            <div className="table-footer">
-              <div className="table-info">
+            <div className={styles.tableFooter}>
+              <div className={styles.tableInfo}>
                 Showing 1 to {filteredFaculty.length} of {totalFaculty} entries
               </div>
-              <div className="pagination">
-                <button className="page-btn disabled">Previous</button>
-                <button className="page-btn active">1</button>
-                <button className="page-btn">2</button>
-                <button className="page-btn">Next</button>
+              <div className={styles.pagination}>
+                <button className={`${styles.pageBtn} ${styles.pageBtnDisabled}`}>Previous</button>
+                <button className={`${styles.pageBtn} ${styles.pageBtnActive}`}>1</button>
+                <button className={styles.pageBtn}>2</button>
+                <button className={styles.pageBtn}>Next</button>
               </div>
             </div>
           </div>
@@ -427,22 +430,22 @@ const FacultyManagement = () => {
 
       {/* Add Faculty Modal */}
       {showAddFacultyModal && (
-        <div className="modal-overlay">
-          <div className="modal-container">
+        <div className={styles.modalOverlay}>
+          <div className={styles.modalContainer}>
             {/* Modal Header */}
-            <div className="modal-header">
-              <h2 className="modal-title">Add New Faculty</h2>
+            <div className={styles.modalHeader}>
+              <h2 className={styles.modalTitle}>Add New Faculty</h2>
             </div>
             
             {/* Modal Content */}
-            <div className="modal-content">
-              <div className="form-grid">
+            <div className={styles.modalContent}>
+              <div className={styles.formGrid}>
                 {/* First Name */}
-                <div className="form-group">
-                  <label className="form-label">First Name *</label>
+                <div className={styles.formGroup}>
+                  <label className={styles.formLabel}>First Name *</label>
                   <input
                     type="text"
-                    className="form-input"
+                    className={styles.formInput}
                     placeholder="Enter First Name"
                     value={facultyForm.firstName}
                     onChange={(e) => handleFacultyFormChange('firstName', e.target.value)}
@@ -450,11 +453,11 @@ const FacultyManagement = () => {
                 </div>
                 
                 {/* Last Name */}
-                <div className="form-group">
-                  <label className="form-label">Last Name *</label>
+                <div className={styles.formGroup}>
+                  <label className={styles.formLabel}>Last Name *</label>
                   <input
                     type="text"
-                    className="form-input"
+                    className={styles.formInput}
                     placeholder="Enter Last Name"
                     value={facultyForm.lastName}
                     onChange={(e) => handleFacultyFormChange('lastName', e.target.value)}
@@ -462,11 +465,11 @@ const FacultyManagement = () => {
                 </div>
                 
                 {/* Email */}
-                <div className="form-group">
-                  <label className="form-label">Email *</label>
+                <div className={styles.formGroup}>
+                  <label className={styles.formLabel}>Email *</label>
                   <input
                     type="email"
-                    className="form-input"
+                    className={styles.formInput}
                     placeholder="Enter Email Address"
                     value={facultyForm.email}
                     onChange={(e) => handleFacultyFormChange('email', e.target.value)}
@@ -474,10 +477,10 @@ const FacultyManagement = () => {
                 </div>
                 
                 {/* Department */}
-                <div className="form-group">
-                  <label className="form-label">Department *</label>
+                <div className={styles.formGroup}>
+                  <label className={styles.formLabel}>Department *</label>
                   <select
-                    className="form-input"
+                    className={styles.formInput}
                     value={facultyForm.department}
                     onChange={(e) => handleFacultyFormChange('department', e.target.value)}
                   >
@@ -489,10 +492,10 @@ const FacultyManagement = () => {
                 </div>
                 
                 {/* Position */}
-                <div className="form-group">
-                  <label className="form-label">Position</label>
+                <div className={styles.formGroup}>
+                  <label className={styles.formLabel}>Position</label>
                   <select
-                    className="form-input"
+                    className={styles.formInput}
                     value={facultyForm.position}
                     onChange={(e) => handleFacultyFormChange('position', e.target.value)}
                   >
@@ -504,10 +507,10 @@ const FacultyManagement = () => {
                 </div>
                 
                 {/* Employment Status */}
-                <div className="form-group">
-                  <label className="form-label">Employment Status</label>
+                <div className={styles.formGroup}>
+                  <label className={styles.formLabel}>Employment Status</label>
                   <select
-                    className="form-input"
+                    className={styles.formInput}
                     value={facultyForm.employmentStatus}
                     onChange={(e) => handleFacultyFormChange('employmentStatus', e.target.value)}
                   >
@@ -521,15 +524,15 @@ const FacultyManagement = () => {
             </div>
             
             {/* Modal Footer */}
-            <div className="modal-footer">
+            <div className={styles.modalFooter}>
               <button 
-                className="btn btn-secondary"
+                className={`${styles.btn} ${styles.btnSecondary}`}
                 onClick={closeAddFacultyModal}
               >
                 Cancel
               </button>
               <button 
-                className="btn btn-primary"
+                className={`${styles.btn} ${styles.btnPrimary}`}
                 onClick={handleAddFaculty}
               >
                 Add Faculty
@@ -541,22 +544,22 @@ const FacultyManagement = () => {
 
       {/* Edit Faculty Modal */}
       {showEditFacultyModal && (
-        <div className="modal-overlay">
-          <div className="modal-container">
+        <div className={styles.modalOverlay}>
+          <div className={styles.modalContainer}>
             {/* Modal Header */}
-            <div className="modal-header">
-              <h2 className="modal-title">Edit Faculty</h2>
+            <div className={styles.modalHeader}>
+              <h2 className={styles.modalTitle}>Edit Faculty</h2>
             </div>
             
             {/* Modal Content */}
-            <div className="modal-content">
-              <div className="form-grid">
+            <div className={styles.modalContent}>
+              <div className={styles.formGrid}>
                 {/* First Name */}
-                <div className="form-group">
-                  <label className="form-label">First Name *</label>
+                <div className={styles.formGroup}>
+                  <label className={styles.formLabel}>First Name *</label>
                   <input
                     type="text"
-                    className="form-input"
+                    className={styles.formInput}
                     placeholder="Enter First Name"
                     value={facultyForm.firstName}
                     onChange={(e) => handleFacultyFormChange('firstName', e.target.value)}
@@ -564,11 +567,11 @@ const FacultyManagement = () => {
                 </div>
                 
                 {/* Last Name */}
-                <div className="form-group">
-                  <label className="form-label">Last Name *</label>
+                <div className={styles.formGroup}>
+                  <label className={styles.formLabel}>Last Name *</label>
                   <input
                     type="text"
-                    className="form-input"
+                    className={styles.formInput}
                     placeholder="Enter Last Name"
                     value={facultyForm.lastName}
                     onChange={(e) => handleFacultyFormChange('lastName', e.target.value)}
@@ -576,11 +579,11 @@ const FacultyManagement = () => {
                 </div>
                 
                 {/* Email */}
-                <div className="form-group">
-                  <label className="form-label">Email *</label>
+                <div className={styles.formGroup}>
+                  <label className={styles.formLabel}>Email *</label>
                   <input
                     type="email"
-                    className="form-input"
+                    className={styles.formInput}
                     placeholder="Enter Email Address"
                     value={facultyForm.email}
                     onChange={(e) => handleFacultyFormChange('email', e.target.value)}
@@ -588,10 +591,10 @@ const FacultyManagement = () => {
                 </div>
                 
                 {/* Department */}
-                <div className="form-group">
-                  <label className="form-label">Department *</label>
+                <div className={styles.formGroup}>
+                  <label className={styles.formLabel}>Department *</label>
                   <select
-                    className="form-input"
+                    className={styles.formInput}
                     value={facultyForm.department}
                     onChange={(e) => handleFacultyFormChange('department', e.target.value)}
                   >
@@ -603,10 +606,10 @@ const FacultyManagement = () => {
                 </div>
                 
                 {/* Position */}
-                <div className="form-group">
-                  <label className="form-label">Position</label>
+                <div className={styles.formGroup}>
+                  <label className={styles.formLabel}>Position</label>
                   <select
-                    className="form-input"
+                    className={styles.formInput}
                     value={facultyForm.position}
                     onChange={(e) => handleFacultyFormChange('position', e.target.value)}
                   >
@@ -618,10 +621,10 @@ const FacultyManagement = () => {
                 </div>
                 
                 {/* Employment Status */}
-                <div className="form-group">
-                  <label className="form-label">Employment Status</label>
+                <div className={styles.formGroup}>
+                  <label className={styles.formLabel}>Employment Status</label>
                   <select
-                    className="form-input"
+                    className={styles.formInput}
                     value={facultyForm.employmentStatus}
                     onChange={(e) => handleFacultyFormChange('employmentStatus', e.target.value)}
                   >
@@ -635,15 +638,15 @@ const FacultyManagement = () => {
             </div>
             
             {/* Modal Footer */}
-            <div className="modal-footer">
+            <div className={styles.modalFooter}>
               <button 
-                className="btn btn-secondary"
+                className={`${styles.btn} ${styles.btnSecondary}`}
                 onClick={closeEditFacultyModal}
               >
                 Cancel
               </button>
               <button 
-                className="btn btn-primary"
+                className={`${styles.btn} ${styles.btnPrimary}`}
                 onClick={handleEditFaculty}
               >
                 Update Faculty

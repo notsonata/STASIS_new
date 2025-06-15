@@ -1,5 +1,5 @@
 /* Settings Page Styles */
-.settings-container {
+.settingsContainer {
   display: flex;
   min-height: 100vh;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
@@ -8,10 +8,10 @@
   font-size: 14px;
 }
 
-.settings-main-content {
+.settingsMainContent {
   flex: 1;
   position: fixed;
-  left: 0 ;
+  left: 256px; /* Add sidebar width to fix the overlap */
   right: 0;
   top: 0;
   bottom: 0;
@@ -21,24 +21,24 @@
   box-sizing: border-box;
 }
 
-.settings-header {
+.settingsHeader {
   margin-bottom: 25px;
 }
 
-.settings-title {
+.settingsTitle {
   font-size: 22px;
   font-weight: 500;
   color: #212529;
   margin: 0;
 }
 
-.settings-subtitle {
+.settingsSubtitle {
   font-size: 14px;
   color: #6c757d;
   margin: 5px 0 0 0;
 }
 
-.settings-content-wrapper {
+.settingsContentWrapper {
   display: grid;
   grid-template-columns: 280px 1fr;
   gap: 25px;
@@ -46,7 +46,7 @@
   padding: 15px; /* Reduce from 20px to 15px */
 }
 
-.settings-nav-section {
+.settingsNavSection {
   background: white;
   border-radius: 8px;
   border: 1px solid #e9ecef;
@@ -56,25 +56,25 @@
   top: 0;
 }
 
-.settings-nav-header {
+.settingsNavHeader {
   padding: 18px 20px;
   border-bottom: 1px solid #f1f3f4;
   background: #fafbfc;
   border-radius: 8px 8px 0 0;
 }
 
-.settings-nav-title {
+.settingsNavTitle {
   font-size: 16px;
   font-weight: 600;
   color: #212529;
   margin: 0;
 }
 
-.settings-nav-list {
+.settingsNavList {
   padding: 12px 0;
 }
 
-.settings-nav-item {
+.settingsNavItem {
   padding: 12px 20px;
   display: flex;
   align-items: center;
@@ -86,12 +86,12 @@
   border-left: 3px solid transparent;
 }
 
-.settings-nav-item:hover {
+.settingsNavItem:hover {
   background-color: #f9fafb;
   color: #374151;
 }
 
-.settings-nav-item-active {
+.settingsNavItemActive {
   color: #ef4444 !important;
   background-color: #fef2f2 !important;
   font-weight: 500;
@@ -99,13 +99,13 @@
   margin: 4px 12px; /* Add margin on sides and top/bottom */
 }
 
-.settings-nav-icon {
+.settingsNavIcon {
   font-size: 16px;
   width: 20px;
   text-align: center;
 }
 
-.settings-main-section {
+.settingsMainSection {
   background: white;
   border-radius: 8px;
   border: 1px solid #e9ecef;
@@ -116,62 +116,62 @@
 }
 
 /* Custom scrollbar styling */
-.settings-main-section::-webkit-scrollbar {
+.settingsMainSection::-webkit-scrollbar {
   width: 8px;
 }
 
-.settings-main-section::-webkit-scrollbar-track {
+.settingsMainSection::-webkit-scrollbar-track {
   background: #f1f3f4;
   border-radius: 8px;
 }
 
-.settings-main-section::-webkit-scrollbar-thumb {
+.settingsMainSection::-webkit-scrollbar-thumb {
   background: #c1c7cd;
   border-radius: 8px;
 }
 
-.settings-main-section::-webkit-scrollbar-thumb:hover {
+.settingsMainSection::-webkit-scrollbar-thumb:hover {
   background: #a8b2ba;
 }
 
-.settings-section-header {
+.settingsSectionHeader {
   padding: 24px 28px;
   border-bottom: 1px solid #f1f3f4;
   background: #fafbfc;
   border-radius: 8px 8px 0 0;
 }
 
-.settings-section-title {
+.settingsSectionTitle {
   font-size: 18px;
   font-weight: 600;
   color: #212529;
   margin: 0 0 6px 0;
 }
 
-.settings-section-desc {
+.settingsSectionDesc {
   font-size: 14px;
   color: #6c757d;
   margin: 0;
 }
 
-.settings-section-content {
+.settingsSectionContent {
   padding: 20px; /* Reduce from 28px to 20px */
   padding-bottom: 20px; /* Reduce bottom padding from 32px to 20px */
 }
 
 /* Form Elements */
-.settings-form-row {
+.settingsFormRow {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 20px;
   margin-bottom: 20px;
 }
 
-.settings-form-group {
+.settingsFormGroup {
   margin-bottom: 20px;
 }
 
-.settings-form-label {
+.settingsFormLabel {
   display: block;
   font-weight: 600;
   color: #374151;
@@ -179,16 +179,16 @@
   font-size: 14px;
 }
 
-.settings-form-sublabel {
+.settingsFormSublabel {
   font-size: 12px;
   color: #6b7280;
   margin-bottom: 8px;
   margin-top: -2px;
 }
 
-.settings-form-input,
-.settings-form-select,
-.settings-form-textarea {
+.settingsFormInput,
+.settingsFormSelect,
+.settingsFormTextarea {
   width: 100%;
   padding: 10px 12px;
   border: 1px solid #d1d5db;
@@ -200,32 +200,32 @@
   box-sizing: border-box;
 }
 
-.settings-form-input:focus,
-.settings-form-select:focus,
-.settings-form-textarea:focus {
+.settingsFormInput:focus,
+.settingsFormSelect:focus,
+.settingsFormTextarea:focus {
   outline: none;
   border-color: #3b82f6;
   box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
 }
 
-.settings-form-textarea {
+.settingsFormTextarea {
   min-height: 80px;
   resize: vertical;
   font-family: inherit;
 }
 
-.settings-form-checkbox-group {
+.settingsFormCheckboxGroup {
   display: flex;
   align-items: flex-start;
   gap: 12px;
 }
 
-.settings-form-checkbox {
+.settingsFormCheckbox {
   margin-top: 2px;
   accent-color: #3b82f6;
 }
 
-.settings-form-checkbox-label {
+.settingsFormCheckboxLabel {
   flex: 1;
   font-weight: 500;
   color: #374151;
@@ -233,7 +233,7 @@
   margin-bottom: 0;
 }
 
-.settings-form-checkbox-desc {
+.settingsFormCheckboxDesc {
   font-size: 12px;
   color: #6b7280;
   font-weight: 400;
@@ -241,7 +241,7 @@
 }
 
 /* Buttons */
-.settings-btn {
+.settingsBtn {
   padding: 10px 16px;
   border-radius: 6px;
   font-size: 14px;
@@ -255,51 +255,51 @@
   text-decoration: none;
 }
 
-.settings-btn-primary {
+.settingsBtnPrimary {
   background-color: #dc3545;
   color: white;
 }
 
-.settings-btn-primary:hover:not(:disabled) {
+.settingsBtnPrimary:hover:not(:disabled) {
   background-color: #c82333;
 }
 
-.settings-btn-primary:disabled {
+.settingsBtnPrimary:disabled {
   background-color: #9ca3af;
   border-color: #9ca3af;
   cursor: not-allowed;
   opacity: 0.6;
 }
 
-.settings-btn-secondary {
+.settingsBtnSecondary {
   background-color: #f9fafb;
   color: #374151;
   border-color: #d1d5db;
 }
 
-.settings-btn-secondary:hover {
+.settingsBtnSecondary:hover {
   background-color: #f3f4f6;
   border-color: #9ca3af;
 }
 
-.settings-btn-danger {
+.settingsBtnDanger {
   background-color: #ef4444;
   color: white;
   border-color: #ef4444;
 }
 
-.settings-btn-danger:hover {
+.settingsBtnDanger:hover {
   background-color: #dc2626;
   border-color: #dc2626;
 }
 
-.settings-btn-small {
+.settingsBtnSmall {
   padding: 8px 12px;
   font-size: 13px;
 }
 
 /* Action Buttons */
-.settings-action-buttons {
+.settingsActionButtons {
   display: flex;
   justify-content: flex-end;
   gap: 12px;
@@ -311,7 +311,7 @@
 }
 
 /* Profile Photo Section */
-.settings-profile-photo-section {
+.settingsProfilePhotoSection {
   display: flex;
   align-items: center;
   gap: 20px;
@@ -322,7 +322,7 @@
   border: 1px solid #e9ecef;
 }
 
-.settings-profile-photo {
+.settingsProfilePhoto {
   width: 80px;
   height: 80px;
   border-radius: 50%;
@@ -336,30 +336,30 @@
   flex-shrink: 0;
 }
 
-.settings-profile-photo-info {
+.settingsProfilePhotoInfo {
   flex: 1;
 }
 
-.settings-profile-photo-title {
+.settingsProfilePhotoTitle {
   font-size: 16px;
   font-weight: 600;
   color: #212529;
   margin: 0 0 6px 0;
 }
 
-.settings-profile-photo-desc {
+.settingsProfilePhotoDesc {
   font-size: 14px;
   color: #6c757d;
   margin: 0 0 16px 0;
 }
 
-.settings-profile-photo-actions {
+.settingsProfilePhotoActions {
   display: flex;
   gap: 12px;
 }
 
 /* Info Boxes */
-.settings-info-box {
+.settingsInfoBox {
   background-color: #fef2f2;
   border: 1px solid #fecaca;
   border-radius: 8px;
@@ -367,14 +367,14 @@
   margin-bottom: 24px;
 }
 
-.settings-info-box-title {
+.settingsInfoBoxTitle {
   font-size: 14px;
   font-weight: 600;
   color: #dc2626;
   margin: 0 0 6px 0;
 }
 
-.settings-info-box-desc {
+.settingsInfoBoxDesc {
   font-size: 13px;
   color: #991b1b;
   margin: 0;
@@ -382,7 +382,7 @@
 }
 
 /* Danger Zone */
-.settings-danger-zone {
+.settingsDangerZone {
   margin-top: 32px;
   padding: 20px;
   border: 1px solid #fecaca;
@@ -390,21 +390,21 @@
   background-color: #fef2f2;
 }
 
-.settings-danger-title {
+.settingsDangerTitle {
   font-size: 16px;
   font-weight: 600;
   color: #dc2626;
   margin: 0 0 8px 0;
 }
 
-.settings-danger-desc {
+.settingsDangerDesc {
   font-size: 14px;
   color: #991b1b;
   margin: 0 0 16px 0;
 }
 
 /* Dividers */
-.settings-divider {
+.settingsDivider {
   border: none;
   height: 1px;
   background-color: #f1f3f4;
@@ -413,57 +413,57 @@
 
 /* Responsive Design */
 @media (max-width: 1200px) {
-  .settings-content-wrapper {
+  .settingsContentWrapper {
     grid-template-columns: 260px 1fr;
     gap: 20px;
   }
 }
 
 @media (max-width: 992px) {
-  .settings-main-content {
+  .settingsMainContent {
     left: 0;
     padding: 16px;
   }
   
-  .settings-content-wrapper {
+  .settingsContentWrapper {
     grid-template-columns: 1fr;
     gap: 16px;
   }
   
-  .settings-nav-section {
+  .settingsNavSection {
     position: static;
   }
   
-  .settings-form-row {
+  .settingsFormRow {
     grid-template-columns: 1fr;
     gap: 16px;
   }
 }
 
 @media (max-width: 768px) {
-  .settings-header {
+  .settingsHeader {
     margin-bottom: 20px;
   }
   
-  .settings-title {
+  .settingsTitle {
     font-size: 20px;
   }
   
-  .settings-section-content {
+  .settingsSectionContent {
     padding: 20px;
   }
   
-  .settings-profile-photo-section {
+  .settingsProfilePhotoSection {
     flex-direction: column;
     text-align: center;
     gap: 16px;
   }
   
-  .settings-profile-photo-actions {
+  .settingsProfilePhotoActions {
     justify-content: center;
   }
   
-  .settings-action-buttons {
+  .settingsActionButtons {
     flex-direction: column;
   }
 }

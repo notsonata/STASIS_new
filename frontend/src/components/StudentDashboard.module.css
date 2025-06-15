@@ -1,4 +1,5 @@
-.dashboard-container {
+/* Reset and base styles */
+.dashboardContainer {
   display: flex;
   min-height: 100vh;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
@@ -8,7 +9,7 @@
   gap: clamp(10px, 2vw, 30px); /* Responsive gap instead of fixed */
 }
 
-.dashboard-sidebar {
+.dashboardSidebar {
   width: 256px;
   background: white;
   border-right: 1px solid #e9ecef;
@@ -21,14 +22,14 @@
   z-index: 1000;
 }
 
-.dashboard-logo {
+.dashboardLogo {
   display: flex;
   align-items: center;
   padding: 20px;
   border-bottom: 1px solid #f1f3f4;
 }
 
-.dashboard-logo-icon {
+.dashboardLogoIcon {
   width: 35px;
   height: 35px;
   background: linear-gradient(135deg, #dc3545, #c82333);
@@ -41,11 +42,11 @@
   font-weight: bold;
 }
 
-.dashboard-nav-section {
+.dashboardNavSection {
   margin-bottom: 25px;
 }
 
-.dashboard-nav-title {
+.dashboardNavTitle {
   color: #6c757d;
   font-size: 11px;
   text-transform: uppercase;
@@ -55,7 +56,7 @@
   letter-spacing: 0.5px;
 }
 
-.dashboard-nav-item {
+.dashboardNavItem {
   padding: 10px 20px;
   cursor: pointer;
   transition: all 0.2s;
@@ -64,17 +65,17 @@
   font-weight: 400;
 }
 
-.dashboard-nav-item:hover {
+.dashboardNavItem:hover {
   background: rgba(220, 53, 69, 0.05);
 }
 
-.dashboard-nav-item-active {
+.dashboardNavItemActive {
   background: rgba(220, 53, 69, 0.1);
   color: #dc3545;
   font-weight: 500;
 }
 
-.dashboard-user-info {
+.dashboardUserInfo {
   position: absolute;
   bottom: 20px;
   left: 20px;
@@ -82,7 +83,7 @@
   color: #6c757d;
 }
 
-.main-content {
+.mainContent {
   flex: 1;
   min-height: 100vh;
   margin-right: 0;
@@ -93,59 +94,59 @@
 }
 
 @media (max-width: 1200px) {
-  .main-content {
+  .mainContent {
     margin-left: 0;
     max-width: 1000px;
   }
 }
 
 @media (max-width: 992px) {
-  .main-content {
+  .mainContent {
     margin-left: 0;
     max-width: 100vw;
   }
 }
 
 @media (max-width: 768px) {
-  .main-content {
+  .mainContent {
     margin-left: 0;
     max-width: 100vw;
   }
 }
 
-.dashboard-header {
+.dashboardHeader {
   margin-bottom: 25px;
 }
 
-.dashboard-welcome-title {
+.dashboardWelcomeTitle {
   font-size: 22px;
   font-weight: 500;
   color: #212529;
   margin: 0;
 }
 
-.dashboard-stats-grid {
+.dashboardStatsGrid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 16px;
   margin-bottom: 25px;
 }
 
-.dashboard-stat-card {
+.dashboardStatCard {
   background: white;
   padding: 20px;
   border-radius: 6px;
   border: 1px solid #e9ecef;
 }
 
-.dashboard-stat-title {
+.dashboardStatTitle {
   color: #6c757d;
   font-size: 13px;
   margin-bottom: 12px;
   font-weight: 500;
 }
 
-.dashboard-stat-value {
+.dashboardStatValue {
   font-size: 28px;
   font-weight: 700;
   color: #212529;
@@ -153,59 +154,59 @@
   line-height: 1;
 }
 
-.dashboard-content-wrapper {
+.dashboardContentWrapper {
   display: grid;
   grid-template-columns: 1fr 280px;
   gap: 25px;
 }
 
-.dashboard-main-section {
+.dashboardMainSection {
   display: flex;
   flex-direction: column;
   gap: 25px;
 }
 
-.dashboard-right-sidebar {
+.dashboardRightSidebar {
   width: 280px;
   display: flex;
   flex-direction: column;
   gap: 20px;
 }
 
-.dashboard-section-card {
+.dashboardSectionCard {
   background: white;
   border-radius: 8px;
   border: 1px solid #e9ecef;
   overflow: hidden;
 }
 
-.dashboard-section-header {
+.dashboardSectionHeader {
   padding: 18px 20px;
   border-bottom: 1px solid #f1f3f4;
   background: #fafbfc;
 }
 
-.dashboard-section-title {
+.dashboardSectionTitle {
   font-size: 16px;
   font-weight: 600;
   color: #212529;
   margin: 0;
 }
 
-.dashboard-main-grid {
+.dashboardMainGrid {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 25px;
 }
 
-.dashboard-actions-grid {
+.dashboardActionsGrid {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 0;
   padding: 20px;
 }
 
-.dashboard-action-btn {
+.dashboardActionBtn {
   padding: 25px 20px;
   border: 1px dashed #dee2e6;
   text-align: center;
@@ -215,82 +216,82 @@
   position: relative;
 }
 
-.dashboard-action-btn:hover {
+.dashboardActionBtn:hover {
   background: #f8f9fa;
   border-color: #dc3545;
 }
 
-.dashboard-action-title {
+.dashboardActionTitle {
   font-weight: 600;
   color: #212529;
   margin-bottom: 4px;
   font-size: 13px;
 }
 
-.dashboard-action-desc {
+.dashboardActionDesc {
   font-size: 11px;
   color: #6c757d;
   line-height: 1.3;
 }
 
-.dashboard-activity-list {
+.dashboardActivityList {
   padding: 20px;
   min-height: 200px;
 }
 
-.dashboard-activity-item {
+.dashboardActivityItem {
   padding: 16px 0;
   border-bottom: 1px solid #f1f3f4;
   display: flex;
   align-items: flex-start;
 }
 
-.dashboard-activity-item:last-child {
+.dashboardActivityItem:last-child {
   border-bottom: none;
 }
 
-.dashboard-activity-content {
+.dashboardActivityContent {
   flex: 1;
 }
 
-.dashboard-activity-message {
+.dashboardActivityMessage {
   color: #212529;
   font-size: 13px;
   margin-bottom: 4px;
   line-height: 1.4;
 }
 
-.dashboard-activity-time {
+.dashboardActivityTime {
   color: #6c757d;
   font-size: 11px;
 }
 
-.dashboard-calendar-section {
+.dashboardCalendarSection {
   background: white;
   border-radius: 8px;
   border: 1px solid #e9ecef;
   overflow: hidden;
 }
 
-.dashboard-calendar-header-section {
+.dashboardCalendarHeaderSection {
   padding: 18px 20px;
   border-bottom: 1px solid #f1f3f4;
   background: #fafbfc;
   text-align: left;
 }
 
-.dashboard-calendar-title {
+.dashboardCalendarTitle {
   font-size: 16px;
   font-weight: 600;
   color: #212529;
   margin: 0;
 }
 
-.dashboard-calendar-content {
+.dashboardCalendarContent {
   padding: 20px;
 }
 
-.dashboard-calendar-month {
+.dashboardCalendarMonth {
   text-align: center;
   font-weight: 600;
   color: #212529;
@@ -298,13 +299,13 @@
   font-size: 14px;
 }
 
-.dashboard-calendar-grid {
+.dashboardCalendarGrid {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
   gap: 2px;
 }
 
-.dashboard-calendar-day-header {
+.dashboardCalendarDayHeader {
   text-align: center;
   padding: 8px 4px;
   font-size: 11px;
@@ -312,7 +313,7 @@
   color: #6c757d;
 }
 
-.dashboard-calendar-day {
+.dashboardCalendarDay {
   text-align: center;
   padding: 8px 4px;
   font-size: 12px;
@@ -329,70 +330,70 @@
 }
 
 /* Calendar month navigation styles */
-.dashboard-calendar-month-nav {
+.dashboardCalendarMonthNav {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 12px;
 }
 
-.dashboard-calendar-nav-btn {
+.dashboardCalendarNavBtn {
   min-width: 0;
   padding: 4px 10px;
 }
 
 /* Time period input container */
-.time-period-container {
+.timePeriodContainer {
   display: flex;
   gap: 10px;
 }
 
 /* Full width form group for time period */
-.form-group-full-width {
+.formGroupFullWidth {
   display: flex;
   flex-direction: column;
   grid-column: 1 / -1;
 }
 
-.dashboard-calendar-day:hover {
+.dashboardCalendarDay:hover {
   background: #f8f9fa;
 }
 
-.dashboard-calendar-day-current-month {
+.dashboardCalendarDayCurrentMonth {
   color: #495057;
 }
 
-.dashboard-calendar-day-selected {
+.dashboardCalendarDaySelected {
   background: #dc3545;
   color: white;
   font-weight: 600;
 }
 
-.dashboard-calendar-day-today {
+.dashboardCalendarDayToday {
   background: #fff3cd;
   color: #856404;
   font-weight: 500;
 }
 
-.dashboard-schedule-header-section {
+.dashboardScheduleHeaderSection {
   padding: 18px 20px;
   border-bottom: 1px solid #f1f3f4;
   background: #fafbfc;
 }
 
-.dashboard-schedule-title {
+.dashboardScheduleTitle {
   font-size: 16px;
   font-weight: 600;
   color: #212529;
   margin: 0;  
 }
 
-.dashboard-schedule-content {
+.dashboardScheduleContent {
   padding: 20px;
   min-height: 150px;
 }
 
-.dashboard-schedule-item {
+.dashboardScheduleItem {
   padding: 12px 20px;
   border-left: 3px solid #dc3545;
   margin-bottom: 12px;
@@ -401,37 +402,37 @@
   border-radius: 0 4px 4px 0;
 }
 
-.dashboard-schedule-item-blue {
+.dashboardScheduleItemBlue {
   border-left-color: #007bff;
   background: rgba(0, 123, 255, 0.02);
 }
 
-.dashboard-schedule-item-green {
+.dashboardScheduleItemGreen {
   border-left-color: #28a745;
   background: rgba(40, 167, 69, 0.02);
 }
 
-.dashboard-schedule-time {
+.dashboardScheduleTime {
   font-size: 11px;
   color: #6c757d;
   margin-bottom: 4px;
   font-weight: 500;
 }
 
-.dashboard-schedule-subject {
+.dashboardScheduleSubject {
   font-weight: 600;
   color: #212529;
   margin-bottom: 2px;
   font-size: 13px;
 }
 
-.dashboard-schedule-room {
+.dashboardScheduleRoom {
   font-size: 11px;
   color: #6c757d;
 }
 
 /* Modal Styles */
-.modal-overlay {
+.modalOverlay {
   position: fixed;
   top: 0;
   left: 0;
@@ -445,7 +446,7 @@
   backdrop-filter: blur(2px);
 }
 
-.modal-content {
+.modalContent {
   background: white;
   border-radius: 12px;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
@@ -468,36 +469,36 @@
   }
 }
 
-.modal-header {
+.modalHeader {
   padding: 24px 28px 20px;
   border-bottom: 1px solid #e9ecef;
   background: #fafbfc;
   border-radius: 12px 12px 0 0;
 }
 
-.modal-title {
+.modalTitle {
   font-size: 20px;
   font-weight: 600;
   color: #212529;
   margin: 0;
 }
 
-.modal-body {
+.modalBody {
   padding: 28px;
 }
 
-.modal-grid {
+.modalGrid {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 20px;
 }
 
-.form-group {
+.formGroup {
   display: flex;
   flex-direction: column;
 }
 
-.form-label {
+.formLabel {
   font-size: 14px;
   font-weight: 600;
   color: #374151;
@@ -505,7 +506,7 @@
   line-height: 1.4;
 }
 
-.form-input {
+.formInput {
   padding: 12px 16px;
   border: 1px solid #d1d5db;
   border-radius: 8px;
@@ -516,18 +517,18 @@
   line-height: 1.5;
 }
 
-.form-input:focus {
+.formInput:focus {
   outline: none;
   border-color: #dc3545;
   box-shadow: 0 0 0 3px rgba(220, 53, 69, 0.1);
   background: #fff;
 }
 
-.form-input::placeholder {
+.formInput::placeholder {
   color: #9ca3af;
 }
 
-.modal-footer {
+.modalFooter {
   padding: 20px 28px 28px;
   border-top: 1px solid #e9ecef;
   display: flex;
@@ -555,84 +556,84 @@
   box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.1);
 }
 
-.btn-secondary {
+.btnSecondary {
   background: #f8f9fa;
   color: #6b7280;
   border: 1px solid #d1d5db;
 }
 
-.btn-secondary:hover {
+.btnSecondary:hover {
   background: #e5e7eb;
   color: #374151;
   border-color: #9ca3af;
 }
 
-.btn-primary {
+.btnPrimary {
   background: #dc3545;
   color: white;
   border: 1px solid #dc3545;
 }
 
-.btn-primary:hover {
+.btnPrimary:hover {
   background: #c82333;
   border-color: #c82333;
   transform: translateY(-1px);
   box-shadow: 0 4px 12px rgba(220, 53, 69, 0.3);
 }
 
-.btn-primary:active {
+.btnPrimary:active {
   transform: translateY(0);
   box-shadow: 0 2px 4px rgba(220, 53, 69, 0.2);
 }
 
 /* Responsive Design */
 @media (max-width: 1024px) {
-  .dashboard-content-wrapper {
+  .dashboardContentWrapper {
     grid-template-columns: 1fr;
   }
   
-  .dashboard-right-sidebar {
+  .dashboardRightSidebar {
     width: 100%;
   }
   
-  .dashboard-main-grid {
+  .dashboardMainGrid {
     grid-template-columns: 1fr;
   }
 }
 
 @media (max-width: 768px) {
-  .main-content {
+  .mainContent {
     margin-left: 0;
     padding: 15px;
     max-width: 100vw;
   }
   
-  .dashboard-stats-grid {
+  .dashboardStatsGrid {
     grid-template-columns: 1fr;
   }
   
-  .dashboard-actions-grid {
+  .dashboardActionsGrid {
     grid-template-columns: 1fr;
   }
 
-  .modal-grid {
+  .modalGrid {
     grid-template-columns: 1fr;
   }
 
-  .modal-content {
+  .modalContent {
     margin: 10px;
     max-width: calc(100vw - 20px);
   }
 
-  .modal-header {
+  .modalHeader {
     padding: 20px 24px 16px;
   }
 
-  .modal-body {
+  .modalBody {
     padding: 24px;
   }
 
-  .modal-footer {
+  .modalFooter {
     padding: 16px 24px 24px;
     flex-direction: column-reverse;
   }

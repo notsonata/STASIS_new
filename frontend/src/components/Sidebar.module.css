@@ -11,7 +11,7 @@
   padding: 0;
 }
 
-.sidebar-header {
+.sidebarHeader {
   padding: 24px;
   border-bottom: 1px solid #f3f4f6;
 }
@@ -29,17 +29,17 @@
   font-size: 16px;
 }
 
-.sidebar-content {
+.sidebarContent {
   padding: 16px;
   height: calc(100vh - 120px);
   overflow-y: auto;
 }
 
-.nav-section {
+.navSection {
   margin-bottom: 24px;
 }
 
-.nav-label {
+.navLabel {
   font-size: 12px;
   color: #6b7280;
   text-transform: uppercase;
@@ -49,13 +49,13 @@
   font-weight: 600;
 }
 
-.nav-items {
+.navItems {
   display: flex;
   flex-direction: column;
   gap: 4px;
 }
 
-.nav-item {
+.navItem {
   padding: 8px 12px;
   color: #6b7280;
   border-radius: 4px;
@@ -73,14 +73,14 @@
   position: relative;
 }
 
-.nav-item:hover {
+.navItem:hover {
   background-color: #f3f4f6;
   color: #374151;
   transform: translateX(2px); /* Subtle slide effect on hover */
 }
 
 /* Fixed active page styling with consistent transitions and hover effects */
-.nav-item.active-page {
+.activePage {
   color: #ef4444 !important;
   background-color: #fef2f2 !important;
   font-weight: 500;
@@ -94,35 +94,35 @@
 }
 
 /* Apply hover effects to active items as well */
-.nav-item.active-page:hover {
+.activePage:hover {
   background-color: #fde8e8 !important; /* Slightly darker shade on hover */
   color: #dc2626 !important; /* Slightly darker red on hover */
   transform: translateX(4px); /* Enhanced slide effect on hover */
 }
 
 /* Non-clickable items */
-.nav-item.non-clickable {
+.nonClickable {
   opacity: 0.6;
   cursor: default;
   /* Ensure transitions still work but reset transform - 0.3s duration */
   transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.nav-item.non-clickable:hover {
+.nonClickable:hover {
   background-color: transparent;
   color: #6b7280;
   transform: none; /* No transform for non-clickable items */
   opacity: 0.6;
 }
 
-.sidebar-footer {
+.sidebarFooter {
   position: absolute;
   bottom: 24px;
   left: 24px;
   right: 24px;
 }
 
-.logout-button {
+.logoutButton {
   width: 100%;
   padding: 8px 12px;
   background-color: #dc3545;
@@ -137,19 +137,19 @@
   text-align: center;
 }
 
-.logout-button:hover {
+.logoutButton:hover {
   background-color: #c82333;
   transform: translateY(-1px);
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.user-profile {
+.userProfile {
   display: flex;
   align-items: center;
   gap: 12px;
 }
 
-.user-avatar {
+.userAvatar {
   width: 32px;
   height: 32px;
   background-color: #ef4444;
@@ -163,18 +163,18 @@
   flex-shrink: 0;
 }
 
-.user-info {
+.userInfo {
   flex: 1;
   font-size: 12px;
   color: #6b7280;
 }
 
-.user-name {
+.userName {
   font-weight: 600;
   color: #374151;
 }
 
-.user-role {
+.userRole {
   margin-top: 2px;
 }
 
@@ -185,18 +185,18 @@
     transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
   
-  .sidebar.open {
+  .open {
     transform: translateX(0);
   }
 }
 
 /* Optional: Add focus states for accessibility */
-.nav-item:focus-visible {
+.navItem:focus-visible {
   outline: 2px solid #ef4444;
   outline-offset: 2px;
 }
 
-.logout-button:focus-visible {
+.logoutButton:focus-visible {
   outline: 2px solid #ffffff;
   outline-offset: 2px;
 }

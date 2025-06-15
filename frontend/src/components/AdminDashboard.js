@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import './AdminDashboard.css';
+import styles from './AdminDashboard.module.css';
 import Sidebar from './Sidebar';
 
 const AdminDashboard = () => {
@@ -403,10 +403,11 @@ const handleAddSchedule = () => {
 
   const calendarDays = generateCalendarDays();
   return (
-    <div className="dashboard-container">      {/* Sidebar */}
+    <div className={styles['dashboard-container']}>      {/* Sidebar */}
       <Sidebar 
         onNavigate={showSection}
-        userInfo={{ name: "David Anderson", role: "Schedule Admin" }}        sections={[
+        userInfo={{ name: "David Anderson", role: "Schedule Admin" }}
+        sections={[
           {
             items: [{ id: 'Dashboard', label: 'Dashboard', icon: '📊' }]
           },
@@ -431,68 +432,68 @@ const handleAddSchedule = () => {
       />
 
       {/* Main Content */}
-      <div className="main-content">
-        <div className="dashboard-header">
-          <h1 className="dashboard-welcome-title">Welcome back, Admin</h1>
+      <div className={styles['main-content']}>
+        <div className={styles['dashboard-header']}>
+          <h1 className={styles['dashboard-welcome-title']}>Welcome back, Admin</h1>
         </div>
 
         {/* Stats Cards */}
-        <div className="dashboard-stats-grid">
-          <div className="dashboard-stat-card">
-            <div className="dashboard-stat-title">Total Students</div>
-            <div className="dashboard-stat-value">{dashboardData.stats.totalStudents.toLocaleString()}</div>
+        <div className={styles['dashboard-stats-grid']}>
+          <div className={styles['dashboard-stat-card']}>
+            <div className={styles['dashboard-stat-title']}>Total Students</div>
+            <div className={styles['dashboard-stat-value']}>{dashboardData.stats.totalStudents.toLocaleString()}</div>
           </div>
-          <div className="dashboard-stat-card">
-            <div className="dashboard-stat-title">Total Faculty</div>
-            <div className="dashboard-stat-value">{dashboardData.stats.totalFaculty}</div>
+          <div className={styles['dashboard-stat-card']}>
+            <div className={styles['dashboard-stat-title']}>Total Faculty</div>
+            <div className={styles['dashboard-stat-value']}>{dashboardData.stats.totalFaculty}</div>
           </div>
-          <div className="dashboard-stat-card">
-            <div className="dashboard-stat-title">Active Courses</div>
-            <div className="dashboard-stat-value">{dashboardData.stats.activeCourses}</div>
+          <div className={styles['dashboard-stat-card']}>
+            <div className={styles['dashboard-stat-title']}>Active Courses</div>
+            <div className={styles['dashboard-stat-value']}>{dashboardData.stats.activeCourses}</div>
           </div>
         </div>
 
         {/* Content Wrapper */}
-        <div className="dashboard-content-wrapper">
+        <div className={styles['dashboard-content-wrapper']}>
           {/* Main Left Section */}
-          <div className="dashboard-main-section">
-            <div className="dashboard-main-grid">
+          <div className={styles['dashboard-main-section']}>
+            <div className={styles['dashboard-main-grid']}>
               {/* Quick Actions */}
-              <div className="dashboard-section-card">
-                <div className="dashboard-section-header">
-                  <h2 className="dashboard-section-title">Quick Actions</h2>
+              <div className={styles['dashboard-section-card']}>
+                <div className={styles['dashboard-section-header']}>
+                  <h2 className={styles['dashboard-section-title']}>Quick Actions</h2>
                 </div>
-                <div className="dashboard-actions-grid">
-                  <div className="dashboard-action-btn" onClick={showAddStudentForm}>
-                    <div className="dashboard-action-title">Add Student</div>
-                    <div className="dashboard-action-desc">Create new student profile</div>
+                <div className={styles['dashboard-actions-grid']}>
+                  <div className={styles['dashboard-action-btn']} onClick={showAddStudentForm}>
+                    <div className={styles['dashboard-action-title']}>Add Student</div>
+                    <div className={styles['dashboard-action-desc']}>Create new student profile</div>
                   </div>
-                  <div className="dashboard-action-btn" onClick={showAddFacultyForm}>
-                    <div className="dashboard-action-title">Add Faculty</div>
-                    <div className="dashboard-action-desc">Register new faculty member</div>
+                  <div className={styles['dashboard-action-btn']} onClick={showAddFacultyForm}>
+                    <div className={styles['dashboard-action-title']}>Add Faculty</div>
+                    <div className={styles['dashboard-action-desc']}>Register new faculty member</div>
                   </div>
-                  <div className="dashboard-action-btn" onClick={showAddCourseForm}>
-                    <div className="dashboard-action-title">Add Course</div>
-                    <div className="dashboard-action-desc">Create new course</div>
+                  <div className={styles['dashboard-action-btn']} onClick={showAddCourseForm}>
+                    <div className={styles['dashboard-action-title']}>Add Course</div>
+                    <div className={styles['dashboard-action-desc']}>Create new course</div>
                   </div>
-                  <div className="dashboard-action-btn" onClick={showScheduleManager}>
-                    <div className="dashboard-action-title">Schedule</div>
-                    <div className="dashboard-action-desc">Manage class schedules</div>
+                  <div className={styles['dashboard-action-btn']} onClick={showScheduleManager}>
+                    <div className={styles['dashboard-action-title']}>Schedule</div>
+                    <div className={styles['dashboard-action-desc']}>Manage class schedules</div>
                   </div>
                 </div>
               </div>
 
               {/* Recent Activities */}
-              <div className="dashboard-section-card">
-                <div className="dashboard-section-header">
-                  <h2 className="dashboard-section-title">Recent Activities</h2>
+              <div className={styles['dashboard-section-card']}>
+                <div className={styles['dashboard-section-header']}>
+                  <h2 className={styles['dashboard-section-title']}>Recent Activities</h2>
                 </div>
-                <div className="dashboard-activity-list">
+                <div className={styles['dashboard-activity-list']}>
                   {dashboardData.recentActivities.map((activity) => (
-                    <div key={activity.id} className="dashboard-activity-item">
-                      <div className="dashboard-activity-content">
-                        <div className="dashboard-activity-message">{activity.message}</div>
-                        <div className="dashboard-activity-time">{activity.time}</div>
+                    <div key={activity.id} className={styles['dashboard-activity-item']}>
+                      <div className={styles['dashboard-activity-content']}>
+                        <div className={styles['dashboard-activity-message']}>{activity.message}</div>
+                        <div className={styles['dashboard-activity-time']}>{activity.time}</div>
                       </div>
                     </div>
                   ))}
@@ -502,29 +503,29 @@ const handleAddSchedule = () => {
           </div>
 
           {/* Right Sidebar */}
-          <div className="dashboard-right-sidebar">
+          <div className={styles['dashboard-right-sidebar']}>
             {/* Calendar */}
-            <div className="dashboard-calendar-section">
-              <div className="dashboard-calendar-header-section">
-                <h2 className="dashboard-calendar-title">Calendar</h2>
+            <div className={styles['dashboard-calendar-section']}>
+              <div className={styles['dashboard-calendar-header-section']}>
+                <h2 className={styles['dashboard-calendar-title']}>Calendar</h2>
               </div>
-              <div className="dashboard-calendar-content">
-                <div className="dashboard-calendar-month" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 12 }}>
+              <div className={styles['dashboard-calendar-content']}>
+                <div className={styles['dashboard-calendar-month']} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 12 }}>
                   <button className="btn btn-secondary" style={{ minWidth: 0, padding: '4px 10px' }} onClick={goToPrevMonth}>&lt;</button>
                   <span>
                     {new Date(calendarYear, calendarMonth).toLocaleString('default', { month: 'long', year: 'numeric' })}
                   </span>
                   <button className="btn btn-secondary" style={{ minWidth: 0, padding: '4px 10px' }} onClick={goToNextMonth}>&gt;</button>
                 </div>
-                <div className="dashboard-calendar-grid">
+                <div className={styles['dashboard-calendar-grid']}>
                   {['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'].map((day) => (
-                    <div key={day} className="dashboard-calendar-day-header">{day}</div>
+                    <div key={day} className={styles['dashboard-calendar-day-header']}>{day}</div>
                   ))}
                   {calendarDays.map((dayObj, index) => {
-                    let dayClasses = ['dashboard-calendar-day'];
-                    if (dayObj.isCurrentMonth) dayClasses.push('dashboard-calendar-day-current-month');
-                    if (dayObj.isSelected) dayClasses.push('dashboard-calendar-day-selected');
-                    if (dayObj.isToday && !dayObj.isSelected) dayClasses.push('dashboard-calendar-day-today');
+                    let dayClasses = [styles['dashboard-calendar-day']];
+                    if (dayObj.isCurrentMonth) dayClasses.push(styles['dashboard-calendar-day-current-month']);
+                    if (dayObj.isSelected) dayClasses.push(styles['dashboard-calendar-day-selected']);
+                    if (dayObj.isToday && !dayObj.isSelected) dayClasses.push(styles['dashboard-calendar-day-today']);
                     return (
                       <div
                         key={index}
@@ -540,19 +541,19 @@ const handleAddSchedule = () => {
             </div>
 
             {/* Upcoming Schedule */}
-            <div className="dashboard-section-card">
-              <div className="dashboard-schedule-header-section">
-                <h2 className="dashboard-schedule-title">Upcoming Schedule</h2>
+            <div className={styles['dashboard-section-card']}>
+              <div className={styles['dashboard-schedule-header-section']}>
+                <h2 className={styles['dashboard-schedule-title']}>Upcoming Schedule</h2>
               </div>
-              <div className="dashboard-schedule-content">
+              <div className={styles['dashboard-schedule-content']}>
                 {scheduleData.map((item) => (
                   <div 
                     key={item.id} 
-                    className={`dashboard-schedule-item ${item.type === 'blue' ? 'dashboard-schedule-item-blue' : item.type === 'green' ? 'dashboard-schedule-item-green' : ''}`}
+                    className={`${styles['dashboard-schedule-item']} ${item.type === 'blue' ? styles['dashboard-schedule-item-blue'] : item.type === 'green' ? styles['dashboard-schedule-item-green'] : ''}`}
                   >
-                    <div className="dashboard-schedule-time">{item.time}</div>
-                    <div className="dashboard-schedule-subject">{item.subject}</div>
-                    <div className="dashboard-schedule-room">{item.room}</div>
+                    <div className={styles['dashboard-schedule-time']}>{item.time}</div>
+                    <div className={styles['dashboard-schedule-subject']}>{item.subject}</div>
+                    <div className={styles['dashboard-schedule-room']}>{item.room}</div>
                   </div>
                 ))}
               </div>

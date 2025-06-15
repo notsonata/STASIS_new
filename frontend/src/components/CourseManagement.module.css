@@ -1,0 +1,785 @@
+/* Container and Layout */
+.dashboardContainer {
+  display: flex;
+  min-height: 100vh;
+  background-color: #f8f9fa;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+/* Main Content */
+.mainContent {
+  flex: 1;
+  padding-left: calc(256px + 20px); /* Sidebar width + content padding */
+  padding-right: 20px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  min-height: 100vh;
+  box-sizing: border-box;
+  background-color: #f8f9fa;
+  min-width: 0;
+  overflow-x: auto;
+}
+
+.contentWrapper {
+  width: 100%;
+  max-width: none; /* Allow full width stretching */
+  margin: 0;
+  padding: 0;
+  min-width: 0;
+}
+
+/* Breadcrumb */
+.breadcrumb {
+  font-size: 14px;
+  color: #6b7280;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.breadcrumbLink {
+  color: #dc3545;
+  cursor: pointer;
+  transition: color 0.2s ease;
+  text-decoration: none;
+}
+
+.breadcrumbLink:hover {
+  color: #c82333;
+  text-decoration: underline;
+}
+
+.breadcrumbSeparator {
+  color: #9ca3af;
+  margin: 0 4px;
+}
+
+.breadcrumbCurrent {
+  color: #6b7280;
+  font-weight: 500;
+}
+
+/* Course Content Wrapper - Similar to Settings */
+.courseContentWrapper {
+  display: grid;
+  grid-template-columns: 230px 1fr; /* Match StudentManagement sidebar width */
+  gap: 25px;
+  height: calc(100vh - 140px);
+  padding: 15px;
+}
+
+/* Program Navigation Card */
+.courseNavSection {
+  background: white;
+  border-radius: 8px;
+  border: 1px solid #e9ecef;
+  padding: 0;
+  width: 230px; /* Match StudentManagement sidebar width */
+  min-width: 160px;
+  max-width: 230px;
+  height: fit-content;
+  position: sticky;
+  top: 0;
+}
+
+/* Main Course Section Card */
+.courseMainSection {
+  background: white;
+  border-radius: 8px;
+  border: 1px solid #e9ecef;
+  padding: 0;
+  height: fit-content;
+  max-height: calc(100vh - 180px); /* Add max height constraint */
+  overflow-y: auto; /* Allow scrolling if content is too tall */
+}
+
+.courseSectionHeader {
+  padding: 24px 28px;
+  border-bottom: 1px solid #f1f3f4;
+  background: #fafbfc;
+  border-radius: 8px 8px 0 0;
+}
+
+.courseSectionTitle {
+  font-size: 18px;
+  font-weight: 600;
+  color: #212529;
+  margin: 0 0 6px 0;
+}
+
+.courseSectionDesc {
+  font-size: 14px;
+  color: #6c757d;
+  margin: 0;
+}
+
+.courseSectionContent {
+  padding: 20px; /* Fixed padding like Settings */
+  padding-bottom: 20px;
+}
+
+.courseNavHeader {
+  padding: 18px 20px;
+  border-bottom: 1px solid #f1f3f4;
+  background: #fafbfc;
+  border-radius: 8px 8px 0 0;
+}
+
+.courseNavTitle {
+  font-size: 16px;
+  font-weight: 600;
+  color: #212529;
+  margin: 0;
+}
+
+.courseNavList {
+  padding: 12px 0;
+}
+
+.courseNavItem {
+  padding: 12px 20px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  color: #495057;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  border-left: 3px solid transparent;
+  font-size: 14px; /* Match StudentManagement */
+}
+
+.courseNavItem:hover {
+  background-color: #f9fafb;
+  color: #374151;
+}
+
+.courseNavItemActive {
+  color: #ef4444 !important;
+  background-color: #fef2f2 !important;
+  font-weight: 500;
+  border-radius: 6px;
+  margin: 4px 12px; /* Add margin on sides and top/bottom */
+}
+
+.courseNavIcon {
+  font-size: 16px;
+  width: 20px;
+  text-align: center;
+}
+
+.courseNavActions {
+  padding: 12px 20px;
+  border-top: 1px solid #f1f3f4;
+  border-bottom: 1px solid #f1f3f4;
+}
+
+.courseBtnAddSection {
+  width: 100%;
+  padding: 8px 12px;
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.courseBtnAddSection:hover {
+  background-color: #c82333;
+}
+
+.courseBtnAddCourse {
+  background: #dc3545;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: 0 1px 2px rgba(220, 53, 69, 0.08);
+  display: inline-block;
+}
+
+.courseBtnAddCourse:hover {
+  background: #c82333;
+}
+
+.courseNavInfo {
+  padding: 12px 20px;
+}
+
+.courseNavInfoItem {
+  margin-bottom: 10px;
+}
+
+.courseNavInfoLabel {
+  font-size: 12px;
+  font-weight: 600;
+  color: #6c757d;
+  margin-bottom: 5px;
+}
+
+.courseNavInfoValue {
+  font-size: 14px;
+  font-weight: 500;
+  color: #212529;
+}
+
+/* Main Course Section Card */
+.courseMainSection {
+  background: white;
+  border-radius: 8px;
+  border: 1px solid #e9ecef;
+  padding: 0;
+  height: fit-content;
+  max-height: calc(100vh - 180px);
+  overflow-y: auto;
+}
+
+.courseSectionHeader {
+  padding: 24px 28px;
+  border-bottom: 1px solid #f1f3f4;
+  background: #fafbfc;
+  border-radius: 8px 8px 0 0;
+}
+
+.courseSectionTitle {
+  font-size: 18px;
+  font-weight: 600;
+  color: #212529;
+  margin: 0 0 6px 0;
+}
+
+.courseSectionDesc {
+  font-size: 14px;
+  color: #6c757d;
+  margin: 0;
+}
+
+.courseSectionContent {
+  padding: 20px;
+  padding-bottom: 20px;
+}
+
+/* Update existing course filters to work within card */
+.courseFilters {
+  padding: 20px 28px;
+  border-bottom: 1px solid #e9ecef;
+  display: flex;
+  gap: 15px;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.courseSearchGroup {
+  flex: 1;
+  min-width: 200px;
+}
+
+/* --- Course Table: Match Student Table Style --- */
+.courseTableContainer {
+  overflow-x: auto;
+  border-radius: clamp(6px, 1vw, 8px);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  margin: 0 !important;
+  padding: 0 !important;
+  box-sizing: border-box;
+}
+
+.courseTable {
+  width: 100%;
+  min-width: 600px;
+  border-collapse: collapse;
+  font-size: clamp(12px, 1.5vw, 14px);
+  margin: 0;
+  padding: 0;
+  max-width: none;
+}
+
+.courseTable th {
+  background-color: #f8f9fa;
+  padding: clamp(10px, 2vw, 16px);
+  text-align: left;
+  font-weight: 600;
+  color: #495057;
+  border-bottom: 1px solid #dee2e6;
+  font-size: clamp(11px, 1.5vw, 13px);
+  white-space: nowrap;
+}
+
+.courseTable td {
+  padding: clamp(10px, 2vw, 16px);
+  border-bottom: 1px solid #f1f3f4;
+  color: #495057;
+  vertical-align: middle;
+}
+
+.courseTable tbody tr:hover {
+  background-color: #f8f9fa;
+  transition: background-color 0.2s ease;
+}
+
+.courseCode {
+  font-weight: 500;
+}
+
+.courseName {
+  max-width: 300px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.courseProgram {
+  font-size: 13px;
+  color: #6c757d;
+}
+
+.courseStatus {
+  display: inline-block;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.courseStatus.active {
+  background-color: #d1fae5;
+  color: #065f46;
+}
+
+.courseStatus.inactive {
+  background-color: #fee2e2;
+  color: #991b1b;
+}
+
+.btnAction {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 6px;
+  color: #6b7280;
+  border-radius: 4px;
+  transition: all 0.2s;
+}
+
+.btnAction:hover {
+  background-color: #f3f4f6;
+  color: #111827;
+}
+
+.noCourses {
+  text-align: center;
+  padding: 40px 0;
+  color: #6c757d;
+  font-size: 14px;
+}
+
+.dashboardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: clamp(20px, 3vw, 36px);
+  padding-bottom: clamp(16px, 2.5vw, 24px);
+  border-bottom: 1px solid #e9ecef;
+  flex-wrap: wrap;
+  gap: clamp(12px, 2vw, 16px);
+}
+
+.dashboardWelcomeTitle {
+  font-size: clamp(20px, 3vw, 28px); /* Responsive title */
+  font-weight: 700; /* Changed from 600 to 700 for bolder text */
+  color: #212529;
+  margin: 0;
+}
+
+.programIndicator {
+  background-color: #ffebee;
+  color: #dc3545;
+  padding: clamp(6px, 1vw, 10px) clamp(12px, 2vw, 20px);
+  border-radius: clamp(16px, 2vw, 24px);
+  font-size: clamp(11px, 1.5vw, 14px);
+  font-weight: 500;
+  white-space: nowrap; /* Prevent wrapping */
+}
+
+/* Modal Styles */
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+  backdrop-filter: blur(2px);
+}
+
+.modalContent {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+  width: 100%;
+  max-width: 600px;
+  margin: 20px;
+  max-height: 90vh;
+  overflow-y: auto;
+  animation: modalSlideIn 0.3s ease-out;
+}
+
+@keyframes modalSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.modalHeader {
+  padding: 24px 28px 20px;
+  border-bottom: 1px solid #e9ecef;
+  background: #fafbfc;
+  border-radius: 12px 12px 0 0;
+}
+
+.modalTitle {
+  font-size: 20px;
+  font-weight: 600;
+  color: #212529;
+  margin: 0;
+}
+
+.modalBody {
+  padding: 28px;
+}
+
+.modalGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+}
+
+.formLabel {
+  font-size: 14px;
+  font-weight: 600;
+  color: #374151;
+  margin-bottom: 8px;
+  line-height: 1.4;
+}
+
+.formInput {
+  padding: 12px 16px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 14px;
+  transition: all 0.2s ease;
+  background: white;
+  color: #374151;
+  line-height: 1.5;
+}
+
+.formInput:focus {
+  outline: none;
+  border-color: #dc3545;
+  box-shadow: 0 0 0 3px rgba(220, 53, 69, 0.1);
+  background: #fff;
+}
+
+.formInput::placeholder {
+  color: #9ca3af;
+}
+
+.modalFooter {
+  padding: 20px 28px 28px;
+  border-top: 1px solid #e9ecef;
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  background: #fafbfc;
+  border-radius: 0 0 12px 12px;
+}
+
+.btn {
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: none;
+  line-height: 1;
+  min-width: 100px;
+  text-align: center;
+}
+
+.btn:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.1);
+}
+
+.btnSecondary {
+  background: #f8f9fa;
+  color: #6b7280;
+  border: 1px solid #d1d5db;
+}
+
+.btnSecondary:hover {
+  background: #e5e7eb;
+  color: #374151;
+  border-color: #9ca3af;
+}
+
+.btnPrimary {
+  background: #dc3545;
+  color: white;
+  border: 1px solid #dc3545;
+}
+
+.btnPrimary:hover {
+  background: #c82333;
+  border-color: #c82333;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(220, 53, 69, 0.3);
+}
+
+/* Dashboard Section Card - copied from StudentManagement */
+.dashboardSectionCard {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  padding: clamp(16px, 2.5vw, 24px);
+  margin-bottom: clamp(16px, 2.5vw, 24px);
+  border: 1px solid #e9ecef;
+}
+
+/* Dashboard Section Header - copied from StudentManagement */
+.dashboardSectionHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: clamp(16px, 2vw, 20px);
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.dashboardSectionTitle {
+  font-size: clamp(16px, 2.5vw, 18px);
+  font-weight: 600;
+  color: #212529;
+  margin: 0;
+}
+
+/* Course Table Container - match StudentManagement styling */
+.courseTableContainer {
+  overflow-x: auto;
+  border: 1px solid #e9ecef;
+  border-radius: 6px;
+  background-color: #fff;
+}
+
+/* Course Table - match StudentManagement styling */
+.courseTable {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+  min-width: 600px; /* Ensure table doesn't shrink too much */
+}
+
+.courseTable th {
+  background-color: #f8f9fa;
+  color: #6c757d;
+  font-weight: 500;
+  text-align: left;
+  padding: 12px 16px;
+  border-bottom: 2px solid #e9ecef;
+}
+
+.courseTable td {
+  padding: 12px 16px;
+  border-bottom: 1px solid #e9ecef;
+  color: #212529;
+}
+
+.courseTable tbody tr:hover {
+  background-color: #f8f9fa;
+}
+
+/* Course Table Cell Styles - match StudentManagement */
+.courseCode {
+  font-family: SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  color: #dc3545;
+  font-weight: 500;
+}
+
+.courseName {
+  font-weight: 500;
+}
+
+.courseProgram {
+  color: #6c757d;
+}
+
+/* Course Status - match StudentManagement styling */
+.courseStatus {
+  display: inline-block;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 500;
+  text-transform: capitalize;
+}
+
+.courseStatus.active {
+  background-color: #e8f5e9;
+  color: #2e7d32;
+}
+
+.courseStatus.inactive {
+  background-color: #ffebee;
+  color: #c62828;
+}
+
+/* Empty State - match StudentManagement */
+.noCourses {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(24px, 5vw, 48px);
+  text-align: center;
+  color: #6c757d;
+  background-color: #f8f9fa;
+  border-radius: 6px;
+  margin: 20px 0;
+}
+
+/* Course Header Actions - match StudentManagement */
+.courseHeaderActions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+/* Button styles - ensure they match StudentManagement */
+.btnAddCourse {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #dc3545;
+  color: white;
+  font-weight: 500;
+  font-size: 14px;
+  border: none;
+  border-radius: 4px;
+  padding: 8px 16px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.btnAddCourse:hover {
+  background-color: #c82333;
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+  .mainContent {
+    padding-left: calc(230px + 20px); /* Match StudentManagement */
+  }
+  .courseContentWrapper {
+    grid-template-columns: 230px 1fr;
+    gap: 20px;
+  }
+}
+
+@media (max-width: 992px) {
+  .mainContent {
+    padding-left: 20px;
+  }
+  
+  .courseContentWrapper {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  
+  .courseNavSection {
+    position: static;
+  }
+}
+
+@media (max-width: 768px) {
+  .mainContent {
+    padding-left: 20px;
+  }
+  
+  .courseFilters {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+  
+  .courseSearchGroup,
+  .courseFilterGroup {
+    min-width: 100%;
+  }
+  
+  .courseSectionContent {
+    padding: 20px;
+  }
+  
+  .courseTable {
+    font-size: 12px;
+  }
+  .courseTable th,
+  .courseTable td {
+    padding: 8px;
+  }
+}
+
+@media (max-width: 480px) {
+  .contentWrapper {
+    padding: 8px;
+  }
+  
+  .courseSectionHeader {
+    padding: 16px;
+  }
+  
+  .courseFilters {
+    padding: 16px;
+  }
+    .courseTableContainer {
+    padding: 0 16px;
+  }
+}
+
+/* Print Styles */
+@media print {
+  .programSidebar,
+  .btn,
+  .btnAction {
+    display: none;
+  }
+  
+  .mainContent {
+    margin-left: 0 !important;
+    width: 100% !important;
+  }
+}

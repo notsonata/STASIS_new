@@ -1,6 +1,6 @@
 import React, { useState} from 'react';
 import { useNavigate } from 'react-router-dom';
-import './CourseManagement.css';
+import styles from './CourseManagement.module.css';
 import Sidebar from './Sidebar';
 
 const Course = () => {
@@ -299,7 +299,7 @@ const Course = () => {
     setSelectedSection('All Sections');
   };
   return (
-  <div className="container">
+  <div className={styles.container}>
     {/* Main Sidebar */}
     <Sidebar 
       onNavigate={showSection}
@@ -329,87 +329,87 @@ const Course = () => {
     />
 
     {/* Main Content with Card Layout */}
-    <div className="main-content">
-      <div className="content-wrapper">
+    <div className={styles.mainContent}>
+      <div className={styles.contentWrapper}>
         {/* Breadcrumb */}
-        <div className="breadcrumb">
+        <div className={styles.breadcrumb}>
           <span 
-            className="breadcrumb-link" 
+            className={styles.breadcrumbLink} 
             onClick={() => navigate('/admin-dashboard')}
           >
             Dashboard
           </span>
-          <span className="breadcrumb-separator"> / </span>
-          <span className="breadcrumb-current">Course Management</span>
+          <span className={styles.breadcrumbSeparator}> / </span>
+          <span className={styles.breadcrumbCurrent}>Course Management</span>
         </div>
         
-        <div className="dashboard-header">
-          <h1 className="dashboard-welcome-title">Course Management</h1>
-          <div className="program-indicator">
+        <div className={styles.dashboardHeader}>
+          <h1 className={styles.dashboardWelcomeTitle}>Course Management</h1>
+          <div className={styles.programIndicator}>
             {selectedProgram}
           </div>
         </div>
 
-        <div className="course-content-wrapper">
+        <div className={styles.courseContentWrapper}>
           {/* Program Selection Card */}
-          <div className="course-nav-section">
-            <div className="course-nav-header">
-              <h2 className="course-nav-title">Programs</h2>
+          <div className={styles.courseNavSection}>
+            <div className={styles.courseNavHeader}>
+              <h2 className={styles.courseNavTitle}>Programs</h2>
             </div>
-            <div className="course-nav-list">
+            <div className={styles.courseNavList}>
               {programs.map((program) => (
                 <div
                   key={program}
-                  className={`course-nav-item ${selectedProgram === program ? 'course-nav-item-active' : ''}`}
+                  className={`${styles.courseNavItem} ${selectedProgram === program ? styles.courseNavItemActive : ''}`}
                   onClick={() => handleProgramSelect(program)}
                 >
-                  <span className="course-nav-icon">📚</span>
+                  <span className={styles.courseNavIcon}>📚</span>
                   {program}
                 </div>
               ))}
             </div>
-            <div className="course-nav-actions">
-              <button className="course-btn-add-section" onClick={showAddSectionForm}>
+            <div className={styles.courseNavActions}>
+              <button className={styles.courseBtnAddSection} onClick={showAddSectionForm}>
                 Add New Section
               </button>
             </div>
-            <div className="course-nav-info">
-              <div className="course-nav-info-item">
-                <div className="course-nav-info-label">{selectedProgram}</div>
-                <div className="course-nav-info-value">Total Courses: {filteredCourses.length}</div>
+            <div className={styles.courseNavInfo}>
+              <div className={styles.courseNavInfoItem}>
+                <div className={styles.courseNavInfoLabel}>{selectedProgram}</div>
+                <div className={styles.courseNavInfoValue}>Total Courses: {filteredCourses.length}</div>
               </div>
             </div>
           </div>
 
           {/* Course Management Section Card */}
-          <div className="course-main-section">
-            <div className="course-section-header">
-              <h2 className="course-section-title">Courses</h2>
-              <p className="course-section-desc">Manage course records and information</p>
+          <div className={styles.courseMainSection}>
+            <div className={styles.courseSectionHeader}>
+              <h2 className={styles.courseSectionTitle}>Courses</h2>
+              <p className={styles.courseSectionDesc}>Manage course records and information</p>
             </div>
             
-            <div className="course-section-content">
+            <div className={styles.courseSectionContent}>
               {/* Filters */}
-              <div className="course-filters">
-                <div className="course-search-group">
+              <div className={styles.courseFilters}>
+                <div className={styles.courseSearchGroup}>
                   <input
                     type="text"
-                    className="form-input course-search-input"
+                    className={`${styles.formInput} ${styles.courseSearchInput}`}
                     placeholder="Search courses..."
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
                   />
                 </div>
-                <div className="course-header-actions">
-                  <button className="course-btn-add-course" onClick={showAddCourseForm}>
+                <div className={styles.courseHeaderActions}>
+                  <button className={styles.courseBtnAddCourse} onClick={showAddCourseForm}>
                     + Add New Course
                   </button>
                 </div>
               </div>
 
               {/* Courses Table */}
-              <div className="course-table-container">
-                <table className="course-table">
+              <div className={styles.courseTableContainer}>
+                <table className={styles.courseTable}>
                   <thead>
                     <tr>
                       <th>Course Code</th>
@@ -422,17 +422,17 @@ const Course = () => {
                   <tbody>
                     {filteredCourses.map((course) => (
                       <tr key={course.id}>
-                        <td className="course-code">{course.courseCode}</td>
-                        <td className="course-name">{course.courseName}</td>
-                        <td className="course-program">{course.program}</td>
+                        <td className={styles.courseCode}>{course.courseCode}</td>
+                        <td className={styles.courseName}>{course.courseName}</td>
+                        <td className={styles.courseProgram}>{course.program}</td>
                         <td>
-                          <span className={`course-status ${course.status.toLowerCase()}`}>
+                          <span className={`${styles.courseStatus} ${styles[course.status.toLowerCase()]}`}>
                             {course.status}
                           </span>
                         </td>
                         <td>
                           <button 
-                            className="btn-action"
+                            className={styles.btnAction}
                             onClick={() => showEditCourseForm(course)}
                           >
                           </button>
@@ -443,7 +443,7 @@ const Course = () => {
                 </table>
                 
                 {filteredCourses.length === 0 && (
-                  <div className="no-courses">
+                  <div className={styles.noCourses}>
                     <p>No courses found matching your criteria.</p>
                   </div>
                 )}
@@ -456,40 +456,40 @@ const Course = () => {
 
     {/* Add Course Modal */}
     {showAddCourseModal && (
-      <div className="modal-overlay">
-        <div className="modal-content">
-          <div className="modal-header">
-            <h2 className="modal-title">Add New Course</h2>
+      <div className={styles.modalOverlay}>
+        <div className={styles.modalContent}>
+          <div className={styles.modalHeader}>
+            <h2 className={styles.modalTitle}>Add New Course</h2>
           </div>
           
-          <div className="modal-body">
-            <div className="modal-grid">
-              <div className="form-group">
-                <label className="form-label">Course Code *</label>
+          <div className={styles.modalBody}>
+            <div className={styles.modalGrid}>
+              <div className={styles.formGroup}>
+                <label className={styles.formLabel}>Course Code *</label>
                 <input
                   type="text"
-                  className="form-input"
+                  className={styles.formInput}
                   placeholder="Enter Course Code (e.g., CS101)"
                   value={courseForm.courseCode}
                   onChange={(e) => handleCourseFormChange('courseCode', e.target.value)}
                 />
               </div>
               
-              <div className="form-group">
-                <label className="form-label">Course Name *</label>
+              <div className={styles.formGroup}>
+                <label className={styles.formLabel}>Course Name *</label>
                 <input
                   type="text"
-                  className="form-input"
+                  className={styles.formInput}
                   placeholder="Enter Course Name"
                   value={courseForm.courseName}
                   onChange={(e) => handleCourseFormChange('courseName', e.target.value)}
                 />
               </div>
               
-              <div className="form-group">
-                <label className="form-label">Program *</label>
+              <div className={styles.formGroup}>
+                <label className={styles.formLabel}>Program *</label>
                 <select
-                  className="form-input"
+                  className={styles.formInput}
                   value={courseForm.program}
                   onChange={(e) => handleCourseFormChange('program', e.target.value)}
                 >
@@ -502,11 +502,11 @@ const Course = () => {
             </div>
           </div>
           
-          <div className="modal-footer">
-            <button className="btn btn-secondary" onClick={closeAddCourseModal}>
+          <div className={styles.modalFooter}>
+            <button className={`${styles.btn} ${styles.btnSecondary}`} onClick={closeAddCourseModal}>
               Cancel
             </button>
-            <button className="btn btn-primary" onClick={handleAddCourse}>
+            <button className={`${styles.btn} ${styles.btnPrimary}`} onClick={handleAddCourse}>
               Add Course
             </button>
           </div>
@@ -516,40 +516,40 @@ const Course = () => {
 
     {/* Edit Course Modal */}
     {showEditCourseModal && (
-      <div className="modal-overlay">
-        <div className="modal-content">
-          <div className="modal-header">
-            <h2 className="modal-title">Edit Course</h2>
+      <div className={styles.modalOverlay}>
+        <div className={styles.modalContent}>
+          <div className={styles.modalHeader}>
+            <h2 className={styles.modalTitle}>Edit Course</h2>
           </div>
           
-          <div className="modal-body">
-            <div className="modal-grid">
-              <div className="form-group">
-                <label className="form-label">Course Code *</label>
+          <div className={styles.modalBody}>
+            <div className={styles.modalGrid}>
+              <div className={styles.formGroup}>
+                <label className={styles.formLabel}>Course Code *</label>
                 <input
                   type="text"
-                  className="form-input"
+                  className={styles.formInput}
                   placeholder="Enter Course Code (e.g., CS101)"
                   value={courseForm.courseCode}
                   onChange={(e) => handleCourseFormChange('courseCode', e.target.value)}
                 />
               </div>
               
-              <div className="form-group">
-                <label className="form-label">Course Name *</label>
+              <div className={styles.formGroup}>
+                <label className={styles.formLabel}>Course Name *</label>
                 <input
                   type="text"
-                  className="form-input"
+                  className={styles.formInput}
                   placeholder="Enter Course Name"
                   value={courseForm.courseName}
                   onChange={(e) => handleCourseFormChange('courseName', e.target.value)}
                 />
               </div>
               
-              <div className="form-group">
-                <label className="form-label">Program *</label>
+              <div className={styles.formGroup}>
+                <label className={styles.formLabel}>Program *</label>
                 <select
-                  className="form-input"
+                  className={styles.formInput}
                   value={courseForm.program}
                   onChange={(e) => handleCourseFormChange('program', e.target.value)}
                 >
@@ -560,10 +560,10 @@ const Course = () => {
                 </select>
               </div>
               
-              <div className="form-group">
-                <label className="form-label">Status</label>
+              <div className={styles.formGroup}>
+                <label className={styles.formLabel}>Status</label>
                 <select
-                  className="form-input"
+                  className={styles.formInput}
                   value={courseForm.status}
                   onChange={(e) => handleCourseFormChange('status', e.target.value)}
                 >
@@ -574,11 +574,11 @@ const Course = () => {
             </div>
           </div>
           
-          <div className="modal-footer">
-            <button className="btn btn-secondary" onClick={closeEditCourseModal}>
+          <div className={styles.modalFooter}>
+            <button className={`${styles.btn} ${styles.btnSecondary}`} onClick={closeEditCourseModal}>
               Cancel
             </button>
-            <button className="btn btn-primary" onClick={handleEditCourse}>
+            <button className={`${styles.btn} ${styles.btnPrimary}`} onClick={handleEditCourse}>
               Update Course
             </button>
           </div>
@@ -588,17 +588,17 @@ const Course = () => {
 
     {/* Add Section Modal */}
     {showAddSectionModal && (
-      <div className="modal-overlay">
-        <div className="modal-content">
-          <div className="modal-header">
-            <h2 className="modal-title">Add New Section</h2>
+      <div className={styles.modalOverlay}>
+        <div className={styles.modalContent}>
+          <div className={styles.modalHeader}>
+            <h2 className={styles.modalTitle}>Add New Section</h2>
           </div>
           
-          <div className="modal-body">
-            <div className="form-group">
-              <label className="form-label">Program *</label>
+          <div className={styles.modalBody}>
+            <div className={styles.formGroup}>
+              <label className={styles.formLabel}>Program *</label>
               <select
-                className="form-input"
+                className={styles.formInput}
                 value={sectionForm.program}
                 onChange={(e) => handleSectionFormChange('program', e.target.value)}
               >
@@ -610,10 +610,10 @@ const Course = () => {
               </select>
             </div>
             
-            <div className="form-group">
-              <label className="form-label">Year Level *</label>
+            <div className={styles.formGroup}>
+              <label className={styles.formLabel}>Year Level *</label>
               <select
-                className="form-input"
+                className={styles.formInput}
                 value={sectionForm.yearLevel}
                 onChange={(e) => handleSectionFormChange('yearLevel', e.target.value)}
               >
@@ -625,10 +625,10 @@ const Course = () => {
               </select>
             </div>
             
-            <div className="form-group">
-              <label className="form-label">Section Number *</label>
+            <div className={styles.formGroup}>
+              <label className={styles.formLabel}>Section Number *</label>
               <select
-                className="form-input"
+                className={styles.formInput}
                 value={sectionForm.sectionNumber}
                 onChange={(e) => handleSectionFormChange('sectionNumber', e.target.value)}
               >
@@ -642,11 +642,11 @@ const Course = () => {
             </div>
           </div>
           
-          <div className="modal-footer">
-            <button className="btn btn-secondary" onClick={closeAddSectionModal}>
+          <div className={styles.modalFooter}>
+            <button className={`${styles.btn} ${styles.btnSecondary}`} onClick={closeAddSectionModal}>
               Cancel
             </button>
-            <button className="btn btn-primary" onClick={handleAddSection}>
+            <button className={`${styles.btn} ${styles.btnPrimary}`} onClick={handleAddSection}>
               Create Section
             </button>
           </div>

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import './AdminTools.css';
+import styles from './AdminTools.module.css';
 import Sidebar from './Sidebar';
 
 const AdminTools = () => {
@@ -176,18 +176,18 @@ const AdminTools = () => {
 
   // Render Logs Section
   const renderLogsSection = () => (
-    <div className="admin-section-content">
-      <div className="admin-controls">
-        <div className="admin-search-group">
+    <div className={styles.adminSectionContent}>
+      <div className={styles.adminControls}>
+        <div className={styles.adminSearchGroup}>
           <input
             type="text"
-            className="admin-search-input"
+            className={styles.adminSearchInput}
             placeholder="Search logs by user, action, or details..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
           <select
-            className="admin-filter-select"
+            className={styles.adminFilterSelect}
             value={filterType}
             onChange={(e) => setFilterType(e.target.value)}
           >
@@ -200,23 +200,23 @@ const AdminTools = () => {
             <option value="error">Error</option>
           </select>
         </div>
-        <button className="admin-btn admin-btn-secondary" onClick={exportLogs}>
+        <button className={`${styles.adminBtn} ${styles.adminBtnSecondary}`} onClick={exportLogs}>
           Export CSV
         </button>
       </div>
 
       {isLoading ? (
-        <div className="admin-loading">Loading logs...</div>
+        <div className={styles.adminLoading}>Loading logs...</div>
       ) : filteredLogs.length === 0 ? (
-        <div className="admin-empty-state">
-          <div className="admin-empty-icon">📋</div>
+        <div className={styles.adminEmptyState}>
+          <div className={styles.adminEmptyIcon}>📋</div>
           <h3>No logs found</h3>
           <p>No system logs match your current search criteria.</p>
         </div>
       ) : (
         <>
-          <div className="admin-table-container">
-            <table className="admin-table">
+          <div className={styles.adminTableContainer}>
+            <table className={styles.adminTable}>
               <thead>
                 <tr>
                   <th>Timestamp</th>
@@ -230,18 +230,18 @@ const AdminTools = () => {
               <tbody>
                 {getCurrentPageData(filteredLogs).map((log, index) => (
                   <tr key={index}>
-                    <td className="admin-table-timestamp">
+                    <td className={styles.adminTableTimestamp}>
                       {new Date(log.timestamp).toLocaleString()}
                     </td>
-                    <td className="admin-table-user">{log.user}</td>
-                    <td className="admin-table-action">{log.action}</td>
+                    <td className={styles.adminTableUser}>{log.user}</td>
+                    <td className={styles.adminTableAction}>{log.action}</td>
                     <td>
-                      <span className={`admin-badge admin-badge-${log.type}`}>
+                      <span className={`${styles.adminBadge} ${styles[`adminBadge${log.type.charAt(0).toUpperCase() + log.type.slice(1)}`]}`}>
                         {log.type}
                       </span>
                     </td>
-                    <td className="admin-table-ip">{log.ipAddress}</td>
-                    <td className="admin-table-details">{log.details}</td>
+                    <td className={styles.adminTableIp}>{log.ipAddress}</td>
+                    <td className={styles.adminTableDetails}>{log.details}</td>
                   </tr>
                 ))}
               </tbody>
@@ -249,19 +249,19 @@ const AdminTools = () => {
           </div>
 
           {getTotalPages(filteredLogs) > 1 && (
-            <div className="admin-pagination">
+            <div className={styles.adminPagination}>
               <button
-                className="admin-pagination-btn"
+                className={styles.adminPaginationBtn}
                 onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
                 disabled={currentPage === 1}
               >
                 Previous
               </button>
-              <span className="admin-pagination-info">
+              <span className={styles.adminPaginationInfo}>
                 Page {currentPage} of {getTotalPages(filteredLogs)}
               </span>
               <button
-                className="admin-pagination-btn"
+                className={styles.adminPaginationBtn}
                 onClick={() => setCurrentPage(prev => Math.min(prev + 1, getTotalPages(filteredLogs)))}
                 disabled={currentPage === getTotalPages(filteredLogs)}
               >
@@ -276,12 +276,12 @@ const AdminTools = () => {
 
   // Render Users Section
   const renderUsersSection = () => (
-    <div className="admin-section-content">
-      <div className="admin-controls">
-        <div className="admin-search-group">
+    <div className={styles.adminSectionContent}>
+      <div className={styles.adminControls}>
+        <div className={styles.adminSearchGroup}>
           <input
             type="text"
-            className="admin-search-input"
+            className={styles.adminSearchInput}
             placeholder="Search users by name, email, or ID..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
@@ -290,17 +290,17 @@ const AdminTools = () => {
       </div>
 
       {isLoading ? (
-        <div className="admin-loading">Loading users...</div>
+        <div className={styles.adminLoading}>Loading users...</div>
       ) : filteredUsers.length === 0 ? (
-        <div className="admin-empty-state">
-          <div className="admin-empty-icon">👥</div>
+        <div className={styles.adminEmptyState}>
+          <div className={styles.adminEmptyIcon}>👥</div>
           <h3>No users found</h3>
           <p>No users match your current search criteria.</p>
         </div>
       ) : (
         <>
-          <div className="admin-table-container">
-            <table className="admin-table">
+          <div className={styles.adminTableContainer}>
+            <table className={styles.adminTable}>
               <thead>
                 <tr>
                   <th>ID</th>
@@ -315,39 +315,39 @@ const AdminTools = () => {
               <tbody>
                 {getCurrentPageData(filteredUsers).map((user) => (
                   <tr key={user.id}>
-                    <td className="admin-table-id">{user.id}</td>
-                    <td className="admin-table-name">{user.name}</td>
-                    <td className="admin-table-email">{user.email}</td>
+                    <td className={styles.adminTableId}>{user.id}</td>
+                    <td className={styles.adminTableName}>{user.name}</td>
+                    <td className={styles.adminTableEmail}>{user.email}</td>
                     <td>
-                      <span className={`admin-badge admin-badge-role-${user.role.toLowerCase()}`}>
+                      <span className={`${styles.adminBadge} ${styles[`adminBadgeRole${user.role.charAt(0).toUpperCase() + user.role.slice(1)}`]}`}>
                         {user.role}
                       </span>
                     </td>
                     <td>
-                      <span className={`admin-badge admin-badge-status-${user.status}`}>
+                      <span className={`${styles.adminBadge} ${styles[`adminBadgeStatus${user.status.charAt(0).toUpperCase() + user.status.slice(1)}`]}`}>
                         {user.status}
                       </span>
                     </td>
-                    <td className="admin-table-timestamp">
+                    <td className={styles.adminTableTimestamp}>
                       {user.lastLogin ? new Date(user.lastLogin).toLocaleString() : 'Never'}
                     </td>
-                    <td className="admin-table-actions">
+                    <td className={styles.adminTableActions}>
                       <button
-                        className="admin-action-btn admin-action-btn-view"
+                        className={`${styles.adminActionBtn} ${styles.adminActionBtnView}`}
                         onClick={() => viewUserDetails(user)}
                         title="View Details"
                       >
                         👁️
                       </button>
                       <button
-                        className="admin-action-btn admin-action-btn-reset"
+                        className={`${styles.adminActionBtn} ${styles.adminActionBtnReset}`}
                         onClick={() => resetUserPassword(user.id)}
                         title="Reset Password"
                       >
                         🔑
                       </button>
                       <button
-                        className={`admin-action-btn ${user.status === 'active' ? 'admin-action-btn-deactivate' : 'admin-action-btn-activate'}`}
+                        className={`${styles.adminActionBtn} ${user.status === 'active' ? styles.adminActionBtnDeactivate : styles.adminActionBtnActivate}`}
                         onClick={() => toggleUserStatus(user.id, user.status)}
                         title={user.status === 'active' ? 'Deactivate' : 'Activate'}
                       >
@@ -361,19 +361,19 @@ const AdminTools = () => {
           </div>
 
           {getTotalPages(filteredUsers) > 1 && (
-            <div className="admin-pagination">
+            <div className={styles.adminPagination}>
               <button
-                className="admin-pagination-btn"
+                className={styles.adminPaginationBtn}
                 onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
                 disabled={currentPage === 1}
               >
                 Previous
               </button>
-              <span className="admin-pagination-info">
+              <span className={styles.adminPaginationInfo}>
                 Page {currentPage} of {getTotalPages(filteredUsers)}
               </span>
               <button
-                className="admin-pagination-btn"
+                className={styles.adminPaginationBtn}
                 onClick={() => setCurrentPage(prev => Math.min(prev + 1, getTotalPages(filteredUsers)))}
                 disabled={currentPage === getTotalPages(filteredUsers)}
               >
@@ -413,7 +413,7 @@ const AdminTools = () => {
   const currentSection = getCurrentSectionData();
 
   return (
-    <div className="admin-container">
+    <div className={styles.adminContainer}>
       <Sidebar 
         onNavigate={showSection}
         userInfo={{ name: "David Anderson", role: "Schedule Admin" }}
@@ -441,35 +441,35 @@ const AdminTools = () => {
         ]}
       />
       
-      <div className="admin-main-content">
-        <div className="admin-header">
-          <h1 className="admin-title">Admin Tools</h1>
-          <p className="admin-subtitle">System administration and monitoring</p>
+      <div className={styles.adminMainContent}>
+        <div className={styles.adminHeader}>
+          <h1 className={styles.adminTitle}>Admin Tools</h1>
+          <p className={styles.adminSubtitle}>System administration and monitoring</p>
         </div>
 
-        <div className="admin-content-wrapper">
-          <div className="admin-nav-section">
-            <div className="admin-nav-header">
-              <h2 className="admin-nav-title">Tools</h2>
+        <div className={styles.adminContentWrapper}>
+          <div className={styles.adminNavSection}>
+            <div className={styles.adminNavHeader}>
+              <h2 className={styles.adminNavTitle}>Tools</h2>
             </div>
-            <div className="admin-nav-list">
+            <div className={styles.adminNavList}>
               {toolSections.map((section) => (
                 <div
                   key={section.id}
-                  className={`admin-nav-item ${activeSection === section.id ? 'admin-nav-item-active' : ''}`}
+                  className={`${styles.adminNavItem} ${activeSection === section.id ? styles.adminNavItemActive : ''}`}
                   onClick={() => setActiveSection(section.id)}
                 >
-                  <span className="admin-nav-icon">{section.icon}</span>
+                  <span className={styles.adminNavIcon}>{section.icon}</span>
                   {section.label}
                 </div>
               ))}
             </div>
           </div>
 
-          <div className="admin-main-section">
-            <div className="admin-section-header">
-              <h2 className="admin-section-title">{currentSection.title}</h2>
-              <p className="admin-section-desc">{currentSection.description}</p>
+          <div className={styles.adminMainSection}>
+            <div className={styles.adminSectionHeader}>
+              <h2 className={styles.adminSectionTitle}>{currentSection.title}</h2>
+              <p className={styles.adminSectionDesc}>{currentSection.description}</p>
             </div>
             
             {currentSection.content}
@@ -479,8 +479,8 @@ const AdminTools = () => {
 
       {/* User Details Modal */}
       {selectedUser && (
-        <div className="admin-modal-overlay" onClick={closeUserModal}>
-          <div className="admin-modal-content" onClick={(e) => e.stopPropagation()}>
+        <div className={styles.adminModalOverlay} onClick={closeUserModal}>
+          <div className={styles.adminModalContent} onClick={(e) => e.stopPropagation()}>
             <div className="admin-modal-header">
               <h3 className="admin-modal-title">User Details</h3>
               <button className="admin-modal-close" onClick={closeUserModal}>×</button>

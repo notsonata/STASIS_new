@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import './ScheduleManagement.css';
+import styles from './ScheduleManagement.module.css';
 import Sidebar from './Sidebar';
 
 const ScheduleManagement = () => {
@@ -319,7 +319,7 @@ const ScheduleManagement = () => {
     return `${hour12}:${minutes} ${ampm}`;
   };
 
-// Navigation
+  // Navigation
   const navigate = useNavigate();
   const showSection = (section) => {
     switch(section){
@@ -348,8 +348,10 @@ const ScheduleManagement = () => {
         // No action for unknown sections
     }
   };
+  
   return (
-    <div className="dashboard-container">      {/* Sidebar */}
+    <div className={styles.dashboardContainer}>      
+      {/* Sidebar */}
       <Sidebar 
         onNavigate={showSection}
         userInfo={{ name: "David Anderson", role: "Schedule Admin" }}
@@ -378,60 +380,60 @@ const ScheduleManagement = () => {
       />
 
       {/* Main Content */}
-      <div className="main-content">
-        <div className="content-wrapper">
-          <div className="breadcrumb">
+      <div className={styles.mainContent}>
+        <div className={styles.contentWrapper}>
+          <div className={styles.breadcrumb}>
             <span 
-              className="breadcrumb-link" 
+              className={styles.breadcrumbLink} 
               onClick={() => navigate('/admin-dashboard')}
             >
               Dashboard
             </span>
-            <span className="breadcrumb-separator"> / </span>
-            <span className="breadcrumb-current">Schedule Management</span>
+            <span className={styles.breadcrumbSeparator}> / </span>
+            <span className={styles.breadcrumbCurrent}>Schedule Management</span>
           </div>
           
           {/* Header */}
-          <div className="page-header">
-            <h1 className="page-title">Schedule Management</h1>
+          <div className={styles.pageHeader}>
+            <h1 className={styles.pageTitle}>Schedule Management</h1>
             <button 
               onClick={showAddScheduleForm}
-              className="add-schedule-btn"
+              className={styles.addScheduleBtn}
             >
               + Add New Schedule
             </button>
           </div>
 
           {/* Stats Cards */}
-          <div className="stats-grid">
-            <div className="stat-card">
-              <div className="stat-label">Total Schedules</div>
-              <div className="stat-value">{totalSchedules}</div>
+          <div className={styles.statsGrid}>
+            <div className={styles.statCard}>
+              <div className={styles.statLabel}>Total Schedules</div>
+              <div className={styles.statValue}>{totalSchedules}</div>
             </div>
-            <div className="stat-card">
-              <div className="stat-label">Active</div>
-              <div className="stat-value">{activeSchedules}</div>
+            <div className={styles.statCard}>
+              <div className={styles.statLabel}>Active</div>
+              <div className={styles.statValue}>{activeSchedules}</div>
             </div>
-            <div className="stat-card">
-              <div className="stat-label">Completed</div>
-              <div className="stat-value">{completedSchedules}</div>
+            <div className={styles.statCard}>
+              <div className={styles.statLabel}>Completed</div>
+              <div className={styles.statValue}>{completedSchedules}</div>
             </div>
-            <div className="stat-card">
-              <div className="stat-label">Cancelled</div>
-              <div className="stat-value">{cancelledSchedules}</div>
+            <div className={styles.statCard}>
+              <div className={styles.statLabel}>Cancelled</div>
+              <div className={styles.statValue}>{cancelledSchedules}</div>
             </div>
           </div>
 
           {/* Schedule List */}
-          <div className="schedule-list-container">
-            <div className="list-header">
-              <div className="list-controls">
-                <h2 className="list-title">Schedule List</h2>
-                <div className="controls">
+          <div className={styles.scheduleListContainer}>
+            <div className={styles.listHeader}>
+              <div className={styles.listControls}>
+                <h2 className={styles.listTitle}>Schedule List</h2>
+                <div className={styles.controls}>
                   <select 
                     value={selectedDay}
                     onChange={(e) => setSelectedDay(e.target.value)}
-                    className="select-input"
+                    className={styles.selectInput}
                   >
                     <option>All Days</option>
                     {dayOptions.map(day => (
@@ -443,14 +445,14 @@ const ScheduleManagement = () => {
                     placeholder="Search schedules..."
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
-                    className="search-input"
+                    className={styles.searchInput}
                   />
                 </div>
               </div>
             </div>
 
-            <div className="table-container">
-              <table className="schedule-table">
+            <div className={styles.tableContainer}>
+              <table className={styles.scheduleTable}>
                 <thead>
                   <tr>
                     <th>Schedule ID</th>
@@ -463,42 +465,42 @@ const ScheduleManagement = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {filteredSchedules.map((schedule, index) => (
+                  {filteredSchedules.map((schedule) => (
                     <tr key={schedule.id}>
                       <td>{schedule.id}</td>
                       <td>
-                        <div className="schedule-info">
-                          <div className="schedule-course">{schedule.course}</div>
-                          <div className="schedule-section">{schedule.section}</div>
+                        <div className={styles.scheduleInfo}>
+                          <div className={styles.scheduleCourse}>{schedule.course}</div>
+                          <div className={styles.scheduleSection}>{schedule.section}</div>
                         </div>
                       </td>
                       <td>{schedule.instructor}</td>
                       <td>{schedule.room}</td>
                       <td>
-                        <div className="time-info">
-                          <div className="time-period">
+                        <div className={styles.timeInfo}>
+                          <div className={styles.timePeriod}>
                             {formatTime(schedule.timeFrom)} - {formatTime(schedule.timeTo)}
                           </div>
-                          <div className="day-info">{schedule.day}</div>
+                          <div className={styles.dayInfo}>{schedule.day}</div>
                         </div>
                       </td>
                       <td>
-                        <span className={`status-badge ${
-                          schedule.status === 'Active' ? 'status-active' : 
-                          schedule.status === 'Completed' ? 'status-completed' : 
-                          'status-cancelled'
+                        <span className={`${styles.statusBadge} ${
+                          schedule.status === 'Active' ? styles.statusActive : 
+                          schedule.status === 'Completed' ? styles.statusCompleted : 
+                          styles.statusCancelled
                         }`}>
                           {schedule.status}
                         </span>
                       </td>
-                      <td className="action-buttons">
+                      <td className={styles.actionButtons}>
                         <button 
-                          className="btn-edit"
+                          className={styles.btnEdit}
                           onClick={() => showEditScheduleForm(schedule)}
                         >
                         </button>
                         <button 
-                          className="btn-delete"
+                          className={styles.btnDelete}
                           onClick={() => handleDeleteSchedule(schedule.id)}
                         >
                         </button>
@@ -509,15 +511,15 @@ const ScheduleManagement = () => {
               </table>
             </div>
 
-            <div className="table-footer">
-              <div className="table-info">
+            <div className={styles.tableFooter}>
+              <div className={styles.tableInfo}>
                 Showing 1 to {filteredSchedules.length} of {totalSchedules} entries
               </div>
-              <div className="pagination">
-                <button className="page-btn disabled">Previous</button>
-                <button className="page-btn active">1</button>
-                <button className="page-btn">2</button>
-                <button className="page-btn">Next</button>
+              <div className={styles.pagination}>
+                <button className={`${styles.pageBtn} ${styles.pageBtnDisabled}`}>Previous</button>
+                <button className={`${styles.pageBtn} ${styles.pageBtnActive}`}>1</button>
+                <button className={styles.pageBtn}>2</button>
+                <button className={styles.pageBtn}>Next</button>
               </div>
             </div>
           </div>
@@ -526,21 +528,21 @@ const ScheduleManagement = () => {
 
       {/* Add Schedule Modal */}
       {showAddScheduleModal && (
-        <div className="modal-overlay">
-          <div className="modal-container">
+        <div className={styles.modalOverlay}>
+          <div className={styles.modalContainer}>
             {/* Modal Header */}
-            <div className="modal-header">
-              <h2 className="modal-title">Add New Schedule</h2>
+            <div className={styles.modalHeader}>
+              <h2 className={styles.modalTitle}>Add New Schedule</h2>
             </div>
             
             {/* Modal Content */}
-            <div className="modal-content">
-              <div className="form-grid">
+            <div className={styles.modalContent}>
+              <div className={styles.formGrid}>
                 {/* Course */}
-                <div className="form-group">
-                  <label className="form-label">Course *</label>
+                <div className={styles.formGroup}>
+                  <label className={styles.formLabel}>Course *</label>
                   <select
-                    className="form-input"
+                    className={styles.formInput}
                     value={scheduleForm.course}
                     onChange={(e) => handleScheduleFormChange('course', e.target.value)}
                   >
@@ -552,11 +554,11 @@ const ScheduleManagement = () => {
                 </div>
                 
                 {/* Section */}
-                <div className="form-group">
-                  <label className="form-label">Section *</label>
+                <div className={styles.formGroup}>
+                  <label className={styles.formLabel}>Section *</label>
                   <input
                     type="text"
-                    className="form-input"
+                    className={styles.formInput}
                     placeholder="e.g., CS-101-A"
                     value={scheduleForm.section}
                     onChange={(e) => handleScheduleFormChange('section', e.target.value)}
@@ -564,10 +566,10 @@ const ScheduleManagement = () => {
                 </div>
                 
                 {/* Instructor */}
-                <div className="form-group">
-                  <label className="form-label">Instructor *</label>
+                <div className={styles.formGroup}>
+                  <label className={styles.formLabel}>Instructor *</label>
                   <select
-                    className="form-input"
+                    className={styles.formInput}
                     value={scheduleForm.instructor}
                     onChange={(e) => handleScheduleFormChange('instructor', e.target.value)}
                   >
@@ -579,10 +581,10 @@ const ScheduleManagement = () => {
                 </div>
                 
                 {/* Room */}
-                <div className="form-group">
-                  <label className="form-label">Room *</label>
+                <div className={styles.formGroup}>
+                  <label className={styles.formLabel}>Room *</label>
                   <select
-                    className="form-input"
+                    className={styles.formInput}
                     value={scheduleForm.room}
                     onChange={(e) => handleScheduleFormChange('room', e.target.value)}
                   >
@@ -594,10 +596,10 @@ const ScheduleManagement = () => {
                 </div>
                 
                 {/* Day */}
-                <div className="form-group">
-                  <label className="form-label">Day *</label>
+                <div className={styles.formGroup}>
+                  <label className={styles.formLabel}>Day *</label>
                   <select
-                    className="form-input"
+                    className={styles.formInput}
                     value={scheduleForm.day}
                     onChange={(e) => handleScheduleFormChange('day', e.target.value)}
                   >
@@ -609,18 +611,18 @@ const ScheduleManagement = () => {
                 </div>
                 
                 {/* Time Period */}
-                <div className="form-group">
-                  <label className="form-label">Time Period *</label>
-                  <div className="time-inputs">
+                <div className={styles.formGroup}>
+                  <label className={styles.formLabel}>Time Period *</label>
+                  <div className={styles.timeInputs}>
                     <input
                       type="time"
-                      className="form-input"
+                      className={styles.formInput}
                       value={scheduleForm.timeFrom}
                       onChange={(e) => handleScheduleFormChange('timeFrom', e.target.value)}
                     />
                     <input
                       type="time"
-                      className="form-input"
+                      className={styles.formInput}
                       value={scheduleForm.timeTo}
                       onChange={(e) => handleScheduleFormChange('timeTo', e.target.value)}
                     />
@@ -630,15 +632,15 @@ const ScheduleManagement = () => {
             </div>
             
             {/* Modal Footer */}
-            <div className="modal-footer">
+            <div className={styles.modalFooter}>
               <button 
-                className="btn btn-secondary"
+                className={`${styles.btn} ${styles.btnSecondary}`}
                 onClick={closeAddScheduleModal}
               >
                 Cancel
               </button>
               <button 
-                className="btn btn-primary"
+                className={`${styles.btn} ${styles.btnPrimary}`}
                 onClick={handleAddSchedule}
               >
                 Add Schedule
@@ -650,21 +652,21 @@ const ScheduleManagement = () => {
 
       {/* Edit Schedule Modal */}
       {showEditScheduleModal && (
-        <div className="modal-overlay">
-          <div className="modal-container">
+        <div className={styles.modalOverlay}>
+          <div className={styles.modalContainer}>
             {/* Modal Header */}
-            <div className="modal-header">
-              <h2 className="modal-title">Edit Schedule</h2>
+            <div className={styles.modalHeader}>
+              <h2 className={styles.modalTitle}>Edit Schedule</h2>
             </div>
             
             {/* Modal Content */}
-            <div className="modal-content">
-              <div className="form-grid">
+            <div className={styles.modalContent}>
+              <div className={styles.formGrid}>
                 {/* Course */}
-                <div className="form-group">
-                  <label className="form-label">Course *</label>
+                <div className={styles.formGroup}>
+                  <label className={styles.formLabel}>Course *</label>
                   <select
-                    className="form-input"
+                    className={styles.formInput}
                     value={scheduleForm.course}
                     onChange={(e) => handleScheduleFormChange('course', e.target.value)}
                   >
@@ -676,11 +678,11 @@ const ScheduleManagement = () => {
                 </div>
                 
                 {/* Section */}
-                <div className="form-group">
-                  <label className="form-label">Section *</label>
+                <div className={styles.formGroup}>
+                  <label className={styles.formLabel}>Section *</label>
                   <input
                     type="text"
-                    className="form-input"
+                    className={styles.formInput}
                     placeholder="e.g., CS-101-A"
                     value={scheduleForm.section}
                     onChange={(e) => handleScheduleFormChange('section', e.target.value)}
@@ -688,10 +690,10 @@ const ScheduleManagement = () => {
                 </div>
                 
                 {/* Instructor */}
-                <div className="form-group">
-                  <label className="form-label">Instructor *</label>
+                <div className={styles.formGroup}>
+                  <label className={styles.formLabel}>Instructor *</label>
                   <select
-                    className="form-input"
+                    className={styles.formInput}
                     value={scheduleForm.instructor}
                     onChange={(e) => handleScheduleFormChange('instructor', e.target.value)}
                   >
@@ -703,10 +705,10 @@ const ScheduleManagement = () => {
                 </div>
                 
                 {/* Room */}
-                <div className="form-group">
-                  <label className="form-label">Room *</label>
+                <div className={styles.formGroup}>
+                  <label className={styles.formLabel}>Room *</label>
                   <select
-                    className="form-input"
+                    className={styles.formInput}
                     value={scheduleForm.room}
                     onChange={(e) => handleScheduleFormChange('room', e.target.value)}
                   >
@@ -718,10 +720,10 @@ const ScheduleManagement = () => {
                 </div>
                 
                 {/* Day */}
-                <div className="form-group">
-                  <label className="form-label">Day *</label>
+                <div className={styles.formGroup}>
+                  <label className={styles.formLabel}>Day *</label>
                   <select
-                    className="form-input"
+                    className={styles.formInput}
                     value={scheduleForm.day}
                     onChange={(e) => handleScheduleFormChange('day', e.target.value)}
                   >
@@ -733,18 +735,18 @@ const ScheduleManagement = () => {
                 </div>
                 
                 {/* Time Period */}
-                <div className="form-group">
-                  <label className="form-label">Time Period *</label>
-                  <div className="time-inputs">
+                <div className={styles.formGroup}>
+                  <label className={styles.formLabel}>Time Period *</label>
+                  <div className={styles.timeInputs}>
                     <input
                       type="time"
-                      className="form-input"
+                      className={styles.formInput}
                       value={scheduleForm.timeFrom}
                       onChange={(e) => handleScheduleFormChange('timeFrom', e.target.value)}
                     />
                     <input
                       type="time"
-                      className="form-input"
+                      className={styles.formInput}
                       value={scheduleForm.timeTo}
                       onChange={(e) => handleScheduleFormChange('timeTo', e.target.value)}
                     />
@@ -754,15 +756,15 @@ const ScheduleManagement = () => {
             </div>
             
             {/* Modal Footer */}
-            <div className="modal-footer">
+            <div className={styles.modalFooter}>
               <button 
-                className="btn btn-secondary"
+                className={`${styles.btn} ${styles.btnSecondary}`}
                 onClick={closeEditScheduleModal}
               >
                 Cancel
               </button>
               <button 
-                className="btn btn-primary"
+                className={`${styles.btn} ${styles.btnPrimary}`}
                 onClick={handleEditSchedule}
               >
                 Update Schedule

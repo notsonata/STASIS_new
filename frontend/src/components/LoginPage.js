@@ -1,5 +1,5 @@
 import React from 'react';
-import './LoginPage.css';
+import styles from './LoginPage.module.css';
 import { FaGraduationCap, FaUserTie, FaChevronRight } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom'; // Import useNavigate
 
@@ -20,55 +20,54 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="login-page">
+    <div className={styles.loginPage}>
       {/* Left Side - Image Section */}
-       <div className="login-image-section">
-            <div className="login-logo">
-                 <img src={logo} alt="Academy Logo" />
-            </div>
-            <div className="login-image-text">
-              <h2>Science and Technology Academy</h2>
-              <p>Helping students step towards brighter tomorrow.</p>
-            </div>
+      <div className={styles.loginImageSection}>
+        <div className={styles.loginLogo}>
+          <img src={logo} alt="Academy Logo" />
         </div>
-
+        <div className={styles.loginImageText}>
+          <h2>Science and Technology Academy</h2>
+          <p>Helping students step towards brighter tomorrow.</p>
+        </div>
+      </div>
 
       {/* Right Side - Form/Selection Section */}
-      <div className="login-form-section">
-         <h1>Hi!</h1>
-         <p className="continue-as-label">Continue as</p>
+      <div className={styles.loginFormSection}>
+        <h1>Hi!</h1>
+        <p className={styles.continueAsLabel}>Continue as</p>
 
         {/* Role Selection: Student */}
         <button
-          className="role-button"
+          className={styles.roleButton}
           onClick={() => handleRoleSelection('student')}
           aria-label="Continue as Student"
         >
-          <div className="role-button-content">
-            <span className="role-button-icon"><FaGraduationCap /></span>
-            <span className="role-button-text">Student</span>
+          <div className={styles.roleButtonContent}>
+            <span className={styles.roleButtonIcon}><FaGraduationCap /></span>
+            <span className={styles.roleButtonText}>Student</span>
           </div>
-          <span className="role-button-arrow"><FaChevronRight /></span>
+          <span className={styles.roleButtonArrow}><FaChevronRight /></span>
         </button>
 
         {/* Role Selection: Faculty */}
         <button
-          className="role-button"
+          className={styles.roleButton}
           onClick={() => handleRoleSelection('faculty')}
           aria-label="Continue as Faculty"
         >
-          <div className="role-button-content">
-            <span className="role-button-icon"><FaUserTie /></span>
-            <span className="role-button-text">Faculty</span>
+          <div className={styles.roleButtonContent}>
+            <span className={styles.roleButtonIcon}><FaUserTie /></span>
+            <span className={styles.roleButtonText}>Faculty</span>
           </div>
-          <span className="role-button-arrow"><FaChevronRight /></span>
+          <span className={styles.roleButtonArrow}><FaChevronRight /></span>
         </button>
 
         {/* Footer Links */}
-        <div className="login-footer">
-            {/* Replace # with actual links eventually */}
-            <a href="#">Privacy Policy</a>
-            <a href="#">About Us</a>
+        <div className={styles.loginFooter}>
+          {/* Replace # with actual links eventually */}
+          <a href="#">Privacy Policy</a>
+          <a href="#">About Us</a>
         </div>
       </div>
     </div>

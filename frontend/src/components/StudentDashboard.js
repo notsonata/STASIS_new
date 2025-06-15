@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import './StudentDashboard.module.css';
+import styles from './StudentDashboard.module.css'; // Import styles correctly
 import Sidebar from './StudentSidebar';
 
 const StudentDashboard = () => {
@@ -225,7 +225,7 @@ const StudentDashboard = () => {
 
   const calendarDays = generateCalendarDays();
   return (
-    <div className="dashboard-container">
+    <div className={styles.dashboardContainer}>
       {/* Sidebar */}
       <Sidebar 
         onNavigate={showSection}
@@ -253,44 +253,44 @@ const StudentDashboard = () => {
       />
 
       {/* Main Content */}
-      <div className="main-content">
-        <div className="dashboard-header">
-          <h1 className="dashboard-welcome-title">Welcome back, Student</h1>
+      <div className={styles.mainContent}>
+        <div className={styles.dashboardHeader}>
+          <h1 className={styles.dashboardWelcomeTitle}>Welcome back, Student</h1>
         </div>
 
         {/* Content Wrapper */}
-        <div className="dashboard-content-wrapper">
+        <div className={styles.dashboardContentWrapper}>
           {/* Main Left Section */}
-          <div className="dashboard-main-section">
-            <div className="dashboard-main-grid">
+          <div className={styles.dashboardMainSection}>
+            <div className={styles.dashboardMainGrid}>
               {/* Quick Actions */}
-              <div className="dashboard-section-card">
-                <div className="dashboard-section-header">
-                  <h2 className="dashboard-section-title">Quick Actions</h2>
+              <div className={styles.dashboardSectionCard}>
+                <div className={styles.dashboardSectionHeader}>
+                  <h2 className={styles.dashboardSectionTitle}>Quick Actions</h2>
                 </div>
-                <div className="dashboard-actions-grid">
-                  <div className="dashboard-action-btn" onClick={showEnrollmentForm}>
-                    <div className="dashboard-action-title">Enrollment for Next Sem</div>
-                    <div className="dashboard-action-desc">Process student enrollment</div>
+                <div className={styles.dashboardActionsGrid}>
+                  <div className={styles.dashboardActionBtn} onClick={showEnrollmentForm}>
+                    <div className={styles.dashboardActionTitle}>Enrollment for Next Sem</div>
+                    <div className={styles.dashboardActionDesc}>Process student enrollment</div>
                   </div>
-                  <div className="dashboard-action-btn" onClick={showGraduationForm}>
-                    <div className="dashboard-action-title">Application for Graduation</div>
-                    <div className="dashboard-action-desc">Submit graduation application</div>
+                  <div className={styles.dashboardActionBtn} onClick={showGraduationForm}>
+                    <div className={styles.dashboardActionTitle}>Application for Graduation</div>
+                    <div className={styles.dashboardActionDesc}>Submit graduation application</div>
                   </div>
                 </div>
               </div>
 
               {/* Recent Activities */}
-              <div className="dashboard-section-card">
-                <div className="dashboard-section-header">
-                  <h2 className="dashboard-section-title">Recent Activities</h2>
+              <div className={styles.dashboardSectionCard}>
+                <div className={styles.dashboardSectionHeader}>
+                  <h2 className={styles.dashboardSectionTitle}>Recent Activities</h2>
                 </div>
-                <div className="dashboard-activity-list">
+                <div className={styles.dashboardActivityList}>
                   {dashboardData.recentActivities.map((activity) => (
-                    <div key={activity.id} className="dashboard-activity-item">
-                      <div className="dashboard-activity-content">
-                        <div className="dashboard-activity-message">{activity.message}</div>
-                        <div className="dashboard-activity-time">{activity.time}</div>
+                    <div key={activity.id} className={styles.dashboardActivityItem}>
+                      <div className={styles.dashboardActivityContent}>
+                        <div className={styles.dashboardActivityMessage}>{activity.message}</div>
+                        <div className={styles.dashboardActivityTime}>{activity.time}</div>
                       </div>
                     </div>
                   ))}
@@ -300,29 +300,35 @@ const StudentDashboard = () => {
           </div>
 
           {/* Right Sidebar */}
-          <div className="dashboard-right-sidebar">
+          <div className={styles.dashboardRightSidebar}>
             {/* Calendar */}
-            <div className="dashboard-calendar-section">
-              <div className="dashboard-calendar-header-section">
-                <h2 className="dashboard-calendar-title">Calendar</h2>
+            <div className={styles.dashboardCalendarSection}>
+              <div className={styles.dashboardCalendarHeaderSection}>
+                <h2 className={styles.dashboardCalendarTitle}>Calendar</h2>
               </div>
-              <div className="dashboard-calendar-content">
-                <div className="dashboard-calendar-month" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 12 }}>
-                  <button className="btn btn-secondary" style={{ minWidth: 0, padding: '4px 10px' }} onClick={goToPrevMonth}>&lt;</button>
+              <div className={styles.dashboardCalendarContent}>
+                <div className={styles.dashboardCalendarMonth} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 12 }}>
+                  <button 
+                    className={`${styles.btn} ${styles.btnSecondary} ${styles.dashboardCalendarNavBtn}`} 
+                    onClick={goToPrevMonth}
+                  >&lt;</button>
                   <span>
                     {new Date(calendarYear, calendarMonth).toLocaleString('default', { month: 'long', year: 'numeric' })}
                   </span>
-                  <button className="btn btn-secondary" style={{ minWidth: 0, padding: '4px 10px' }} onClick={goToNextMonth}>&gt;</button>
+                  <button 
+                    className={`${styles.btn} ${styles.btnSecondary} ${styles.dashboardCalendarNavBtn}`} 
+                    onClick={goToNextMonth}
+                  >&gt;</button>
                 </div>
-                <div className="dashboard-calendar-grid">
+                <div className={styles.dashboardCalendarGrid}>
                   {['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'].map((day) => (
-                    <div key={day} className="dashboard-calendar-day-header">{day}</div>
+                    <div key={day} className={styles.dashboardCalendarDayHeader}>{day}</div>
                   ))}
                   {calendarDays.map((dayObj, index) => {
-                    let dayClasses = ['dashboard-calendar-day'];
-                    if (dayObj.isCurrentMonth) dayClasses.push('dashboard-calendar-day-current-month');
-                    if (dayObj.isSelected) dayClasses.push('dashboard-calendar-day-selected');
-                    if (dayObj.isToday && !dayObj.isSelected) dayClasses.push('dashboard-calendar-day-today');
+                    let dayClasses = [styles.dashboardCalendarDay];
+                    if (dayObj.isCurrentMonth) dayClasses.push(styles.dashboardCalendarDayCurrentMonth);
+                    if (dayObj.isSelected) dayClasses.push(styles.dashboardCalendarDaySelected);
+                    if (dayObj.isToday && !dayObj.isSelected) dayClasses.push(styles.dashboardCalendarDayToday);
                     return (
                       <div
                         key={index}
@@ -338,19 +344,19 @@ const StudentDashboard = () => {
             </div>
 
             {/* Upcoming Schedule */}
-            <div className="dashboard-section-card">
-              <div className="dashboard-schedule-header-section">
-                <h2 className="dashboard-schedule-title">Upcoming Schedule</h2>
+            <div className={styles.dashboardSectionCard}>
+              <div className={styles.dashboardScheduleHeaderSection}>
+                <h2 className={styles.dashboardScheduleTitle}>Upcoming Schedule</h2>
               </div>
-              <div className="dashboard-schedule-content">
+              <div className={styles.dashboardScheduleContent}>
                 {scheduleData.map((item) => (
                   <div 
                     key={item.id} 
-                    className={`dashboard-schedule-item ${item.type === 'blue' ? 'dashboard-schedule-item-blue' : item.type === 'green' ? 'dashboard-schedule-item-green' : ''}`}
+                    className={`${styles.dashboardScheduleItem} ${item.type === 'blue' ? styles.dashboardScheduleItemBlue : item.type === 'green' ? styles.dashboardScheduleItemGreen : ''}`}
                   >
-                    <div className="dashboard-schedule-time">{item.time}</div>
-                    <div className="dashboard-schedule-subject">{item.subject}</div>
-                    <div className="dashboard-schedule-room">{item.room}</div>
+                    <div className={styles.dashboardScheduleTime}>{item.time}</div>
+                    <div className={styles.dashboardScheduleSubject}>{item.subject}</div>
+                    <div className={styles.dashboardScheduleRoom}>{item.room}</div>
                   </div>
                 ))}
               </div>
@@ -361,29 +367,29 @@ const StudentDashboard = () => {
 
       {/* Enrollment Modal */}
       {showEnrollmentModal && (
-        <div className="modal-overlay">
-          <div className="modal-content">
-            <div className="modal-header">
-              <h2 className="modal-title">Enrollment for Next Semester</h2>
+        <div className={styles.modalOverlay}>
+          <div className={styles.modalContent}>
+            <div className={styles.modalHeader}>
+              <h2 className={styles.modalTitle}>Enrollment for Next Semester</h2>
             </div>
             
-            <div className="modal-body">
-              <div className="modal-grid">
-                <div className="form-group">
-                  <label className="form-label">Student ID *</label>
+            <div className={styles.modalBody}>
+              <div className={styles.modalGrid}>
+                <div className={styles.formGroup}>
+                  <label className={styles.formLabel}>Student ID *</label>
                   <input
                     type="text"
-                    className="form-input"
+                    className={styles.formInput}
                     placeholder="Enter Student ID"
                     value={enrollmentForm.studentId}
                     onChange={(e) => handleEnrollmentFormChange('studentId', e.target.value)}
                   />
                 </div>
                 
-                <div className="form-group">
-                  <label className="form-label">Semester *</label>
+                <div className={styles.formGroup}>
+                  <label className={styles.formLabel}>Semester *</label>
                   <select
-                    className="form-input"
+                    className={styles.formInput}
                     value={enrollmentForm.semester}
                     onChange={(e) => handleEnrollmentFormChange('semester', e.target.value)}
                   >
@@ -394,10 +400,10 @@ const StudentDashboard = () => {
                   </select>
                 </div>
                 
-                <div className="form-group">
-                  <label className="form-label">Academic Year *</label>
+                <div className={styles.formGroup}>
+                  <label className={styles.formLabel}>Academic Year *</label>
                   <select
-                    className="form-input"
+                    className={styles.formInput}
                     value={enrollmentForm.academicYear}
                     onChange={(e) => handleEnrollmentFormChange('academicYear', e.target.value)}
                   >
@@ -410,11 +416,11 @@ const StudentDashboard = () => {
               </div>
             </div>
             
-            <div className="modal-footer">
-              <button className="btn btn-secondary" onClick={closeEnrollmentModal}>
+            <div className={styles.modalFooter}>
+              <button className={`${styles.btn} ${styles.btnSecondary}`} onClick={closeEnrollmentModal}>
                 Cancel
               </button>
-              <button className="btn btn-primary" onClick={handleEnrollment}>
+              <button className={`${styles.btn} ${styles.btnPrimary}`} onClick={handleEnrollment}>
                 Process Enrollment
               </button>
             </div>
@@ -424,29 +430,29 @@ const StudentDashboard = () => {
 
       {/* Graduation Modal */}
       {showGraduationModal && (
-        <div className="modal-overlay">
-          <div className="modal-content">
-            <div className="modal-header">
-              <h2 className="modal-title">Application for Graduation</h2>
+        <div className={styles.modalOverlay}>
+          <div className={styles.modalContent}>
+            <div className={styles.modalHeader}>
+              <h2 className={styles.modalTitle}>Application for Graduation</h2>
             </div>
             
-            <div className="modal-body">
-              <div className="modal-grid">
-                <div className="form-group">
-                  <label className="form-label">Student ID *</label>
+            <div className={styles.modalBody}>
+              <div className={styles.modalGrid}>
+                <div className={styles.formGroup}>
+                  <label className={styles.formLabel}>Student ID *</label>
                   <input
                     type="text"
-                    className="form-input"
+                    className={styles.formInput}
                     placeholder="Enter Student ID"
                     value={graduationForm.studentId}
                     onChange={(e) => handleGraduationFormChange('studentId', e.target.value)}
                   />
                 </div>
                 
-                <div className="form-group">
-                  <label className="form-label">Program *</label>
+                <div className={styles.formGroup}>
+                  <label className={styles.formLabel}>Program *</label>
                   <select
-                    className="form-input"
+                    className={styles.formInput}
                     value={graduationForm.program}
                     onChange={(e) => handleGraduationFormChange('program', e.target.value)}
                   >
@@ -457,21 +463,21 @@ const StudentDashboard = () => {
                   </select>
                 </div>
                 
-                <div className="form-group">
-                  <label className="form-label">Expected Graduation *</label>
+                <div className={styles.formGroup}>
+                  <label className={styles.formLabel}>Expected Graduation *</label>
                   <input
                     type="date"
-                    className="form-input"
+                    className={styles.formInput}
                     value={graduationForm.expectedGraduation}
                     onChange={(e) => handleGraduationFormChange('expectedGraduation', e.target.value)}
                   />
                 </div>
                 
-                <div className="form-group">
-                  <label className="form-label">Application Date</label>
+                <div className={styles.formGroup}>
+                  <label className={styles.formLabel}>Application Date</label>
                   <input
                     type="date"
-                    className="form-input"
+                    className={styles.formInput}
                     value={graduationForm.applicationDate}
                     onChange={(e) => handleGraduationFormChange('applicationDate', e.target.value)}
                   />
@@ -479,11 +485,11 @@ const StudentDashboard = () => {
               </div>
             </div>
             
-            <div className="modal-footer">
-              <button className="btn btn-secondary" onClick={closeGraduationModal}>
+            <div className={styles.modalFooter}>
+              <button className={`${styles.btn} ${styles.btnSecondary}`} onClick={closeGraduationModal}>
                 Cancel
               </button>
-              <button className="btn btn-primary" onClick={handleGraduation}>
+              <button className={`${styles.btn} ${styles.btnPrimary}`} onClick={handleGraduation}>
                 Submit Application
               </button>
             </div>

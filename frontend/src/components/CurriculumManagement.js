@@ -1,35 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import './CurriculumManagement.css';
+import styles from './CurriculumManagement.module.css';
 import Sidebar from './Sidebar';
 
 const CurriculumManagement = () => {
   // Sample curriculum data
-  const [curriculumData, setCurriculumData] = useState([
-    /*
-        data here separated by {} example:
-        {
-            id: 1,
-            name: "Computer Science Curriculum",
-            code: "CUR001",
-            program: "BS Computer Science",
-            academicYear: "2025-2026",
-            status: "Active",
-            lastUpdated: "2025-03-06",
-            description: ""
-        },
-        {
-            id: 2,
-            name: "Information Technology Curriculum",
-            code: "CUR002",
-            program: "BS Information Technology",
-            academicYear: "2025-2026",
-            status: "Draft",
-            lastUpdated: "2025-02-11",
-            description: ""
-        }
-    */
-   ]);
+  const [curriculumData, setCurriculumData] = useState([]);
 
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(5);
@@ -188,7 +164,8 @@ const CurriculumManagement = () => {
   }, [searchTerm]);
 
   // Navigation
-  const navigate = useNavigate();  const showSection = (section) => {
+  const navigate = useNavigate();
+  const showSection = (section) => {
     switch(section){
       case 'Dashboard':
         navigate('/admin-dashboard');
@@ -218,8 +195,10 @@ const CurriculumManagement = () => {
         // No action for unknown sections
     }
   };
+  
   return (
-    <div className="container">      {/* Sidebar */}
+    <div className={styles.container}>      
+      {/* Sidebar */}
       <Sidebar 
         onNavigate={showSection}
         userInfo={{ name: "David Anderson", role: "Faculty Admin" }}
@@ -248,65 +227,65 @@ const CurriculumManagement = () => {
       />
 
       {/* Main Content */}
-      <div className="main-content">
+      <div className={styles.mainContent}>
         {/* Breadcrumb */}
-        <div className="breadcrumb">
+        <div className={styles.breadcrumb}>
           <span 
-            className="breadcrumb-link" 
+            className={styles.breadcrumbLink} 
             onClick={() => navigate('/admin-dashboard')}
           >
             Dashboard
           </span>
-          <span className="breadcrumb-separator"> / </span>
-          <span className="breadcrumb-current">Curriculum Management</span>
+          <span className={styles.breadcrumbSeparator}> / </span>
+          <span className={styles.breadcrumbCurrent}>Curriculum Management</span>
         </div>
 
         {/* Header */}
-        <div className="header">
+        <div className={styles.header}>
           <div>
-            <h1 className="page-title">Curriculum Management</h1>
+            <h1 className={styles.pageTitle}>Curriculum Management</h1>
           </div>
-          <button className="create-btn" onClick={openModal}>
+          <button className={styles.createBtn} onClick={openModal}>
             + Create New Curriculum
           </button>
         </div>
 
         {/* Stats Cards */}
-        <div className="stats-grid">
-          <div className="stat-card">
-            <div className="stat-icon blue">📘</div>
-            <div className="stat-content">
+        <div className={styles.statsGrid}>
+          <div className={styles.statCard}>
+            <div className={`${styles.statIcon} ${styles.statIconBlue}`}>📘</div>
+            <div className={styles.statContent}>
               <h3>Active Curricula</h3>
-              <div className="stat-value">{activeCurricula}</div>
+              <div className={styles.statValue}>{activeCurricula}</div>
             </div>
           </div>
-          <div className="stat-card">
-            <div className="stat-icon purple">📅</div>
-            <div className="stat-content">
+          <div className={styles.statCard}>
+            <div className={`${styles.statIcon} ${styles.statIconPurple}`}>📅</div>
+            <div className={styles.statContent}>
               <h3>Academic Year</h3>
-              <div className="stat-value">2025-2026</div>
+              <div className={styles.statValue}>2025-2026</div>
             </div>
           </div>
         </div>
 
         {/* Curriculum List */}
-        <div className="curriculum-section">
-          <div className="section-header">
-            <h2 className="section-title">Curriculum List</h2>
-            <div className="search-filter">
+        <div className={styles.curriculumSection}>
+          <div className={styles.sectionHeader}>
+            <h2 className={styles.sectionTitle}>Curriculum List</h2>
+            <div className={styles.searchFilter}>
               <input 
                 type="text" 
-                className="search-input" 
+                className={styles.searchInput} 
                 placeholder="Search curriculum..." 
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
-              <button className="filter-btn">🔽</button>
+              <button className={styles.filterBtn}>🔽</button>
             </div>
           </div>
           
-          <div className="table-container">
-            <table className="curriculum-table">
+          <div className={styles.tableContainer}>
+            <table className={styles.curriculumTable}>
               <thead>
                 <tr>
                   <th>Curriculum</th>
@@ -321,26 +300,27 @@ const CurriculumManagement = () => {
                 {paginatedData.map(curriculum => (
                   <tr key={curriculum.id}>
                     <td>
-                      <div className="curriculum-name">{curriculum.name}</div>
-                      <div className="curriculum-code">{curriculum.code}</div>
+                      <div className={styles.curriculumName}>{curriculum.name}</div>
+                      <div className={styles.curriculumCode}>{curriculum.code}</div>
                     </td>
                     <td>{curriculum.program}</td>
                     <td>{curriculum.academicYear}</td>
                     <td>
-                      <span className={`status-badge status-${curriculum.status.toLowerCase()}`}>
+                      <span className={`${styles.statusBadge} ${styles['status' + curriculum.status]}`}>
                         {curriculum.status}
                       </span>
                     </td>
                     <td>{formatDate(curriculum.lastUpdated)}</td>
                     <td>
-                      <div className="action-buttons">                        <button 
-                          className="action-btn edit-btn" 
+                      <div className={styles.actionButtons}>
+                        <button 
+                          className={`${styles.actionBtn} ${styles.editBtn}`} 
                           onClick={() => editCurriculum(curriculum.id)}
                           title="Edit"
                         >
                         </button>
                         <button 
-                          className="action-btn delete-btn" 
+                          className={`${styles.actionBtn} ${styles.deleteBtn}`} 
                           onClick={() => deleteCurriculum(curriculum.id)}
                           title="Delete"
                         >
@@ -353,12 +333,16 @@ const CurriculumManagement = () => {
             </table>
           </div>
 
-          <div className="pagination">
-            <div className="pagination-info">
+          <div className={styles.pagination}>
+            <div className={styles.paginationInfo}>
               Showing {startIndex + 1} to {Math.min(endIndex, filteredData.length)} of {filteredData.length} entries
             </div>
-            <div className="pagination-controls">
-              <button className="page-btn" onClick={previousPage} disabled={currentPage === 1}>
+            <div className={styles.paginationControls}>
+              <button 
+                className={styles.pageBtn} 
+                onClick={previousPage} 
+                disabled={currentPage === 1}
+              >
                 Previous
               </button>
               {[...Array(Math.min(3, totalPages))].map((_, index) => {
@@ -366,14 +350,18 @@ const CurriculumManagement = () => {
                 return (
                   <button
                     key={pageNum}
-                    className={`page-btn ${currentPage === pageNum ? 'active' : ''}`}
+                    className={`${styles.pageBtn} ${currentPage === pageNum ? styles.pageBtnActive : ''}`}
                     onClick={() => goToPage(pageNum)}
                   >
                     {pageNum}
                   </button>
                 );
               })}
-              <button className="page-btn" onClick={nextPage} disabled={currentPage === totalPages}>
+              <button 
+                className={styles.pageBtn} 
+                onClick={nextPage} 
+                disabled={currentPage === totalPages}
+              >
                 Next
               </button>
             </div>
@@ -383,41 +371,41 @@ const CurriculumManagement = () => {
 
       {/* Modal */}
       {isModalOpen && (
-        <div className="modal">
-          <div className="modal-content">
-            <div className="modal-header">
-              <h2 className="modal-title">
+        <div className={styles.modal}>
+          <div className={styles.modalContent}>
+            <div className={styles.modalHeader}>
+              <h2 className={styles.modalTitle}>
                 {editingId ? 'Edit Curriculum' : 'Create New Curriculum'}
               </h2>
-              <span className="close" onClick={closeModal}>&times;</span>
+              <span className={styles.close} onClick={closeModal}>&times;</span>
             </div>
-            <div className="modal-body">
-              <div className="form-group">
-                <label className="form-label">Curriculum Name</label>
+            <div className={styles.modalBody}>
+              <div className={styles.formGroup}>
+                <label className={styles.formLabel}>Curriculum Name</label>
                 <input 
                   type="text" 
-                  className="form-input" 
+                  className={styles.formInput} 
                   name="name"
                   value={formData.name}
                   onChange={handleInputChange}
                   required 
                 />
               </div>
-              <div className="form-group">
-                <label className="form-label">Curriculum Code</label>
+              <div className={styles.formGroup}>
+                <label className={styles.formLabel}>Curriculum Code</label>
                 <input 
                   type="text" 
-                  className="form-input" 
+                  className={styles.formInput} 
                   name="code"
                   value={formData.code}
                   onChange={handleInputChange}
                   required 
                 />
               </div>
-              <div className="form-group">
-                <label className="form-label">Program</label>
+              <div className={styles.formGroup}>
+                <label className={styles.formLabel}>Program</label>
                 <select 
-                  className="form-select" 
+                  className={styles.formSelect} 
                   name="program"
                   value={formData.program}
                   onChange={handleInputChange}
@@ -431,10 +419,10 @@ const CurriculumManagement = () => {
                   <option value="BS Psychology">BS Psychology</option>
                 </select>
               </div>
-              <div className="form-group">
-                <label className="form-label">Academic Year</label>
+              <div className={styles.formGroup}>
+                <label className={styles.formLabel}>Academic Year</label>
                 <select 
-                  className="form-select" 
+                  className={styles.formSelect} 
                   name="academicYear"
                   value={formData.academicYear}
                   onChange={handleInputChange}
@@ -446,10 +434,10 @@ const CurriculumManagement = () => {
                   <option value="2026-2027">2026-2027</option>
                 </select>
               </div>
-              <div className="form-group">
-                <label className="form-label">Status</label>
+              <div className={styles.formGroup}>
+                <label className={styles.formLabel}>Status</label>
                 <select 
-                  className="form-select" 
+                  className={styles.formSelect} 
                   name="status"
                   value={formData.status}
                   onChange={handleInputChange}
@@ -461,10 +449,10 @@ const CurriculumManagement = () => {
                   <option value="Inactive">Inactive</option>
                 </select>
               </div>
-              <div className="form-group">
-                <label className="form-label">Description</label>
+              <div className={styles.formGroup}>
+                <label className={styles.formLabel}>Description</label>
                 <textarea 
-                  className="form-textarea" 
+                  className={styles.formTextarea} 
                   name="description"
                   value={formData.description}
                   onChange={handleInputChange}
@@ -472,11 +460,11 @@ const CurriculumManagement = () => {
                 />
               </div>
             </div>
-            <div className="modal-footer">
-              <button type="button" className="btn-secondary" onClick={closeModal}>
+            <div className={styles.modalFooter}>
+              <button type="button" className={styles.btnSecondary} onClick={closeModal}>
                 Cancel
               </button>
-              <button type="button" className="btn-primary" onClick={saveCurriculum}>
+              <button type="button" className={styles.btnPrimary} onClick={saveCurriculum}>
                 Save Curriculum
               </button>
             </div>
