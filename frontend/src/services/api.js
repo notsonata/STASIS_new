@@ -121,19 +121,19 @@ export const courseSectionAPI = {
     return api.delete(`/course-sections/${id}`);
   },
   
-  // Get sections by status
+  // Get sections by status (now uses schedules)
   getSectionsByStatus: (status) => api.get(`/course-sections/status/${status}`),
   
-  // Get sections by day
+  // Get sections by day (now uses schedules)
   getSectionsByDay: (day) => api.get(`/course-sections/day/${day}`),
   
   // Get sections by section name
   getSectionsBySectionName: (sectionName) => api.get(`/course-sections/section-name/${sectionName}`),
   
-  // Get active sections
+  // Get active sections (now uses schedules)
   getActiveSections: () => api.get('/course-sections/active'),
   
-  // Update section status
+  // Update section status (now updates associated schedules)
   updateSectionStatus: (id, status) => api.put(`/course-sections/${id}/status?status=${encodeURIComponent(status)}`),
   
   // Validate section
@@ -150,6 +150,96 @@ export const courseSectionAPI = {
     console.log('Calling getSectionsByFaculty API for faculty ID:', facultyId);
     return api.get(`/course-sections/faculty/${facultyId}`);
   },
+};
+
+// Schedule API endpoints
+export const scheduleAPI = {
+  // Get all schedules
+  getAllSchedules: () => {
+    console.log('Calling getAllSchedules API...');
+    return api.get('/schedules');
+  },
+  
+  // Get schedule by ID
+  getScheduleById: (id) => api.get(`/schedules/${id}`),
+  
+  // Create new schedule
+  createSchedule: (scheduleData) => {
+    console.log('Calling createSchedule API with data:', scheduleData);
+    return api.post('/schedules', scheduleData);
+  },
+  
+  // Update schedule
+  updateSchedule: (id, scheduleData) => {
+    console.log('Calling updateSchedule API for ID:', id, 'with data:', scheduleData);
+    return api.put(`/schedules/${id}`, scheduleData);
+  },
+  
+  // Delete schedule
+  deleteSchedule: (id) => {
+    console.log('Calling deleteSchedule API for ID:', id);
+    return api.delete(`/schedules/${id}`);
+  },
+  
+  // Get schedules by course section
+  getSchedulesByCourseSectionId: (courseSectionId) => {
+    console.log('Calling getSchedulesByCourseSectionId API for course section ID:', courseSectionId);
+    return api.get(`/schedules/course-section/${courseSectionId}`);
+  },
+  
+  // Get schedules by course
+  getSchedulesByCourseId: (courseId) => {
+    console.log('Calling getSchedulesByCourseId API for course ID:', courseId);
+    return api.get(`/schedules/course/${courseId}`);
+  },
+  
+  // Get schedules by status
+  getSchedulesByStatus: (status) => api.get(`/schedules/status/${status}`),
+  
+  // Get schedules by day
+  getSchedulesByDay: (day) => api.get(`/schedules/day/${day}`),
+  
+  // Get schedules by room
+  getSchedulesByRoom: (room) => api.get(`/schedules/room/${room}`),
+  
+  // Get schedules by semester and year
+  getSchedulesBySemesterAndYear: (semester, year) => api.get(`/schedules/semester/${semester}/year/${year}`),
+  
+  // Get active schedules
+  getActiveSchedules: () => api.get('/schedules/active'),
+  
+  // Get active schedules with details
+  getActiveSchedulesWithDetails: () => api.get('/schedules/active/details'),
+  
+  // Get schedules by faculty
+  getSchedulesByFacultyId: (facultyId) => {
+    console.log('Calling getSchedulesByFacultyId API for faculty ID:', facultyId);
+    return api.get(`/schedules/faculty/${facultyId}`);
+  },
+  
+  // Get schedules by program
+  getSchedulesByProgramId: (programId) => {
+    console.log('Calling getSchedulesByProgramId API for program ID:', programId);
+    return api.get(`/schedules/program/${programId}`);
+  },
+  
+  // Update schedule status
+  updateScheduleStatus: (id, status) => api.put(`/schedules/${id}/status?status=${encodeURIComponent(status)}`),
+  
+  // Find conflicting schedules
+  findConflictingSchedules: (day, room, startTime, endTime) => {
+    console.log('Calling findConflictingSchedules API...');
+    return api.get(`/schedules/conflicts?day=${day}&room=${room}&startTime=${startTime}&endTime=${endTime}`);
+  },
+  
+  // Check for time conflicts
+  hasTimeConflict: (day, room, startTime, endTime) => {
+    console.log('Calling hasTimeConflict API...');
+    return api.get(`/schedules/conflicts/check?day=${day}&room=${room}&startTime=${startTime}&endTime=${endTime}`);
+  },
+  
+  // Validate schedule
+  validateSchedule: (scheduleData) => api.post('/schedules/validate', scheduleData),
 };
 
 // Enrolled Courses API endpoints

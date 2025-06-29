@@ -1,17 +1,11 @@
 package com.stasis.stasis.model;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 
-import java.time.LocalTime;
+import java.util.List;
 
 @Entity
 @Data
@@ -38,13 +32,10 @@ public class CourseSection {
     private String semester;
     private int year;
     
-    // Schedule fields - broken down for better structure
-    private LocalTime startTime;
-    private LocalTime endTime;
-    private String day; // e.g., "MWF", "TTH", "MONDAY", etc.
-    private String status; // e.g., "ACTIVE", "CANCELLED", "FULL", etc.
-    //End Schedule fields
-
+    // One-to-many relationship with Schedule
+    @OneToMany(mappedBy = "courseSection", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Schedule> schedules;
     
-    private String room;
+    // Schedule fields have been moved to Schedule entity
+    // Removed: startTime, endTime, day, status, room
 }

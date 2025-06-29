@@ -48,7 +48,7 @@ public class CourseSectionController {
         return ResponseEntity.noContent().build();
     }
 
-    // New endpoints for enhanced functionality
+    // Enhanced functionality endpoints
     @GetMapping("/status/{status}")
     public ResponseEntity<List<CourseSection>> getSectionsByStatus(@PathVariable String status) {
         List<CourseSection> sections = courseSectionService.getSectionsByStatus(status);
@@ -84,30 +84,26 @@ public class CourseSectionController {
     }
 
     @GetMapping("/program/{programId}")
-public ResponseEntity<List<CourseSection>> getSectionsByProgram(@PathVariable Long programId) {
-    List<CourseSection> sections = courseSectionService.getSectionsByProgram(programId);
-    return ResponseEntity.ok(sections);
-}
+    public ResponseEntity<List<CourseSection>> getSectionsByProgram(@PathVariable Long programId) {
+        List<CourseSection> sections = courseSectionService.getSectionsByProgram(programId);
+        return ResponseEntity.ok(sections);
+    }
 
-
-
-    // Validation endpoint
+    // Validation endpoint - updated to remove schedule field validation
     @PostMapping("/validate")
     public ResponseEntity<String> validateSection(@RequestBody CourseSection section) {
         if (section.getSectionName() == null || section.getSectionName().trim().isEmpty()) {
             return ResponseEntity.badRequest().body("Section name is required");
         }
-        if (section.getStartTime() == null || section.getEndTime() == null) {
-            return ResponseEntity.badRequest().body("Start time and end time are required");
+        if (section.getCourse() == null) {
+            return ResponseEntity.badRequest().body("Course is required");
         }
-        if (section.getStartTime().isAfter(section.getEndTime())) {
-            return ResponseEntity.badRequest().body("Start time must be before end time");
+        if (section.getFaculty() == null) {
+            return ResponseEntity.badRequest().body("Faculty is required");
         }
-        if (section.getDay() == null || section.getDay().trim().isEmpty()) {
-            return ResponseEntity.badRequest().body("Day is required");
+        if (section.getProgram() == null) {
+            return ResponseEntity.badRequest().body("Program is required");
         }
         return ResponseEntity.ok("Section data is valid");
-
-    
     }
 }
