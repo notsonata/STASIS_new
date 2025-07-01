@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
+  import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './ScheduleManagement.css';
 import Sidebar from './Sidebar';
 import { useAdminData } from '../hooks/useAdminData';
-import { courseSectionAPI, scheduleAPI, courseAPI, facultyAPI, programAPI, testConnection } from '../services/api';
+import { courseSectionAPI, courseAPI, facultyAPI, programAPI, testConnection } from '../services/api';
 
 const ScheduleManagement = () => {
   const { getUserInfo } = useAdminData();
@@ -73,7 +73,7 @@ const ScheduleManagement = () => {
 
       // Load all data in parallel
       const [schedulesResponse, coursesResponse, instructorsResponse, programsResponse, sectionsResponse] = await Promise.all([
-        scheduleAPI.getAllSchedules(),
+        courseSectionAPI.getAllSections(),
         courseAPI.getAllCourses(),
         facultyAPI.getAllFaculty(),
         programAPI.getAllPrograms(),
@@ -81,20 +81,20 @@ const ScheduleManagement = () => {
       ]);
 
       // Transform and set schedule data
-      const transformedSchedules = schedulesResponse.data.map(schedule => ({
-        id: schedule.scheduleID,
-        course: schedule.course?.courseDescription || 'Unknown Course',
-        section: schedule.courseSection?.sectionName || 'Unknown Section',
-        instructor: schedule.courseSection?.faculty ? 
-          `${schedule.courseSection.faculty.firstName} ${schedule.courseSection.faculty.lastName}` : 'TBA',
-        room: schedule.room || 'TBA',
-        day: schedule.day || 'TBA',
-        timeFrom: schedule.startTime || '00:00',
-        timeTo: schedule.endTime || '00:00',
-        status: schedule.status || 'ACTIVE',
-        semester: schedule.semester || 'Current',
-        year: schedule.year || new Date().getFullYear(),
-        program: schedule.courseSection?.program?.programName
+      const transformedSchedules = schedulesResponse.data.map(section => ({
+        id: section.sectionID,
+        courseName: section.course?.courseDescription || 'Unknown Course',
+        courseId: section.course?.courseCode || 'N/A',
+        section: section.sectionName,
+        instructor: section.faculty ? `${section.faculty.firstName} ${section.faculty.lastName}` : 'TBA',
+        room: section.room || 'TBA',
+        day: section.day || 'TBA',
+        timeFrom: section.startTime || '00:00',
+        timeTo: section.endTime || '00:00',
+        status: section.status || 'ACTIVE',
+        semester: section.semester || 'Current',
+        year: section.year || new Date().getFullYear(),
+        program: section.course?.program?.programName
       }));
       
       setScheduleList(transformedSchedules);
@@ -103,7 +103,7 @@ const ScheduleManagement = () => {
       setCourseOptions(coursesResponse.data.map(course => ({
         id: course.id,
         label: `${course.courseCode} - ${course.courseDescription}`,
-        value: course.id  // Changed from course.courseCode to course.id
+        value: course.courseCode
       })));
 
       // Set instructor options
@@ -146,21 +146,21 @@ const ScheduleManagement = () => {
   // Reload schedules after operations
   const reloadSchedules = async () => {
     try {
-      const response = await scheduleAPI.getAllSchedules();
-      const transformedData = response.data.map(schedule => ({
-        id: schedule.scheduleID,
-        course: schedule.course?.courseDescription || 'Unknown Course',
-        section: schedule.courseSection?.sectionName || 'Unknown Section',
-        instructor: schedule.courseSection?.faculty ? 
-          `${schedule.courseSection.faculty.firstName} ${schedule.courseSection.faculty.lastName}` : 'TBA',
-        room: schedule.room || 'TBA',
-        day: schedule.day || 'TBA',
-        timeFrom: schedule.startTime || '00:00',
-        timeTo: schedule.endTime || '00:00',
-        status: schedule.status || 'ACTIVE',
-        semester: schedule.semester || 'Current',
-        year: schedule.year || new Date().getFullYear(),
-        program: schedule.courseSection?.program?.programName
+      const response = await courseSectionAPI.getAllSections();
+      const transformedData = response.data.map(section => ({
+        id: section.sectionID,
+        courseName: section.course?.courseDescription || 'Unknown Course',
+        courseId: section.course?.courseCode || 'N/A',
+        section: section.sectionName,
+        instructor: section.faculty ? `${section.faculty.firstName} ${section.faculty.lastName}` : 'TBA',
+        room: section.room || 'TBA',
+        day: section.day || 'TBA',
+        timeFrom: section.startTime || '00:00',
+        timeTo: section.endTime || '00:00',
+        status: section.status || 'ACTIVE',
+        semester: section.semester || 'Current',
+        year: section.year || new Date().getFullYear(),
+        program: section.course?.program?.programName
       }));
       setScheduleList(transformedData);
     } catch (err) {
@@ -179,105 +179,54 @@ const ScheduleManagement = () => {
   // Add new schedule
   const handleAddSchedule = async () => {
     try {
-      // Enhanced validation with specific field checks
-      const missingFields = [];
-      if (!scheduleForm.course) missingFields.push('Course');
-      if (!scheduleForm.sectionName) missingFields.push('Section Name');
-      if (!scheduleForm.instructor) missingFields.push('Instructor');
-      if (!scheduleForm.room) missingFields.push('Room');
-      if (!scheduleForm.day) missingFields.push('Day');
-      if (!scheduleForm.startTime) missingFields.push('Start Time');
-      if (!scheduleForm.endTime) missingFields.push('End Time');
-
-      if (missingFields.length > 0) {
-        alert(`Please fill in the following required fields: ${missingFields.join(', ')}`);
+      // Validate required fields
+      if (!scheduleForm.course || !scheduleForm.sectionName || !scheduleForm.instructor || 
+          !scheduleForm.room || !scheduleForm.day || !scheduleForm.startTime || !scheduleForm.endTime) {
+        alert('Please fill in all required fields.');
         return;
       }
 
-      // Find course and faculty objects first for validation
-      const selectedCourse = courseOptions.find(c => c.value === parseInt(scheduleForm.course));
+      // Validate section data
+      const validationData = {
+        sectionName: scheduleForm.sectionName,
+        startTime: scheduleForm.startTime,
+        endTime: scheduleForm.endTime,
+        day: scheduleForm.day
+      };
+
+      await courseSectionAPI.validateSection(validationData);
+
+      // Find course and faculty objects
+      const selectedCourse = courseOptions.find(c => c.value === scheduleForm.course);
       const selectedFaculty = instructorOptions.find(f => f.value === parseInt(scheduleForm.instructor));
-
-      if (!selectedCourse) {
-        alert('Invalid course selected. Please select a valid course.');
-        return;
-      }
-
-      if (!selectedFaculty) {
-        alert('Invalid instructor selected. Please select a valid instructor.');
-        return;
-      }
-
-      // Frontend time validation
-      if (scheduleForm.startTime >= scheduleForm.endTime) {
-        alert('Start time must be before end time.');
-        return;
-      }
-
-      console.log('Selected Course:', selectedCourse);
-      console.log('Selected Faculty:', selectedFaculty);
 
       // Prepare section data for API
       const sectionData = {
         sectionName: scheduleForm.sectionName,
         semester: scheduleForm.semester || 'Current',
-        year: parseInt(scheduleForm.year),
+        year: scheduleForm.year,
         startTime: scheduleForm.startTime,
         endTime: scheduleForm.endTime,
         day: scheduleForm.day,
         status: scheduleForm.status,
         room: scheduleForm.room,
-        course: { id: selectedCourse.value },
-        faculty: { facultyID: selectedFaculty.value }
+        course: { id: selectedCourse?.id },
+        faculty: selectedFaculty ? { facultyID: selectedFaculty.value } : null
       };
 
-      console.log('Section Data:', JSON.stringify(sectionData, null, 2));
+      console.log('Creating section with data:', sectionData);
+      console.log('Selected faculty:', selectedFaculty);
 
-      // First create the course section
-      const sectionResponse = await courseSectionAPI.createSection(sectionData);
-      console.log('Section Response:', sectionResponse.data);
-
-      // Then create the schedule with the course section - match backend expectations
-      const scheduleData = {
-        courseSection: { sectionID: sectionResponse.data.sectionID },
-        course: { id: selectedCourse.value },
-        startTime: scheduleForm.startTime,
-        endTime: scheduleForm.endTime,
-        day: scheduleForm.day,
-        status: scheduleForm.status,
-        room: scheduleForm.room,
-        semester: scheduleForm.semester || 'Current',
-        year: parseInt(scheduleForm.year) // Ensure year is an integer
-      };
-
-      console.log('Schedule Data:', JSON.stringify(scheduleData, null, 2));
-
-      // Create the schedule
-      const scheduleResponse = await scheduleAPI.createSchedule(scheduleData);
-      console.log('Schedule Response:', scheduleResponse.data);
-      
+      await courseSectionAPI.createSection(sectionData);
       alert('Schedule added successfully!');
       closeAddScheduleModal();
       reloadSchedules();
     } catch (error) {
       console.error('Error adding schedule:', error);
-      console.error('Error response:', error.response?.data);
-      console.error('Error status:', error.response?.status);
-      
       if (error.response?.status === 400) {
-        // Handle validation errors from the backend
-        const errorMessage = error.response.data;
-        if (Array.isArray(errorMessage)) {
-          alert(`Validation failed:\n${errorMessage.join('\n')}`);
-        } else if (typeof errorMessage === 'string') {
-          alert(`Validation failed: ${errorMessage}`);
-        } else {
-          alert('Invalid schedule data provided! Please check all fields.');
-        }
-      } else if (error.response?.status === 500) {
-        alert('Server error occurred. Please check the backend console for details.');
+        alert(error.response.data || 'Invalid schedule data provided!');
       } else {
-        alert(`Failed to add schedule: ${error.message}`);
+        alert('Failed to add schedule. Please try again.');
       }
     }
   };
@@ -286,14 +235,14 @@ const ScheduleManagement = () => {
   const showEditScheduleForm = (schedule) => {
     setEditingSchedule(schedule);
     
-    // Find the course value for the dropdown - now search by course name/description
-    const courseOption = courseOptions.find(c => c.label.includes(schedule.course));
+    // Find the course value for the dropdown
+    const courseOption = courseOptions.find(c => c.label.includes(schedule.courseName || schedule.course || ''));
     const instructorOption = instructorOptions.find(i => i.label === schedule.instructor);
     
     setScheduleForm({
-      course: courseOption?.value?.toString() || '', // Convert to string for form input
+      course: courseOption?.value || '',
       sectionName: schedule.section,
-      instructor: instructorOption?.value?.toString() || '',
+      instructor: instructorOption?.value || '',
       room: schedule.room,
       day: schedule.day,
       startTime: schedule.timeFrom,
@@ -310,7 +259,7 @@ const ScheduleManagement = () => {
       if (!editingSchedule) return;
 
       // Similar validation and data preparation as add
-      const selectedCourse = courseOptions.find(c => c.value === parseInt(scheduleForm.course)); // Parse as int
+      const selectedCourse = courseOptions.find(c => c.value === scheduleForm.course);
       const selectedFaculty = instructorOptions.find(f => f.value === parseInt(scheduleForm.instructor));
 
       const sectionData = {
@@ -323,9 +272,12 @@ const ScheduleManagement = () => {
         day: scheduleForm.day,
         status: scheduleForm.status,
         room: scheduleForm.room,
-        course: selectedCourse ? { id: selectedCourse.value } : null, // Use course ID
+        course: selectedCourse ? { id: selectedCourse.id } : null,
         faculty: selectedFaculty ? { facultyID: selectedFaculty.value } : null
       };
+
+      console.log('Updating section with data:', sectionData);
+      console.log('Selected faculty for update:', selectedFaculty);
 
       await courseSectionAPI.updateSection(editingSchedule.id, sectionData);
       alert('Schedule updated successfully!');
@@ -365,7 +317,7 @@ const ScheduleManagement = () => {
 
   // Modal handlers
   const showAddScheduleForm = () => {
-    const newForm = {
+    setScheduleForm({
       course: '',
       sectionName: '',
       instructor: '',
@@ -376,17 +328,7 @@ const ScheduleManagement = () => {
       status: statusOptions.length > 0 ? statusOptions[0] : 'ACTIVE',
       semester: 'Current',
       year: new Date().getFullYear()
-    };
-    
-    console.log('New form initialized:', newForm);
-    console.log('Available options:', {
-      courseOptions: courseOptions.length,
-      instructorOptions: instructorOptions.length,
-      statusOptions,
-      roomOptions: roomOptions.length
     });
-    
-    setScheduleForm(newForm);
     setShowAddScheduleModal(true);
   };
 
@@ -469,7 +411,10 @@ const ScheduleManagement = () => {
 
   // Filter schedules with section filtering only
   const filteredSchedules = scheduleList.filter(schedule => {
-    const matchesSearch = schedule.course.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    const courseName = schedule.courseName || schedule.course || '';
+    const courseId = schedule.courseId || '';
+    const matchesSearch = courseName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                         courseId.toLowerCase().includes(searchTerm.toLowerCase()) ||
                          schedule.section.toLowerCase().includes(searchTerm.toLowerCase()) ||
                          schedule.instructor.toLowerCase().includes(searchTerm.toLowerCase()) ||
                          schedule.room.toLowerCase().includes(searchTerm.toLowerCase());
@@ -802,8 +747,9 @@ const ScheduleManagement = () => {
                   <table className="student-table">
                     <thead>
                       <tr>
-                        <th>Schedule ID</th>
-                        <th>Course & Section</th>
+                        <th>Course ID</th>
+                        <th>Course Name</th>
+                        <th>Section</th>
                         <th>Instructor</th>
                         <th>Room</th>
                         <th>Day & Time</th>
@@ -815,11 +761,9 @@ const ScheduleManagement = () => {
                       {filteredSchedules.length > 0 ? (
                         filteredSchedules.map((schedule) => (
                           <tr key={schedule.id}>
-                            <td className="student-id">{schedule.id}</td>
-                            <td className="course-section">
-                              <div className="student-name">{schedule.course}</div>
-                              <div className="student-email">{schedule.section}</div>
-                            </td>
+                            <td className="course-id">{schedule.courseId || 'N/A'}</td>
+                            <td className="course-name">{schedule.courseName || schedule.course || 'N/A'}</td>
+                            <td className="section">{schedule.section}</td>
                             <td className="instructor">{schedule.instructor}</td>
                             <td className="room">{schedule.room}</td>
                             <td className="day-time">
@@ -851,7 +795,7 @@ const ScheduleManagement = () => {
                         ))
                       ) : (
                         <tr>
-                          <td colSpan="7" className="no-students">
+                          <td colSpan="8" className="no-students">
                             No schedules found matching the current filters.
                           </td>
                         </tr>
@@ -891,13 +835,18 @@ const ScheduleManagement = () => {
                 
                 <div className="form-group">
                   <label className="form-label">Section Name *</label>
-                  <input
-                    type="text"
+                  <select
                     className="form-input"
-                    placeholder="e.g., CS-101-A"
                     value={scheduleForm.sectionName}
                     onChange={(e) => handleScheduleFormChange('sectionName', e.target.value)}
-                  />
+                  >
+                    <option value="">Select section</option>
+                    {[...new Set(sectionsList.map(section => section.sectionName))]
+                      .sort()
+                      .map(sectionName => (
+                        <option key={sectionName} value={sectionName}>{sectionName}</option>
+                    ))}
+                  </select>
                 </div>
                 
                 <div className="form-group">
@@ -1015,13 +964,18 @@ const ScheduleManagement = () => {
                 
                 <div className="form-group">
                   <label className="form-label">Section Name *</label>
-                  <input
-                    type="text"
+                  <select
                     className="form-input"
-                    placeholder="e.g., CS-101-A"
                     value={scheduleForm.sectionName}
                     onChange={(e) => handleScheduleFormChange('sectionName', e.target.value)}
-                  />
+                  >
+                    <option value="">Select section</option>
+                    {[...new Set(sectionsList.map(section => section.sectionName))]
+                      .sort()
+                      .map(sectionName => (
+                        <option key={sectionName} value={sectionName}>{sectionName}</option>
+                    ))} 
+                  </select>
                 </div>
                 
                 <div className="form-group">

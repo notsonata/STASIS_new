@@ -1,125 +1,101 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './StudentSchedule.module.css';
 import Sidebar from './StudentSidebar';
 import { useStudentData } from '../hooks/useStudentData';
+import { enrolledCourseAPI } from '../services/api';
 
 const StudentSchedule = () => {
-  const { getUserInfo } = useStudentData();
-  // Sample schedule data - removed status field
-  const [scheduleList, setScheduleList] = useState([
-    {
-      id: 'SCH001',
-      course: 'Computer Programming I',
-      section: 'CS-101-A',
-      instructor: 'Emily Thompson',
-      room: 'Room 204',
-      day: 'Monday',
-      timeFrom: '08:00',
-      timeTo: '10:00'
-    },
-    {
-      id: 'SCH002',
-      course: 'Database Management',
-      section: 'IT-201-B',
-      instructor: 'James Chen',
-      room: 'Lab 301',
-      day: 'Tuesday',
-      timeFrom: '10:00',
-      timeTo: '12:00'
-    },
-    {
-      id: 'SCH003',
-      course: 'Business Ethics',
-      section: 'BA-105-A',
-      instructor: 'Sarah Martinez',
-      room: 'Room 105',
-      day: 'Wednesday',
-      timeFrom: '14:00',
-      timeTo: '16:00'
-    },
-    {
-      id: 'SCH004',
-      course: 'Engineering Mathematics',
-      section: 'ENG-102-C',
-      instructor: 'Michael Roberts',
-      room: 'Room 307',
-      day: 'Thursday',
-      timeFrom: '09:00',
-      timeTo: '11:00'
-    },
-    {
-      id: 'SCH005',
-      course: 'General Psychology',
-      section: 'PSY-101-A',
-      instructor: 'Rachel Williams',
-      room: 'Room 201',
-      day: 'Friday',
-      timeFrom: '13:00',
-      timeTo: '15:00'
-    },
-    {
-      id: 'SCH006',
-      course: 'Data Structures',
-      section: 'CS-201-B',
-      instructor: 'Emily Thompson',
-      room: 'Lab 205',
-      day: 'Monday',
-      timeFrom: '15:00',
-      timeTo: '17:00'
-    },
-    {
-      id: 'SCH007',
-      course: 'Network Administration',
-      section: 'IT-301-A',
-      instructor: 'James Chen',
-      room: 'Lab 302',
-      day: 'Wednesday',
-      timeFrom: '08:00',
-      timeTo: '10:00'
-    },
-    {
-      id: 'SCH008',
-      course: 'Financial Accounting',
-      section: 'BA-201-C',
-      instructor: 'Sarah Martinez',
-      room: 'Room 106',
-      day: 'Friday',
-      timeFrom: '10:00',
-      timeTo: '12:00'
-    }
-  ]);
+  const { studentData, loading: studentLoading, error: studentError } = useStudentData();
+  const studentId = studentData?.id;
 
+  const [scheduleList, setScheduleList] = useState([]);
   const [selectedDay, setSelectedDay] = useState('All Days');
   const [searchTerm, setSearchTerm] = useState('');
+  const [loading, setLoading] = useState(false);
 
   // Day options
   const dayOptions = [
     'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'
   ];
 
-  // Statistics calculations - simplified without status
+  // Fetch schedule from backend
+  useEffect(() => {
+    if (!studentId || studentLoading) return;
+    
+    console.log('Fetching schedule for student ID:', studentId);
+    setLoading(true);
+    
+    enrolledCourseAPI.getEnrolledCoursesByStudent(studentId)
+      .then(res => {
+        console.log('Raw enrolled courses response:', res);
+        console.log('Enrolled courses data:', res.data);
+        console.log('Number of enrolled courses:', res.data?.length || 0);
+        
+        // Filter only active enrollments and map to schedule format
+        const mapped = (res.data || [])
+          .filter(ec => {
+            console.log('Checking enrollment status:', ec.status);
+            return ec.status === 'Enrolled' || ec.status === 'ENROLLED';
+          })
+          .map((ec) => {
+            console.log('Processing enrollment for schedule:', ec);
+            console.log('Section data:', ec.section);
+            console.log('Course data:', ec.section?.course);
+            console.log('Faculty data:', ec.section?.faculty);
+            
+            return {
+              courseCode: ec.section?.course?.courseCode || 'N/A',
+              course: ec.section?.course?.courseDescription || ec.section?.course?.courseName || ec.section?.course?.courseCode || '',
+              section: ec.section?.sectionName || '',
+              instructor: ec.section?.faculty
+                ? `${ec.section.faculty.firstName} ${ec.section.faculty.lastName}`
+                : 'TBA',
+              room: ec.section?.room || 'TBA',
+              day: ec.section?.day || '',
+              timeFrom: ec.section?.startTime ? ec.section.startTime.substring(0, 5) : '',
+              timeTo: ec.section?.endTime ? ec.section.endTime.substring(0, 5) : '',
+              status: ec.status
+            };
+          });
+        console.log('Final mapped schedule data:', mapped);
+        setScheduleList(mapped);
+      })
+      .catch((error) => {
+        console.error('Error fetching enrolled courses:', error);
+        console.error('Error details:', {
+          message: error.message,
+          response: error.response?.data,
+          status: error.response?.status
+        });
+        setScheduleList([]);
+      })
+      .finally(() => setLoading(false));
+  }, [studentId, studentLoading]);
+
+  // Statistics calculations
   const totalSchedules = scheduleList.length;
   const todaySchedules = scheduleList.filter(s => {
     const today = new Date().toLocaleDateString('en-US', { weekday: 'long' });
     return s.day === today;
   }).length;
-  const weekSchedules = scheduleList.length; // All are weekly schedules
+  const weekSchedules = scheduleList.length;
   const uniqueInstructors = [...new Set(scheduleList.map(s => s.instructor))].length;
 
   // Filter schedules based on search and day
   const filteredSchedules = scheduleList.filter(schedule => {
-    const matchesSearch = schedule.course.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         schedule.section.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         schedule.instructor.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         schedule.room.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         schedule.id.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesSearch = (schedule.course || '').toLowerCase().includes(searchTerm.toLowerCase()) ||
+                         (schedule.section || '').toLowerCase().includes(searchTerm.toLowerCase()) ||
+                         (schedule.instructor || '').toLowerCase().includes(searchTerm.toLowerCase()) ||
+                         (schedule.room || '').toLowerCase().includes(searchTerm.toLowerCase()) ||
+                         (schedule.courseCode || '').toLowerCase().includes(searchTerm.toLowerCase());
     const matchesDay = selectedDay === 'All Days' || schedule.day === selectedDay;
     return matchesSearch && matchesDay;
   });
 
   // Format time for display
   const formatTime = (time) => {
+    if (!time) return '';
     const [hours, minutes] = time.split(':');
     const hour12 = hours % 12 || 12;
     const ampm = hours < 12 ? 'AM' : 'PM';
@@ -158,7 +134,10 @@ const StudentSchedule = () => {
       {/* Sidebar */}
       <Sidebar 
         onNavigate={showSection}
-        userInfo={getUserInfo()}
+        userInfo={{ 
+          name: studentData ? `${studentData.firstName} ${studentData.lastName}` : "Loading...", 
+          role: "Student" 
+        }}
         sections={[
           {
             items: [{ id: 'StudentDashboard', label: 'Dashboard', icon: '📊' }]
@@ -200,7 +179,7 @@ const StudentSchedule = () => {
             <h1 className="page-title">My Schedule</h1>
           </div>
 
-          {/* Stats Cards - Updated without status-based stats */}
+          {/* Stats Cards */}
           <div className="stats-grid">
             <div className="stat-card">
               <div className="stat-label">Total Classes</div>
@@ -251,35 +230,42 @@ const StudentSchedule = () => {
               <table className="schedule-table">
                 <thead>
                   <tr>
-                    <th>Schedule ID</th>
-                    <th>Course & Section</th>
+                    <th>Course Code</th>
+                    <th>Course Name</th>
+                    <th>Section</th>
                     <th>Instructor</th>
                     <th>Room</th>
                     <th>Day & Time</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {filteredSchedules.map((schedule, index) => (
-                    <tr key={schedule.id}>
-                      <td>{schedule.id}</td>
-                      <td>
-                        <div className="schedule-info">
-                          <div className="schedule-course">{schedule.course}</div>
-                          <div className="schedule-section">{schedule.section}</div>
-                        </div>
-                      </td>
-                      <td>{schedule.instructor}</td>
-                      <td>{schedule.room}</td>
-                      <td>
-                        <div className="time-info">
-                          <div className="time-period">
-                            {formatTime(schedule.timeFrom)} - {formatTime(schedule.timeTo)}
-                          </div>
-                          <div className="day-info">{schedule.day}</div>
-                        </div>
-                      </td>
+                  {loading ? (
+                    <tr>
+                      <td colSpan={6}>Loading schedule...</td>
                     </tr>
-                  ))}
+                  ) : filteredSchedules.length === 0 ? (
+                    <tr>
+                      <td colSpan={6}>No classes found.</td>
+                    </tr>
+                  ) : (
+                    filteredSchedules.map((schedule, index) => (
+                      <tr key={`${schedule.courseCode}-${index}`}>
+                        <td>{schedule.courseCode}</td>
+                        <td>{schedule.course || 'N/A'}</td>
+                        <td>{schedule.section}</td>
+                        <td>{schedule.instructor}</td>
+                        <td>{schedule.room}</td>
+                        <td>
+                          <div className="time-info">
+                            <div className="time-period">
+                              {formatTime(schedule.timeFrom)} - {formatTime(schedule.timeTo)}
+                            </div>
+                            <div className="day-info">{schedule.day}</div>
+                          </div>
+                        </td>
+                      </tr>
+                    ))
+                  )}
                 </tbody>
               </table>
             </div>
