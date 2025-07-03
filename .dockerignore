@@ -1,47 +1,32 @@
-# Maven
-target/
-!.mvn/wrapper/maven-wrapper.jar
-!**/src/main/**/target/
-!**/src/test/**/target/
+# Version control
+.git
+.gitignore
 
-# IDE
-.idea
+# Documentation
+*.md
+!README.md
+
+# Development files
 .vscode/
-*.swp
-*.swo
-*~
+.idea/
+*.log
 
-# OS
+# Build artifacts
+target/
+node_modules/
+build/
+
+# Test files
+**/*.test.js
+**/test/
+coverage/
+
+# OS files
 .DS_Store
 Thumbs.db
 
-# Logs
-logs/
-*.log
-
-# Environment
-.env
+# Environment files (exclude from image)
 .env.local
+.env.development
+.env.test
 .env.production
-
-# Temporary files
-*.tmp
-*.temp
-
-# Maven Wrapper
-!mvnw
-!mvnw.cmd
-!.mvn/
-
-# Git
-.git/
-.gitignore
-
-# Docker
-Dockerfile
-docker-compose*.yml
-.dockerignore
-
-# Documentation
-README.md
-*.md
