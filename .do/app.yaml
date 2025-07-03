@@ -1,0 +1,48 @@
+# DigitalOcean App Platform specification
+# This file defines the deployment configuration for DigitalOcean App Platform
+
+name: stasis-webapp
+services:
+  - name: stasis-app
+    source_dir: /
+    github:
+      repo: your-username/your-repo-name  # Replace with your GitHub repo
+      branch: main
+    dockerfile_path: Dockerfile
+    run_command: java -jar app.jar
+    environment_slug: ubuntu-18
+    instance_count: 1
+    instance_size_slug: basic-xxs
+    http_port: 8080
+    routes:
+      - path: /
+    health_check:
+      http_path: /actuator/health
+    envs:
+      - key: SPRING_PROFILES_ACTIVE
+        value: production
+      - key: DATABASE_URL
+        value: ${stasis-db.DATABASE_URL}
+      - key: DB_USERNAME
+        value: ${stasis-db.USERNAME}
+      - key: DB_PASSWORD
+        value: ${stasis-db.PASSWORD}
+      - key: PORT
+        value: "8080"
+
+databases:
+  - name: stasis-db
+    engine: PG
+    version: "15"
+    production: true  # Set to true for production
+    size: db-s-dev-database  # Use db-s-1vcpu-1gb for production
+
+# Optional: Static site for serving additional static content
+# static_sites:
+#   - name: stasis-static
+#     source_dir: frontend/build
+#     github:
+#       repo: your-username/your-repo-name
+#       branch: main
+#     routes:
+#       - path: /static

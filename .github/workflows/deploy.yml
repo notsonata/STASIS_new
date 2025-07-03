@@ -1,0 +1,74 @@
+name: Deploy to DigitalOcean App Platform
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+env:
+  REGISTRY: registry.digitalocean.com
+  IMAGE_NAME: stasis-webapp
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        cache: 'npm'
+        cache-dependency-path: frontend/package-lock.json
+
+    - name: Set up JDK 17
+      uses: actions/setup-java@v4
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+        cache: maven
+
+    - name: Build React frontend
+      run: |
+        cd frontend
+        npm ci
+        npm run build
+
+    - name: Test Spring Boot application
+      run: |
+        mvn clean test
+
+    - name: Build Spring Boot application
+      run: |
+        mvn clean package -DskipTests
+
+    - name: Build Docker image
+      run: |
+        docker build -t ${{ env.IMAGE_NAME }}:${{ github.sha }} .
+        docker tag ${{ env.IMAGE_NAME }}:${{ github.sha }} ${{ env.IMAGE_NAME }}:latest
+
+    # Uncomment and configure the following steps for automatic deployment
+    # - name: Install doctl
+    #   uses: digitalocean/action-doctl@v2
+    #   with:
+    #     token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
+
+    # - name: Log in to DigitalOcean Container Registry
+    #   run: doctl registry login --expiry-seconds 600
+
+    # - name: Push image to DigitalOcean Container Registry
+    #   run: |
+    #     docker tag ${{ env.IMAGE_NAME }}:${{ github.sha }} ${{ env.REGISTRY }}/${{ secrets.DO_REGISTRY_NAME }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
+    #     docker tag ${{ env.IMAGE_NAME }}:${{ github.sha }} ${{ env.REGISTRY }}/${{ secrets.DO_REGISTRY_NAME }}/${{ env.IMAGE_NAME }}:latest
+    #     docker push ${{ env.REGISTRY }}/${{ secrets.DO_REGISTRY_NAME }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
+    #     docker push ${{ env.REGISTRY }}/${{ secrets.DO_REGISTRY_NAME }}/${{ env.IMAGE_NAME }}:latest
+
+    # - name: Deploy to DigitalOcean App Platform
+    #   run: |
+    #     doctl apps create --spec .do/app.yaml
+    #     # or update existing app:
+    #     # doctl apps update ${{ secrets.DO_APP_ID }} --spec .do/app.yaml
