@@ -13,7 +13,7 @@ COPY frontend/ ./
 RUN npm run build
 
 # Stage 2: Build Spring Boot backend
-FROM maven:3.9.6-eclipse-temurin-17-slim AS backend-build
+FROM maven:3.9.6-openjdk-17 AS backend-build
 WORKDIR /app
 
 # Copy pom.xml and download dependencies
