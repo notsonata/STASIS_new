@@ -1,7 +1,8 @@
 {
-  "name": "frontend",
+  "name": "stasis-frontend",
   "version": "0.1.0",
   "private": true,
+  "homepage": ".",
   "proxy": "http://localhost:8080",
   "dependencies": {
     "@craco/craco": "^7.1.0",
@@ -23,7 +24,12 @@
     "start": "craco start",
     "build": "craco build",
     "test": "craco test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "build:production": "NODE_ENV=production npm run build",
+    "serve": "npx serve -s build -l 3000",
+    "docker:build": "docker build -t stasis-frontend .",
+    "docker:run": "docker run -p 80:80 stasis-frontend",
+    "deploy": "chmod +x deploy.sh && ./deploy.sh"
   },
   "eslintConfig": {
     "extends": [
