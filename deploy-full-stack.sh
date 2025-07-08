@@ -96,13 +96,9 @@ deploy_services() {
 wait_for_services() {
     print_status "Waiting for services to be healthy..."
     
-    # Wait for database
-    print_status "Waiting for database..."
-    timeout 60 bash -c 'until docker-compose exec -T database pg_isready -U postgres; do sleep 2; done'
-    
-    # Wait for backend
-    print_status "Waiting for backend..."
-    timeout 120 bash -c 'until curl -f http://localhost:8080/api/actuator/health &>/dev/null; do sleep 5; done'
+    # Wait for backend (connecting to Supabase)
+    print_status "Waiting for backend to connect to Supabase..."
+    timeout 120 bash -c 'until curl -f http://localhost:8080/actuator/health &>/dev/null; do sleep 5; done'
     
     # Wait for frontend
     print_status "Waiting for frontend..."
@@ -122,8 +118,8 @@ show_status() {
     echo ""
     echo -e "${GREEN}📊 Service URLs:${NC}"
     echo -e "  Frontend: ${BLUE}http://localhost${NC} (or your domain)"
-    echo -e "  Backend API: ${BLUE}http://localhost:8080/api${NC}"
-    echo -e "  Database: ${BLUE}localhost:5432${NC}"
+    echo -e "  Backend API: ${BLUE}http://localhost:8080${NC}"
+    echo -e "  Database: ${BLUE}Supabase (external)${NC}"
     echo ""
     echo -e "${GREEN}🔧 Management Commands:${NC}"
     echo -e "  View logs: ${YELLOW}docker-compose logs -f [service_name]${NC}"
@@ -133,7 +129,7 @@ show_status() {
     echo ""
     echo -e "${GREEN}🏥 Health Checks:${NC}"
     echo -e "  Frontend: ${BLUE}curl http://localhost/health${NC}"
-    echo -e "  Backend: ${BLUE}curl http://localhost:8080/api/actuator/health${NC}"
+    echo -e "  Backend: ${BLUE}curl http://localhost:8080/actuator/health${NC}"
 }
 
 # Cleanup function
@@ -154,8 +150,7 @@ main() {
     echo "║                    STASIS FULL STACK DEPLOY                 ║"
     echo "║                                                              ║"
     echo "║  This script will deploy:                                    ║"
-    echo "║  • PostgreSQL Database                                       ║"
-    echo "║  • Spring Boot Backend API                                   ║"
+    echo "║  • Spring Boot Backend API (using Supabase DB)              ║"
     echo "║  • React Frontend with Nginx                                 ║"
     echo "╚══════════════════════════════════════════════════════════════╝"
     echo -e "${NC}"
