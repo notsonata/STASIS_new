@@ -1,7 +1,7 @@
 # Multi-stage Dockerfile for Spring Boot Backend
 
 # Stage 1: Build the application
-FROM openjdk:17-jdk-slim AS builder
+FROM eclipse-temurin:17-jdk-alpine AS builder
 
 # Set working directory
 WORKDIR /app
@@ -25,15 +25,13 @@ COPY src ./src
 RUN ./mvnw clean package -DskipTests
 
 # Stage 2: Runtime image
-FROM openjdk:17-jre-slim
+FROM eclipse-temurin:17-jre-alpine
 
 # Set working directory
 WORKDIR /app
 
 # Install wget for health checks
-RUN apt-get update && \
-    apt-get install -y wget && \
-    rm -rf /var/lib/apt/lists/*
+RUN apk add --no-cache wget
 
 # Copy the built JAR from the builder stage
 COPY --from=builder /app/target/stasis-0.0.1-SNAPSHOT.jar app.jar
