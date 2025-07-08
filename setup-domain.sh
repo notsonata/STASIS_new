@@ -72,6 +72,15 @@ configure_nginx() {
     sed -i "s/stasis-edu.tech/$DOMAIN/g" nginx-proxy.conf
     sed -i "s/www.stasis-edu.tech/www.$DOMAIN/g" nginx-proxy.conf
     
+    # Add rate limiting zones to main nginx.conf if not already present
+    if ! grep -q "limit_req_zone.*zone=api" /etc/nginx/nginx.conf; then
+        print_status "Adding rate limiting zones to nginx.conf..."
+        sed -i '/http {/a\\n\t# Rate limiting zones\n\tlimit_req_zone $binary_remote_addr zone=api:10m rate=10r/s;\n\tlimit_req_zone $binary_remote_addr zone=login:10m rate=5r/m;\n' /etc/nginx/nginx.conf
+    fi
+    
+    # Remove rate limiting zones from site config since they're now in main config
+    sed -i '/# Rate limiting zones/,/limit_req_zone.*zone=login/d' nginx-proxy.conf
+    
     # Copy configuration to nginx sites
     cp nginx-proxy.conf /etc/nginx/sites-available/stasis
     
