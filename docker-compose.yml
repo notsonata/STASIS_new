@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   # PostgreSQL Database
   database:
@@ -45,11 +43,11 @@ services:
       - stasis-network
     restart: unless-stopped
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8080/actuator/health"]
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:8080/api/actuator/health"]
       interval: 30s
       timeout: 10s
-      retries: 3
-      start_period: 60s
+      retries: 5
+      start_period: 90s
 
   # React Frontend with Nginx
   frontend:
@@ -58,8 +56,7 @@ services:
       dockerfile: Dockerfile
     container_name: stasis-frontend
     ports:
-      - "80:80"
-      - "443:443"
+      - "3001:80"  # Changed from 80:80 to avoid conflict with main nginx
     depends_on:
       backend:
         condition: service_healthy

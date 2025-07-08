@@ -82,7 +82,7 @@ cd STASIS_new
 chmod +x deploy-full-stack.sh
 
 # Run deployment
-./deploy-full-stack.sh
+c
 ```
 
 ### 3. Verify Deployment
