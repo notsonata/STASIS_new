@@ -98,11 +98,51 @@ wait_for_services() {
     
     # Wait for backend (connecting to Supabase)
     print_status "Waiting for backend to connect to Supabase..."
-    timeout 120 bash -c 'until curl -f http://localhost:8080/actuator/health &>/dev/null; do sleep 5; done'
+    local backend_ready=false
+    local attempts=0
+    local max_attempts=24  # 2 minutes with 5-second intervals
+    
+    while [ $attempts -lt $max_attempts ]; do
+        if curl -f http://localhost:8080/actuator/health &>/dev/null; then
+            backend_ready=true
+            break
+        fi
+        print_status "Backend not ready yet (attempt $((attempts + 1))/$max_attempts)..."
+        sleep 5
+        attempts=$((attempts + 1))
+    done
+    
+    if [ "$backend_ready" = false ]; then
+        print_error "Backend failed to become healthy within 2 minutes"
+        print_status "Checking backend logs..."
+        docker-compose -f "$COMPOSE_FILE" logs --tail=20 backend
+        return 1
+    fi
+    
+    print_success "Backend is healthy"
     
     # Wait for frontend
     print_status "Waiting for frontend..."
-    timeout 60 bash -c 'until curl -f http://localhost/health &>/dev/null; do sleep 2; done'
+    local frontend_ready=false
+    attempts=0
+    max_attempts=12  # 1 minute with 5-second intervals
+    
+    while [ $attempts -lt $max_attempts ]; do
+        if curl -f http://localhost/health &>/dev/null; then
+            frontend_ready=true
+            break
+        fi
+        print_status "Frontend not ready yet (attempt $((attempts + 1))/$max_attempts)..."
+        sleep 5
+        attempts=$((attempts + 1))
+    done
+    
+    if [ "$frontend_ready" = false ]; then
+        print_error "Frontend failed to become healthy within 1 minute"
+        print_status "Checking frontend logs..."
+        docker-compose -f "$COMPOSE_FILE" logs --tail=20 frontend
+        return 1
+    fi
     
     print_success "All services are healthy"
 }

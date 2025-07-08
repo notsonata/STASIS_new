@@ -21,6 +21,9 @@ RUN npm run build
 # ---- Stage 2: Serve the application with Nginx ----
 FROM nginx:stable-alpine
 
+# Install wget for health checks
+RUN apk add --no-cache wget
+
 # Copy the custom server configuration to the correct directory
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 
@@ -32,5 +35,5 @@ COPY --from=builder /app/build /usr/share/nginx/html
 # Expose port 80
 EXPOSE 80
 
-# Start Nginx
+# Start Nginx (nginx needs to run as root to bind to port 80)
 CMD ["nginx", "-g", "daemon off;"]

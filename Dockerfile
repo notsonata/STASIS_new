@@ -30,8 +30,8 @@ FROM eclipse-temurin:17-jre-alpine
 # Set working directory
 WORKDIR /app
 
-# Install wget for health checks
-RUN apk add --no-cache wget
+# Install wget and curl for health checks and debugging
+RUN apk add --no-cache wget curl
 
 # Copy the built JAR from the builder stage
 COPY --from=builder /app/target/stasis-0.0.1-SNAPSHOT.jar app.jar
@@ -39,5 +39,6 @@ COPY --from=builder /app/target/stasis-0.0.1-SNAPSHOT.jar app.jar
 # Expose port 8080
 EXPOSE 8080
 
-# Run the application with optimized JVM settings
-CMD ["java", "-Xmx512m", "-Xms256m", "-jar", "app.jar"]
+# Run the application with optimized JVM settings for containers
+# Use environment variable JAVA_OPTS if provided, otherwise use defaults
+CMD ["sh", "-c", "java ${JAVA_OPTS:--Xmx512m -Xms256m -XX:+UseContainerSupport -XX:MaxRAMPercentage=75.0} -jar app.jar"]
