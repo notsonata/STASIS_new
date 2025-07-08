@@ -14,11 +14,6 @@ services:
     networks:
       - stasis-network
     restart: unless-stopped
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
 
   # Spring Boot Backend
   backend:
@@ -37,17 +32,10 @@ services:
     ports:
       - "8080:8080"
     depends_on:
-      database:
-        condition: service_healthy
+      - database
     networks:
       - stasis-network
     restart: unless-stopped
-    healthcheck:
-      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:8080/actuator/health"]
-      interval: 30s
-      timeout: 15s
-      retries: 10
-      start_period: 120s
 
   # React Frontend with Nginx
   frontend:
@@ -56,18 +44,12 @@ services:
       dockerfile: Dockerfile
     container_name: stasis-frontend
     ports:
-      - "3001:80"  # Changed from 80:80 to avoid conflict with main nginx
+      - "3001:80"
     depends_on:
-      backend:
-        condition: service_healthy
+      - backend
     networks:
       - stasis-network
     restart: unless-stopped
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost/health"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
 
 volumes:
   postgres_data:
