@@ -1,0 +1,54 @@
+# Docker ignore file for Spring Boot backend
+
+# Target directory (Maven build output)
+target/
+!target/stasis-*.jar
+
+# Frontend directory (not needed for backend build)
+frontend/
+
+# IDE files
+.idea/
+.vscode/
+*.iml
+*.ipr
+*.iws
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Git
+.git/
+.gitignore
+
+# Documentation
+*.md
+README*
+
+# Logs
+*.log
+logs/
+
+# Temporary files
+*.tmp
+*.temp
+
+# Node modules (if any)
+node_modules/
+
+# Environment files
+.env
+.env.local
+.env.production
+
+# Docker files
+docker-compose*.yml
+Dockerfile*
+
+# Scripts
+*.sh
+*.bat
+*.cmd
+!mvnw
+!mvnw.cmd
