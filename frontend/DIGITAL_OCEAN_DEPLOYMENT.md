@@ -1,107 +1,97 @@
-# Digital Ocean Deployment Guide for STASIS Frontend
+# STASIS Full Project Deployment on Digital Ocean
 
-## Quick Deployment Steps
+## Prerequisites
 
-### 1. Prepare Your Digital Ocean Droplet
+- Digital Ocean account
+- Domain `stasis-edu.tech` configured to point to your droplet IP
+- Docker and Docker Compose installed on the droplet
+- Project files including `docker-compose.yml`, `Dockerfile.backend`, and frontend directory uploaded to the droplet
 
-**Create a new droplet:**
-- Ubuntu 20.04 or 22.04 LTS
-- Minimum: 1GB RAM, 1 vCPU
-- Recommended: 2GB RAM, 2 vCPU
+## Step 1: Create Digital Ocean Droplet
 
-**SSH into your droplet:**
+- Create a new droplet with Ubuntu 20.04 or later
+- Choose a plan with sufficient resources (e.g., 2GB RAM or more)
+- Add your SSH key for secure access
+
+## Step 2: Install Docker and Docker Compose
+
+SSH into your droplet and run:
+
 ```bash
-ssh root@YOUR_DROPLET_IP
-```
-
-### 2. Install Required Software
-
-```bash
-# Update system
-sudo apt update && sudo apt upgrade -y
-
-# Install Docker (Official Docker installation)
-curl -fsSL https://get.docker.com -o get-docker.sh
-sudo sh get-docker.sh
-sudo systemctl start docker
+sudo apt update
+sudo apt install -y docker.io docker-compose
 sudo systemctl enable docker
-sudo usermod -aG docker $USER
-
-# Install Docker Compose
-sudo curl -L "https://github.com/docker/compose/releases/download/v2.20.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-sudo chmod +x /usr/local/bin/docker-compose
-
-# Install Nginx for SSL termination
-sudo apt install nginx certbot python3-certbot-nginx -y
-
-# Install Git
-sudo apt install git -y
-
-# Logout and login again to apply docker group changes
-exit
-ssh root@YOUR_DROPLET_IP
+sudo systemctl start docker
 ```
 
-### 3. Deploy Your Frontend
+Verify installation:
 
 ```bash
-# Clone your repository
-git clone https://github.com/YOUR_USERNAME/STASIS-front.git
-cd STASIS-front
-
-# Make deploy script executable
-chmod +x deploy.sh
-
-# Deploy the application
-./deploy.sh
+docker --version
+docker-compose --version
 ```
-### 4. Configure Nginx for SSL and Domain
 
-**Create Nginx configuration:**
+## Step 3: Upload Project Files
+
+Upload your project files to the droplet, including:
+
+- `docker-compose.yml`
+- `Dockerfile.backend`
+- `frontend/` directory
+
+You can use `scp` or any file transfer method.
+
+docker-compose --version
+## Step 4: Configure Environment Variables
+
+- Update `frontend/.env.production` to point to backend URL (e.g., `http://localhost:8080`)
+- Add any backend environment variables in `docker-compose.yml` under `backend.environment`
+
+## Step 5: Run Docker Compose
+
+From the project root on the droplet, run:
+
 ```bash
-sudo nano /etc/nginx/sites-available/stasis
+docker-compose up --build -d
 ```
 
-**Add this configuration:**
-```nginx
-server {
-    listen 80;
-    server_name stasis-edu.tech www.stasis-edu.tech;
-    
-    location / {
-        proxy_pass http://localhost:80;
-        proxy_http_version 1.1;
-        proxy_set_header Upgrade $http_upgrade;
-        proxy_set_header Connection 'upgrade';
-        proxy_set_header Host $host;
-        proxy_set_header X-Real-IP $remote_addr;
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_set_header X-Forwarded-Proto $scheme;
-        proxy_cache_bypass $http_upgrade;
-    }
-}
-```
+This will build and start both backend and frontend containers.
 
-**Enable the site:**
+## Step 6: Configure Nginx for SSL and Domain
+
+The frontend container uses Nginx to serve the React app on port 80.
+
+To enable SSL and reverse proxy:
+
+1. Install Certbot on the droplet:
+
 ```bash
-sudo ln -s /etc/nginx/sites-available/stasis /etc/nginx/sites-enabled/
-sudo nginx -t
-sudo systemctl reload nginx
+sudo apt install -y certbot python3-certbot-nginx
 ```
 
-**Get SSL certificate:**
+2. Obtain SSL certificate for your domain:
+
 ```bash
 sudo certbot --nginx -d stasis-edu.tech -d www.stasis-edu.tech
 ```
 
-### 5. Configure Firewall
+3. Certbot will update Nginx config to enable HTTPS and redirect HTTP to HTTPS.
+
+4. To proxy backend API through Nginx, update `frontend/nginx.conf` to proxy `/api` requests to `http://backend:8080`.
+
+## Step 7: Configure Firewall
+
+Allow necessary ports:
 
 ```bash
-sudo ufw allow 22
-sudo ufw allow 80
-sudo ufw allow 443
+sudo ufw allow OpenSSH
+sudo ufw allow 80/tcp
+sudo ufw allow 443/tcp
+sudo ufw allow 8080/tcp
 sudo ufw enable
 ```
+sudo certbot --nginx -d stasis-edu.tech -d www.stasis-edu.tech
+docker-compose up --build -d
 
 ## Verification Steps
 
